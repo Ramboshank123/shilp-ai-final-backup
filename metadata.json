@@ -1,0 +1,6 @@
+{
+  "name": "SHILP AI",
+  "description": "A simple AI-powered digital business assistant and artisan craft marketplace empowering Indian artisans to digitize, price, and sell their handmade crafts.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
