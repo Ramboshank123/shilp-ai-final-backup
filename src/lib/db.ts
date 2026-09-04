@@ -100,7 +100,7 @@ function saveStoredProductImage(productId: string, url: string) {
   }
 }
 
-function getLocalProducts(): MarketplaceProduct[] {
+export function getLocalProducts(): MarketplaceProduct[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem("shilp.local_products");
@@ -126,12 +126,12 @@ export function saveLocalProduct(product: MarketplaceProduct) {
   }
 }
 
-function getLocalArtisanProducts(artisanId: string): MarketplaceProduct[] {
+export function getLocalArtisanProducts(artisanId: string): MarketplaceProduct[] {
   const all = getLocalProducts();
   return all.filter((p) => p.artisan_id === artisanId);
 }
 
-function getLocalEnquiries(artisanId: string): EnquiryWithProduct[] {
+export function getLocalEnquiries(artisanId: string): EnquiryWithProduct[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(`shilp.enquiries_${artisanId}`);

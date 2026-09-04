@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "../lib/auth";
 import { LanguageProvider } from "../lib/i18n";
+import { CustomScrollIndicator } from "../components/custom-scroll-indicator";
 
 function NotFoundComponent() {
   return (
@@ -131,6 +132,7 @@ function RootComponent() {
         <LanguageProvider>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
+          <CustomScrollIndicator />
         </LanguageProvider>
       </AuthProvider>
     </QueryClientProvider>
