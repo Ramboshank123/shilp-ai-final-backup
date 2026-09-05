@@ -390,7 +390,7 @@ function Field({
   multiline?: boolean;
 }) {
   const className =
-    "w-full rounded-2xl border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-[15px] text-[#29251f] outline-none transition focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10";
+    "w-full rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-[15px] text-[#29251f] outline-none transition focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10";
   return (
     <label className="block space-y-2">
       <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">{label}</span>
@@ -438,7 +438,7 @@ function PrimaryButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-5 text-sm font-bold transition active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-5 text-sm font-bold transition active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50",
         variant === "primary" &&
           "bg-[#b85f42] text-white shadow-[0_8px_20px_rgba(184,95,66,.2)] hover:bg-[#a85338]",
         variant === "secondary" &&
@@ -477,7 +477,7 @@ function PageTitle({
 function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="relative flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#b85f42] text-white shadow-[0_7px_18px_rgba(184,95,66,.25)]">
+      <div className="relative flex h-10 w-10 items-center justify-center rounded-md bg-[#b85f42] text-white shadow-[0_7px_18px_rgba(184,95,66,.25)]">
         <Sprout size={20} strokeWidth={2.4} />
         <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-[#d6a348]" />
       </div>
@@ -560,7 +560,7 @@ function EmptyState({
 }) {
   return (
     <div className="surface-card flex flex-col items-center justify-center px-6 py-14 text-center">
-      <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-[#f4e7da] text-[#b85f42]">
+      <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-md bg-[#f4e7da] text-[#b85f42]">
         <Icon size={28} strokeWidth={1.7} />
       </div>
       <h3 className="text-xl font-semibold text-[#382f27]">{title}</h3>
@@ -577,7 +577,7 @@ function ProductCard({ product, onClick }: { product: MarketplaceProduct; onClic
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       onClick={onClick}
-      className="group overflow-hidden rounded-[24px] border border-[#e8dfd3] bg-white text-left shadow-[0_6px_20px_rgba(65,47,29,.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(65,47,29,.1)]"
+      className="group overflow-hidden rounded-lg border border-[#e8dfd3] bg-white text-left shadow-[0_6px_20px_rgba(65,47,29,.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(65,47,29,.1)]"
     >
       <div className="relative aspect-[1.06] overflow-hidden bg-[#eee5d8]">
         <ImageBox
@@ -585,10 +585,10 @@ function ProductCard({ product, onClick }: { product: MarketplaceProduct; onClic
           alt={product.name}
           className="transition duration-500 group-hover:scale-105"
         />
-        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#685f53] backdrop-blur">
+        <span className="absolute left-3 top-3 rounded-md bg-white/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#685f53] backdrop-blur">
           {product.category_name ?? product.craft_type ?? "Handmade"}
         </span>
-        <span className="absolute bottom-3 right-3 rounded-full bg-[#342c24]/85 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
+        <span className="absolute bottom-3 right-3 rounded-md bg-[#342c24]/85 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
           {formatPrice(product.price)}
         </span>
       </div>
@@ -620,9 +620,7 @@ function StatCard({
 }) {
   return (
     <div className="surface-card flex items-start gap-3 p-4">
-      <div
-        className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl", accent)}
-      >
+      <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-md", accent)}>
         <Icon size={18} />
       </div>
       <div>
@@ -1382,7 +1380,7 @@ export function ShilpApp() {
           <motion.div
             animate={{ y: [0, -8, 0], rotate: [0, -2, 2, 0] }}
             transition={{ duration: 3, repeat: Infinity }}
-            className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-[32px] bg-[#b85f42] text-white shadow-[0_20px_40px_rgba(184,95,66,.24)]"
+            className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-lg bg-[#b85f42] text-white shadow-[0_20px_40px_rgba(184,95,66,.24)]"
           >
             <Sprout size={45} strokeWidth={1.6} />
           </motion.div>
@@ -1580,7 +1578,10 @@ export function ShilpApp() {
           <Topbar
             view={view}
             demoMode={demoMode}
+            profile={profile}
             onBack={() => go(view === "details" ? "marketplace" : "dashboard")}
+            onNavigate={go}
+            unreadCount={(enquiries || []).filter((e) => e.status === "new").length}
           />
           <div className="mx-auto max-w-6xl px-4 py-6 sm:px-8 sm:py-9">{primaryContent}</div>
         </main>
@@ -1590,7 +1591,7 @@ export function ShilpApp() {
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-24 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-3 rounded-2xl bg-[#342c24] px-4 py-3 text-sm font-semibold text-white shadow-xl lg:bottom-7"
+          className="fixed bottom-24 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-3 rounded-md bg-[#342c24] px-4 py-3 text-sm font-semibold text-white shadow-xl lg:bottom-7"
         >
           <BadgeCheck size={18} className="text-[#e3aa68]" />
           {toast}
@@ -1625,7 +1626,7 @@ function LanguageScreen({
               key={item.code}
               onClick={() => setLanguage(item.code)}
               className={cn(
-                "rounded-3xl border p-4 text-left transition",
+                "rounded-md border p-4 text-left transition",
                 language === item.code
                   ? "border-[#b85f42] bg-[#fff7ef] shadow-[0_8px_20px_rgba(184,95,66,.1)]"
                   : "border-[#e8dfd3] bg-white/70 hover:border-[#d2b39d]",
@@ -1703,7 +1704,7 @@ function AuthScreen({
             title={mode === "login" ? t("auth.welcome") : t("auth.signup")}
             description={t("auth.sub")}
           />
-          <div className="mt-7 flex rounded-2xl bg-[#eee6db] p-1">
+          <div className="mt-7 flex rounded-md bg-[#eee6db] p-1">
             {(["login", "signup"] as const).map((item) => (
               <button
                 key={item}
@@ -1712,7 +1713,7 @@ function AuthScreen({
                   setValidationError(null);
                 }}
                 className={cn(
-                  "flex-1 rounded-xl py-3 text-sm font-bold transition",
+                  "flex-1 rounded-sm py-3 text-sm font-bold transition",
                   mode === item ? "bg-white text-[#3d332b] shadow-sm" : "text-[#887f73]",
                 )}
               >
@@ -1722,7 +1723,7 @@ function AuthScreen({
           </div>
 
           {validationError && (
-            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-xs font-semibold text-red-700">
+            <div className="mt-4 rounded-md border border-red-200 bg-red-50 p-3 text-xs font-semibold text-red-700">
               {validationError}
             </div>
           )}
@@ -1760,7 +1761,7 @@ function AuthScreen({
                   if (validationError) setValidationError(null);
                 }}
                 autoComplete={mode === "login" ? "current-password" : "new-password"}
-                className="w-full rounded-2xl border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-[15px] outline-none focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10"
+                className="w-full rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-[15px] outline-none focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10"
                 placeholder="At least 6 characters"
               />
             </label>
@@ -1872,7 +1873,7 @@ function ProfileSetup({
           title={t("profile.title")}
           description={t("profile.subtitle")}
         />
-        <div className="mt-8 space-y-5 rounded-[28px] border border-[#e8dfd3] bg-white/70 p-5 shadow-[0_8px_24px_rgba(65,47,29,.05)] sm:p-8">
+        <div className="mt-8 space-y-5 rounded-lg border border-[#e8dfd3] bg-white/70 p-5 shadow-[0_8px_24px_rgba(65,47,29,.05)] sm:p-8">
           <Field
             label={t("profile.fullName")}
             value={fullName}
@@ -1889,7 +1890,7 @@ function ProfileSetup({
                   key={item}
                   onClick={() => setCraft(item)}
                   className={cn(
-                    "rounded-full border px-4 py-2.5 text-sm font-semibold transition",
+                    "rounded-md border px-4 py-2.5 text-sm font-semibold transition",
                     craft === item
                       ? "border-[#b85f42] bg-[#b85f42] text-white"
                       : "border-[#e3d9cb] bg-white text-[#645b50] hover:border-[#c89e89]",
@@ -1944,9 +1945,30 @@ function ProfileSetup({
   );
 }
 
-function Topbar({ view, demoMode, onBack }: { view: View; demoMode: boolean; onBack: () => void }) {
+function Topbar({
+  view,
+  demoMode,
+  profile,
+  onBack,
+  onNavigate,
+  unreadCount = 0,
+}: {
+  view: View;
+  demoMode: boolean;
+  profile?: AppProfile | null;
+  onBack: () => void;
+  onNavigate?: (view: View) => void;
+  unreadCount?: number;
+}) {
   const isMain = ["dashboard", "products", "marketplace", "messages", "profile"].includes(view);
   const { language, setLanguage, t } = useI18n();
+  const initials = useMemo(() => {
+    const fullName = profile?.profile?.full_name?.trim();
+    if (!fullName) return "MD";
+    const parts = fullName.split(/\s+/);
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }, [profile?.profile?.full_name]);
   return (
     <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-[#eee5d9]/80 bg-[#fbf7ef]/90 px-4 backdrop-blur-xl sm:px-8 lg:static lg:border-0 lg:bg-transparent">
       <div className="flex items-center gap-3 lg:hidden">
@@ -1963,13 +1985,13 @@ function Topbar({ view, demoMode, onBack }: { view: View; demoMode: boolean; onB
       </div>
       <div className="hidden lg:block">
         {demoMode && (
-          <span className="rounded-full bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#a2553a]">
+          <span className="rounded-md bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#a2553a]">
             {t("common.demo")}
           </span>
         )}
       </div>
       <div className="flex items-center gap-2 lg:ml-auto">
-        <div className="flex items-center gap-1.5 rounded-2xl border border-[#e5ded2] bg-white px-2.5 py-1.5 text-xs font-bold text-[#675d50] shadow-sm">
+        <div className="flex items-center gap-1.5 rounded-md border border-[#e5ded2] bg-white px-2.5 py-1.5 text-xs font-bold text-[#675d50] shadow-sm">
           <Globe2 size={15} className="text-[#b85f42]" />
           <select
             value={language}
@@ -1985,14 +2007,26 @@ function Topbar({ view, demoMode, onBack }: { view: View; demoMode: boolean; onB
           </select>
         </div>
         <button
+          type="button"
+          onClick={() => onNavigate?.("messages")}
           aria-label={t("nav.messages")}
-          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-[#71685d] shadow-sm"
+          title={t("nav.messages")}
+          className="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white text-[#71685d] shadow-sm transition hover:bg-[#faf7f2] hover:text-[#b85f42] active:scale-95 active:opacity-80"
         >
           <Bell size={18} />
+          {unreadCount > 0 && (
+            <span className="absolute right-2.5 top-2.5 flex h-2 w-2 rounded-full bg-[#b85f42] ring-2 ring-white" />
+          )}
         </button>
-        <div className="hidden h-10 w-10 items-center justify-center rounded-2xl bg-[#d7eadb] text-sm font-bold text-[#44694d] sm:flex">
-          MD
-        </div>
+        <button
+          type="button"
+          onClick={() => onNavigate?.("profile")}
+          aria-label={t("nav.profile")}
+          title={t("nav.profile")}
+          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-[#d7eadb] text-sm font-bold text-[#44694d] shadow-sm transition hover:opacity-90 active:scale-95"
+        >
+          {initials}
+        </button>
       </div>
     </header>
   );
@@ -2016,7 +2050,7 @@ function DesktopSidebar({
             key={id}
             onClick={() => onNavigate(id)}
             className={cn(
-              "flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left text-sm font-semibold transition",
+              "flex w-full items-center gap-3 rounded-md px-4 py-3 text-left text-sm font-semibold transition",
               view === id
                 ? "bg-[#f3e5d6] text-[#a2553a]"
                 : "text-[#7d7468] hover:bg-white hover:text-[#443a31]",
@@ -2027,7 +2061,7 @@ function DesktopSidebar({
           </button>
         ))}
       </div>
-      <div className="mt-auto rounded-3xl bg-[#34483c] p-5 text-white">
+      <div className="mt-auto rounded-lg bg-[#34483c] p-5 text-white">
         <Sparkles size={19} className="text-[#e8b06c]" />
         <p className="mt-4 font-display text-lg">{t("nav.story")}</p>
         <p className="mt-2 text-xs leading-5 text-white/65">{t("app.subtitle")}</p>
@@ -2053,7 +2087,7 @@ function BottomNav({
             key={id}
             onClick={() => onNavigate(id)}
             className={cn(
-              "flex min-w-[58px] flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-bold transition",
+              "flex min-w-[58px] flex-col items-center gap-1 rounded-md px-2 py-2 text-[10px] font-bold transition",
               view === id ? "bg-[#f3e5d6] text-[#a2553a]" : "text-[#93887b]",
             )}
           >
@@ -2069,21 +2103,23 @@ function BottomNav({
 function Dashboard({
   profile,
   stats,
-  products,
-  enquiries,
+  products = [],
+  enquiries = [],
   loading,
   onAdd,
   onNavigate,
 }: {
   profile: AppProfile;
   stats: { total: number; published: number; views: number; enquiries: number };
-  products: MarketplaceProduct[];
-  enquiries: EnquiryCard[];
+  products?: MarketplaceProduct[];
+  enquiries?: EnquiryCard[];
   loading: boolean;
   onAdd: () => void;
   onNavigate: (view: View) => void;
 }) {
   const { t } = useI18n();
+  const safeProducts = useMemo(() => products || [], [products]);
+  const safeEnquiries = useMemo(() => enquiries || [], [enquiries]);
   const [tips, setTips] = useState([
     "Add a clear, well-lit photograph — buyers trust listings they can see properly.",
     "Mention exact dimensions so buyers know what to expect.",
@@ -2099,12 +2135,16 @@ function Dashboard({
         publishedCount: stats.published,
         views: stats.views,
         enquiries: stats.enquiries,
-        sampleProducts: products.slice(0, 3).map((item) => item.name),
+        sampleProducts: safeProducts.slice(0, 3).map((item) => item.name),
       },
     })
-      .then((result) => setTips(result.tips))
+      .then((result) => {
+        if (result?.tips && Array.isArray(result.tips)) {
+          setTips(result.tips);
+        }
+      })
       .catch(() => {});
-  }, [profile.artisan, products, stats]);
+  }, [profile.artisan, safeProducts, stats]);
   const name = profile.profile?.full_name?.split(" ")[0] ?? "Artisan";
   return (
     <div className="space-y-8">
@@ -2147,9 +2187,9 @@ function Dashboard({
         />
       </div>
       <div className="grid gap-5 lg:grid-cols-[1.35fr_.65fr]">
-        <section className="warm-gradient relative overflow-hidden rounded-[28px] p-6 text-white shadow-[0_12px_30px_rgba(184,95,66,.18)] sm:p-8">
+        <section className="warm-gradient relative overflow-hidden rounded-lg p-6 text-white shadow-[0_12px_30px_rgba(184,95,66,.18)] sm:p-8">
           <div className="relative z-10 max-w-md">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em]">
+            <span className="inline-flex items-center gap-2 rounded-md bg-white/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em]">
               <Sparkles size={13} /> {t("dash.journey")}
             </span>
             <h2 className="mt-5 font-display text-3xl font-semibold leading-tight">
@@ -2177,15 +2217,15 @@ function Dashboard({
                 {t("dash.coachSubtitle")}
               </h2>
             </div>
-            <div className="rounded-2xl bg-[#f3e5d6] p-3 text-[#b85f42]">
+            <div className="rounded-md bg-[#f3e5d6] p-3 text-[#b85f42]">
               <WandSparkles size={20} />
             </div>
           </div>
           <div className="mt-5 space-y-3">
-            {tips.slice(0, 2).map((tip) => (
+            {(tips || []).slice(0, 2).map((tip) => (
               <div
                 key={tip}
-                className="flex gap-3 rounded-2xl bg-[#fbf7ef] p-3 text-xs leading-5 text-[#70675b]"
+                className="flex gap-3 rounded-md bg-[#fbf7ef] p-3 text-xs leading-5 text-[#70675b]"
               >
                 <Check size={15} className="mt-0.5 shrink-0 text-[#5e8a64]" />
                 {tip}
@@ -2206,12 +2246,12 @@ function Dashboard({
         </div>
         {loading ? (
           <div className="grid gap-4 sm:grid-cols-3">
-            <div className="h-64 animate-pulse rounded-3xl bg-[#eee5d8]" />
-            <div className="h-64 animate-pulse rounded-3xl bg-[#eee5d8]" />
+            <div className="h-64 animate-pulse rounded-lg bg-[#eee5d8]" />
+            <div className="h-64 animate-pulse rounded-lg bg-[#eee5d8]" />
           </div>
-        ) : products.length ? (
+        ) : safeProducts.length ? (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {products.slice(0, 3).map((product) => (
+            {safeProducts.slice(0, 3).map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
@@ -2234,13 +2274,14 @@ function Dashboard({
       </section>
       <section className="surface-card flex flex-col justify-between gap-4 p-5 sm:flex-row sm:items-center">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#dcebdc] text-[#4c7954]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#dcebdc] text-[#4c7954]">
             <MessageCircle size={21} />
           </div>
           <div>
             <p className="font-semibold">{t("dash.messages")}</p>
             <p className="mt-1 text-sm text-[#81786c]">
-              {enquiries.filter((item) => item.status === "new").length} {t("dash.messagesWaiting")}
+              {safeEnquiries.filter((item) => item.status === "new").length}{" "}
+              {t("dash.messagesWaiting")}
             </p>
           </div>
         </div>
@@ -2282,7 +2323,7 @@ function AddProduct({
           onClick={onTakePhoto}
           className="group surface-card relative min-h-44 overflow-hidden p-6 text-left transition hover:-translate-y-1 hover:border-[#c9937f]"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f3e5d6] text-[#b85f42]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#f3e5d6] text-[#b85f42]">
             <Camera size={23} />
           </div>
           <h3 className="mt-5 text-xl font-semibold">{t("add.takePhoto")}</h3>
@@ -2293,7 +2334,7 @@ function AddProduct({
           onClick={() => uploadRef.current?.click()}
           className="group surface-card min-h-44 p-6 text-left transition hover:-translate-y-1 hover:border-[#c9937f]"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e1ece1] text-[#4c7954]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#e1ece1] text-[#4c7954]">
             <Upload size={23} />
           </div>
           <h3 className="mt-5 text-xl font-semibold">{t("add.uploadPhoto")}</h3>
@@ -2304,12 +2345,12 @@ function AddProduct({
           onClick={onVoice}
           className="surface-card relative min-h-44 border-[#d9b59f] bg-[#fff8f1] p-6 text-left transition hover:-translate-y-1"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#b85f42] text-white">
+          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#b85f42] text-white">
             <Mic size={23} />
           </div>
           <h3 className="mt-5 text-xl font-semibold">{t("add.voice")}</h3>
           <p className="mt-1 text-sm text-[#83796d]">{t("add.voiceDesc")}</p>
-          <span className="absolute right-5 top-5 rounded-full bg-[#f1dfd0] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#a2553a]">
+          <span className="absolute right-5 top-5 rounded-md bg-[#f1dfd0] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#a2553a]">
             {t("add.easyStart")}
           </span>
         </button>
@@ -2317,7 +2358,7 @@ function AddProduct({
           onClick={onManual}
           className="surface-card min-h-44 p-6 text-left transition hover:-translate-y-1"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e8e5ef] text-[#6e628d]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#e8e5ef] text-[#6e628d]">
             <FileText size={23} />
           </div>
           <h3 className="mt-5 text-xl font-semibold">{t("add.manual")}</h3>
@@ -2402,7 +2443,7 @@ function CameraScreen({ onImage, onBack }: { onImage: (file: File) => void; onBa
         title={t("camera.title")}
         description={t("camera.desc")}
       />
-      <div className="relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-[30px] bg-[#342c24] text-center text-white shadow-xl">
+      <div className="relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-lg bg-[#342c24] text-center text-white shadow-xl">
         {streamActive ? (
           <>
             <video
@@ -2412,7 +2453,7 @@ function CameraScreen({ onImage, onBack }: { onImage: (file: File) => void; onBa
               muted
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="pointer-events-none absolute inset-8 rounded-[22px] border border-dashed border-white/40" />
+            <div className="pointer-events-none absolute inset-8 rounded-md border border-dashed border-white/40" />
             <div className="absolute bottom-6 flex items-center gap-4">
               <button
                 type="button"
@@ -2426,7 +2467,7 @@ function CameraScreen({ onImage, onBack }: { onImage: (file: File) => void; onBa
           </>
         ) : (
           <div className="flex flex-col items-center p-8">
-            <div className="pointer-events-none absolute inset-8 rounded-[22px] border border-dashed border-white/35" />
+            <div className="pointer-events-none absolute inset-8 rounded-md border border-dashed border-white/35" />
             <Camera size={44} strokeWidth={1.3} className="text-[#e5ad72]" />
             <p className="relative mt-5 font-display text-2xl">{t("camera.ready")}</p>
             <p className="relative mt-2 max-w-xs text-sm leading-6 text-white/60">
@@ -2534,7 +2575,7 @@ function Studio({
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[#847a6d]">
             {t("studio.original")}
           </p>
-          <div className="aspect-square overflow-hidden rounded-[28px] bg-[#eee5d8]">
+          <div className="aspect-square overflow-hidden rounded-lg bg-[#eee5d8]">
             <ImageBox src={draft.originalImageUrl} alt="Original product" />
           </div>
         </div>
@@ -2542,7 +2583,7 @@ function Studio({
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[#b85f42]">
             {t("studio.enhanced")}
           </p>
-          <div className="relative aspect-square overflow-hidden rounded-[28px] bg-[#eee5d8]">
+          <div className="relative aspect-square overflow-hidden rounded-lg bg-[#eee5d8]">
             <ImageBox src={processedUrl ?? draft.originalImageUrl} alt="Enhanced product" />
             {processing && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#342c24]/80 p-6 text-center text-white backdrop-blur-sm">
@@ -2711,7 +2752,7 @@ function VoiceDescription({
                 key={index}
                 type="button"
                 onClick={() => setText(prompt)}
-                className="rounded-xl border border-[#e5ded2] bg-[#f8f5ee] px-3 py-1.5 text-xs text-[#5f5548] hover:bg-[#ebdccb] text-left transition"
+                className="rounded-md border border-[#e5ded2] bg-[#f8f5ee] px-3 py-1.5 text-xs text-[#5f5548] hover:bg-[#ebdccb] text-left transition"
               >
                 {prompt.slice(0, 42)}...
               </button>
@@ -2816,16 +2857,16 @@ function Catalogue({
 
       <div className="surface-card overflow-hidden p-5 sm:p-8">
         {generating && (
-          <div className="mb-6 flex items-center gap-3 rounded-2xl bg-[#f3e5d6] p-4 text-sm font-semibold text-[#9b553c]">
+          <div className="mb-6 flex items-center gap-3 rounded-md bg-[#f3e5d6] p-4 text-sm font-semibold text-[#9b553c]">
             <Loader2 className="animate-spin" size={18} /> {t("cat.loading")}
           </div>
         )}
 
         {/* Image selector / thumbnail preview */}
-        <div className="mb-7 rounded-2xl border border-[#e8dfd2] bg-[#fbf9f5] p-4">
+        <div className="mb-7 rounded-md border border-[#e8dfd2] bg-[#fbf9f5] p-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
-              <div className="h-16 w-16 overflow-hidden rounded-xl bg-[#eee5d8] border border-[#dfd5c7] flex-shrink-0">
+              <div className="h-16 w-16 overflow-hidden rounded-md bg-[#eee5d8] border border-[#dfd5c7] flex-shrink-0">
                 <ImageBox
                   src={draft.imageUrl ?? draft.originalImageUrl}
                   alt={draft.name || "Product image"}
@@ -2857,7 +2898,7 @@ function Catalogue({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-1.5 rounded-xl border border-[#d6caba] bg-white px-3 py-2 text-xs font-bold text-[#625647] hover:bg-[#f6eee4]"
+                className="flex items-center gap-1.5 rounded-md border border-[#d6caba] bg-white px-3 py-2 text-xs font-bold text-[#625647] hover:bg-[#f6eee4]"
               >
                 <Camera size={14} /> {t("cat.uploadPhoto")}
               </button>
@@ -2879,7 +2920,7 @@ function Catalogue({
                         category: sample.cat,
                       }))
                     }
-                    className="flex items-center gap-1.5 rounded-lg border border-[#e4d9cb] bg-white px-2.5 py-1 text-xs text-[#6e6355] hover:bg-[#f3ece0]"
+                    className="flex items-center gap-1.5 rounded-md border border-[#e4d9cb] bg-white px-2.5 py-1 text-xs text-[#6e6355] hover:bg-[#f3ece0]"
                   >
                     <Sparkles size={11} className="text-[#b85f42]" />
                     {sample.label}
@@ -2890,11 +2931,11 @@ function Catalogue({
           )}
         </div>
 
-        <div className="mb-6 flex gap-2 rounded-2xl bg-[#f4eee6] p-1">
+        <div className="mb-6 flex gap-2 rounded-md bg-[#f4eee6] p-1">
           <button
             onClick={() => setTab("en")}
             className={cn(
-              "flex-1 rounded-xl py-2.5 text-sm font-bold",
+              "flex-1 rounded-sm py-2.5 text-sm font-bold",
               tab === "en" ? "bg-white text-[#3f342b] shadow-sm" : "text-[#8e8478]",
             )}
           >
@@ -2903,7 +2944,7 @@ function Catalogue({
           <button
             onClick={() => setTab("hi")}
             className={cn(
-              "flex-1 rounded-xl py-2.5 text-sm font-bold",
+              "flex-1 rounded-sm py-2.5 text-sm font-bold",
               tab === "hi" ? "bg-white text-[#3f342b] shadow-sm" : "text-[#8e8478]",
             )}
           >
@@ -2927,7 +2968,7 @@ function Catalogue({
                 <select
                   value={draft.category}
                   onChange={(event) => update("category", event.target.value)}
-                  className="w-full rounded-2xl border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
+                  className="w-full rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
                 >
                   {categoryNames.map((item) => (
                     <option key={item}>{item}</option>
@@ -2983,7 +3024,7 @@ function Catalogue({
                 {draft.key_features.map((feature, index) => (
                   <span
                     key={`${feature}-${index}`}
-                    className="flex items-center gap-2 rounded-full bg-[#e1ece1] px-3 py-2 text-xs font-semibold text-[#4b7151]"
+                    className="flex items-center gap-2 rounded-md bg-[#e1ece1] px-3 py-2 text-xs font-semibold text-[#4b7151]"
                   >
                     {feature}
                     <button
@@ -3015,12 +3056,12 @@ function Catalogue({
                     }
                   }}
                   placeholder="e.g. 100% Biodegradable"
-                  className="flex-1 rounded-xl border border-[#e5ded2] bg-white px-3 py-2 text-xs outline-none focus:border-[#bb6547]"
+                  className="flex-1 rounded-md border border-[#e5ded2] bg-white px-3 py-2 text-xs outline-none focus:border-[#bb6547]"
                 />
                 <button
                   type="button"
                   onClick={addFeature}
-                  className="rounded-xl bg-[#b85f42] px-3 py-2 text-xs font-bold text-white hover:bg-[#a25137]"
+                  className="rounded-md bg-[#b85f42] px-3 py-2 text-xs font-bold text-white hover:bg-[#a25137]"
                 >
                   {t("cat.addFeature")}
                 </button>
@@ -3040,7 +3081,7 @@ function Catalogue({
               onChange={(value) => update("description_hindi", value)}
               multiline
             />
-            <div className="rounded-2xl bg-[#fbf7ef] p-4 text-sm leading-6 text-[#756e63]">
+            <div className="rounded-md bg-[#fbf7ef] p-4 text-sm leading-6 text-[#756e63]">
               <Globe2 size={17} className="mb-2 text-[#b85f42]" />
               {t("cat.hindiNote")}
             </div>
@@ -3206,7 +3247,7 @@ function Pricing({
             {t("price.recalculate")}
           </PrimaryButton>
         </div>
-        <div className="warm-gradient flex min-h-[330px] flex-col rounded-[28px] p-6 text-white sm:p-8">
+        <div className="warm-gradient flex min-h-[330px] flex-col rounded-lg p-6 text-white sm:p-8">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/65">
@@ -3218,7 +3259,7 @@ function Pricing({
                   : t("common.loading")}
               </p>
             </div>
-            <div className="rounded-2xl bg-white/15 p-3">
+            <div className="rounded-md bg-white/15 p-3">
               <IndianRupee size={23} />
             </div>
           </div>
@@ -3238,7 +3279,7 @@ function Pricing({
               </div>
             </div>
           )}
-          <div className="mt-auto rounded-2xl bg-white/10 p-4 text-xs leading-5 text-white/75">
+          <div className="mt-auto rounded-md bg-white/10 p-4 text-xs leading-5 text-white/75">
             <CircleHelp size={15} className="mb-1 text-[#f0c685]" />
             {result?.reasoning ?? t("price.desc")}
           </div>
@@ -3249,7 +3290,7 @@ function Pricing({
           <p className="font-semibold">{t("price.finalPrice")}</p>
           <p className="mt-1 text-sm text-[#82796e]">{t("price.finalPriceDesc")}</p>
         </div>
-        <div className="flex items-center rounded-2xl border border-[#e5ded2] bg-white px-3">
+        <div className="flex items-center rounded-md border border-[#e5ded2] bg-white px-3">
           <span className="text-[#8e8376]">₹</span>
           <input
             value={draft.price || ""}
@@ -3311,7 +3352,7 @@ function Preview({
         title={t("preview.title")}
         description={t("preview.desc")}
       />
-      <div className="overflow-hidden rounded-[30px] border border-[#e4d9cc] bg-white shadow-[0_12px_32px_rgba(65,47,29,.08)]">
+      <div className="overflow-hidden rounded-lg border border-[#e4d9cc] bg-white shadow-[0_12px_32px_rgba(65,47,29,.08)]">
         <div className="grid md:grid-cols-[.9fr_1.1fr]">
           <div className="aspect-square bg-[#eee5d8] md:aspect-auto">
             <ImageBox src={previewImage} alt={draft.name || "Product preview"} />
@@ -3319,7 +3360,7 @@ function Preview({
           <div className="p-6 sm:p-9">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span className="rounded-full bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a2553a]">
+                <span className="rounded-md bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a2553a]">
                   {draft.category || "Handmade"}
                 </span>
                 <h2 className="mt-4 font-display text-3xl font-semibold text-[#342c24]">
@@ -3328,7 +3369,7 @@ function Preview({
               </div>
               <button
                 onClick={onEditCatalogue}
-                className="rounded-xl p-2 text-[#a2553a] hover:bg-[#f7eee5]"
+                className="rounded-md p-2 text-[#a2553a] hover:bg-[#f7eee5]"
                 title={t("preview.editCatalogue")}
               >
                 <Edit3 size={17} />
@@ -3407,9 +3448,9 @@ function Success({
       </p>
       <h1 className="mt-3 text-4xl font-semibold">{t("success.title")}</h1>
       <p className="mt-3 max-w-md text-sm leading-6 text-[#7c7367]">{t("success.desc")}</p>
-      <div className="mt-8 w-full overflow-hidden rounded-[28px] border border-[#e4d9cc] bg-white text-left shadow-sm">
+      <div className="mt-8 w-full overflow-hidden rounded-lg border border-[#e4d9cc] bg-white text-left shadow-sm">
         <div className="flex gap-4 p-4">
-          <div className="h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-[#eee5d8]">
+          <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md bg-[#eee5d8]">
             <ImageBox src={product.imageUrl ?? product.originalImageUrl} alt={product.name} />
           </div>
           <div className="min-w-0">
@@ -3472,7 +3513,7 @@ function Marketplace({
         />
         <button
           onClick={onRefresh}
-          className="flex items-center gap-2 self-start rounded-xl px-3 py-2 text-sm font-bold text-[#83796e] hover:bg-white"
+          className="flex items-center gap-2 self-start rounded-md px-3 py-2 text-sm font-bold text-[#83796e] hover:bg-white"
         >
           <Compass size={16} /> {t("common.retry")}
         </button>
@@ -3483,7 +3524,7 @@ function Marketplace({
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder={t("market.search")}
-          className="w-full rounded-2xl border border-[#e5ded2] bg-white px-12 py-4 text-sm outline-none shadow-sm focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10"
+          className="w-full rounded-md border border-[#e5ded2] bg-white px-12 py-4 text-sm outline-none shadow-sm focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10"
         />
       </div>
       <div className="flex gap-2 overflow-x-auto pb-2">
@@ -3492,7 +3533,7 @@ function Marketplace({
             key={item}
             onClick={() => setCategory(item)}
             className={cn(
-              "shrink-0 rounded-full px-4 py-2.5 text-xs font-bold transition",
+              "shrink-0 rounded-md px-4 py-2.5 text-xs font-bold transition",
               category === item
                 ? "bg-[#342c24] text-white"
                 : "bg-white text-[#766c60] hover:bg-[#f3e5d6]",
@@ -3554,13 +3595,13 @@ function Details({
       <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#756e63]">
         <ArrowLeft size={16} /> {t("common.back")}
       </button>
-      <div className="overflow-hidden rounded-[30px] border border-[#e4d9cc] bg-white shadow-sm">
+      <div className="overflow-hidden rounded-lg border border-[#e4d9cc] bg-white shadow-sm">
         <div className="grid md:grid-cols-[1.05fr_.95fr]">
           <div className="aspect-square bg-[#eee5d8] md:aspect-auto">
             <ImageBox src={product.image_url} alt={product.name} />
           </div>
           <div className="p-6 sm:p-10">
-            <span className="rounded-full bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a2553a]">
+            <span className="rounded-md bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a2553a]">
               {product.category_name ?? product.craft_type}
             </span>
             <h1 className="mt-5 text-3xl font-semibold leading-tight sm:text-4xl">
@@ -3656,7 +3697,7 @@ function Enquiry({
           <input
             name="buyerContact"
             required
-            className="w-full rounded-2xl border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
+            className="w-full rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
             placeholder={t("enquiry.contact")}
           />
         </label>
@@ -3668,7 +3709,7 @@ function Enquiry({
             name="message"
             required
             defaultValue={t("enquiry.default")}
-            className="min-h-32 w-full resize-y rounded-2xl border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
+            className="min-h-32 w-full resize-y rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
           />
         </label>
         <PrimaryButton type="submit" className="w-full">
@@ -3700,7 +3741,7 @@ function Messages({
             <div key={enquiry.id} className="surface-card p-5">
               <div className="flex flex-col justify-between gap-4 sm:flex-row">
                 <div className="flex gap-3">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#eee0ed] text-[#8c5b85]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-[#eee0ed] text-[#8c5b85]">
                     <UserRound size={18} />
                   </div>
                   <div>
@@ -3716,7 +3757,7 @@ function Messages({
                 </div>
                 <span
                   className={cn(
-                    "self-start rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em]",
+                    "self-start rounded-md px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em]",
                     enquiry.status === "new"
                       ? "bg-[#f3e5d6] text-[#a2553a]"
                       : "bg-[#dcebdc] text-[#4c7954]",
@@ -3725,19 +3766,19 @@ function Messages({
                   {enquiry.status === "new" ? t("messages.new") : t("messages.contacted")}
                 </span>
               </div>
-              <p className="mt-5 rounded-2xl bg-[#fbf7ef] p-4 text-sm leading-6 text-[#685f53]">
+              <p className="mt-5 rounded-md bg-[#fbf7ef] p-4 text-sm leading-6 text-[#685f53]">
                 “{enquiry.message}”
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <a
                   href={`mailto:${enquiry.buyer_contact}`}
-                  className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#e3d9cb] px-3 text-xs font-bold text-[#665c50]"
+                  className="inline-flex min-h-10 items-center gap-2 rounded-md border border-[#e3d9cb] px-3 text-xs font-bold text-[#665c50]"
                 >
                   <Mail size={14} /> {enquiry.buyer_contact}
                 </a>
                 {enquiry.status === "new" && (
                   <PrimaryButton
-                    className="min-h-10 rounded-xl px-3 text-xs"
+                    className="min-h-10 rounded-md px-3 text-xs"
                     onClick={() => onMark(enquiry, "contacted")}
                   >
                     <Check size={14} /> {t("messages.markContacted")}
@@ -3797,13 +3838,13 @@ function MyProducts({
           <Plus size={17} /> {t("dash.addProduct")}
         </PrimaryButton>
       </div>
-      <div className="flex gap-2 rounded-2xl bg-[#eee6db] p-1">
+      <div className="flex gap-2 rounded-md bg-[#eee6db] p-1">
         {(["draft", "published", "archived"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setSelectedTab(tab)}
             className={cn(
-              "flex-1 rounded-xl py-3 text-xs font-bold capitalize",
+              "flex-1 rounded-sm py-3 text-xs font-bold capitalize",
               selectedTab === tab ? "bg-white text-[#3e342b] shadow-sm" : "text-[#887e72]",
             )}
           >
@@ -3821,7 +3862,7 @@ function MyProducts({
               key={product.id}
               className="surface-card flex flex-col gap-4 p-4 sm:flex-row sm:items-center"
             >
-              <div className="h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-[#eee5d8]">
+              <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md bg-[#eee5d8]">
                 <ImageBox src={product.image_url} alt={product.name} />
               </div>
               <div className="min-w-0 flex-1">
@@ -3829,7 +3870,7 @@ function MyProducts({
                   <h3 className="font-display text-xl font-semibold">{product.name}</h3>
                   <span
                     className={cn(
-                      "rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em]",
+                      "rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em]",
                       product.status === "published"
                         ? "bg-[#dcebdc] text-[#4c7954]"
                         : product.status === "archived"
@@ -3852,14 +3893,14 @@ function MyProducts({
               <div className="flex gap-2">
                 <button
                   onClick={() => onEdit(product)}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
                   title={t("common.edit")}
                 >
                   <Edit3 size={16} />
                 </button>
                 <button
                   onClick={() => onView(product)}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
                   title={t("success.view")}
                 >
                   <Eye size={16} />
@@ -3867,7 +3908,7 @@ function MyProducts({
                 {product.status !== "archived" && (
                   <button
                     onClick={() => onArchive(product)}
-                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
+                    className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
                     title={t("products.archived")}
                   >
                     <Archive size={16} />
@@ -3875,7 +3916,7 @@ function MyProducts({
                 )}
                 <button
                   onClick={() => void onDelete(product)}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#e4d9cc] text-[#a85e4d] hover:bg-[#faece7]"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#a85e4d] hover:bg-[#faece7]"
                   title={t("common.delete")}
                 >
                   <Trash2 size={16} />
@@ -3947,13 +3988,13 @@ function ProfileScreen({
         />
         <button
           onClick={() => setEditing((value) => !value)}
-          className="flex h-11 items-center gap-2 rounded-2xl border border-[#e1d6ca] bg-white px-4 text-sm font-bold text-[#6d6357]"
+          className="flex h-11 items-center gap-2 rounded-md border border-[#e1d6ca] bg-white px-4 text-sm font-bold text-[#6d6357]"
         >
           <Edit3 size={16} /> {editing ? t("common.close") : t("common.edit")}
         </button>
       </div>
       <div className="grid gap-5 lg:grid-cols-[.7fr_1.3fr]">
-        <div className="warm-gradient flex flex-col items-center rounded-[28px] p-8 text-center text-white">
+        <div className="warm-gradient flex flex-col items-center rounded-lg p-8 text-center text-white">
           <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white/20 text-3xl font-display font-semibold">
             {fullName.slice(0, 1)}
           </div>
@@ -3987,7 +4028,7 @@ function ProfileScreen({
                 <select
                   value={language}
                   onChange={(event) => setLanguage(event.target.value as LanguageCode)}
-                  className="w-full rounded-2xl border border-[#e5ded2] bg-white px-4 py-3.5 text-sm"
+                  className="w-full rounded-md border border-[#e5ded2] bg-white px-4 py-3.5 text-sm"
                 >
                   {LANGUAGES.map((item) => (
                     <option key={item.code} value={item.code}>
