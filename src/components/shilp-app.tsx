@@ -1574,7 +1574,7 @@ export function ShilpApp() {
     <div className="min-h-screen bg-[#fbf7ef] text-[#302a23]">
       <div className="mx-auto flex min-h-screen max-w-[1500px]">
         {shellViews.has(view) && <DesktopSidebar view={view as MainView} onNavigate={go} t={t} />}
-        <main className="min-w-0 flex-1 pb-24 lg:pb-8">
+        <main className="flex min-w-0 flex-1 flex-col pb-24 lg:pb-8">
           <Topbar
             view={view}
             demoMode={demoMode}
@@ -1583,15 +1583,17 @@ export function ShilpApp() {
             onNavigate={go}
             unreadCount={(enquiries || []).filter((e) => e.status === "new").length}
           />
-          <div className="mx-auto max-w-6xl px-4 py-6 sm:px-8 sm:py-9">{primaryContent}</div>
+          <div className="mx-auto w-full max-w-6xl flex-1 px-4 py-5 sm:px-8 sm:py-9">
+            {primaryContent}
+          </div>
+          {shellViews.has(view) && <BottomNav view={view as MainView} onNavigate={go} t={t} />}
         </main>
       </div>
-      {shellViews.has(view) && <BottomNav view={view as MainView} onNavigate={go} t={t} />}
       {toast && (
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-24 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-3 rounded-md bg-[#342c24] px-4 py-3 text-sm font-semibold text-white shadow-xl lg:bottom-7"
+          className="fixed bottom-20 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-3 rounded-md bg-[#342c24] px-4 py-3 text-sm font-semibold text-white shadow-xl lg:bottom-7"
         >
           <BadgeCheck size={18} className="text-[#e3aa68]" />
           {toast}
@@ -2079,8 +2081,29 @@ function BottomNav({
   onNavigate: (view: View) => void;
   t: (key: TranslationKey) => string;
 }) {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      setVisible(scrollY > 25);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [view]);
+
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#e9dfd3] bg-[#fffdf9]/95 px-2 py-2 backdrop-blur-xl lg:hidden">
+    <nav
+      aria-label="Mobile Navigation"
+      className={cn(
+        "fixed bottom-0 left-0 right-0 z-40 border-t border-[#e9dfd3] bg-[#fffdf9]/95 px-2 py-2 shadow-[0_-8px_20px_-6px_rgba(48,42,35,0.12)] backdrop-blur-xl transition-all duration-300 ease-out lg:hidden",
+        visible
+          ? "translate-y-0 opacity-100 pointer-events-auto"
+          : "translate-y-full opacity-0 pointer-events-none",
+      )}
+    >
       <div className="mx-auto flex max-w-lg justify-around">
         {navItems(t).map(({ id, label, icon: Icon }) => (
           <button
@@ -2147,14 +2170,16 @@ function Dashboard({
   }, [profile.artisan, safeProducts, stats]);
   const name = profile.profile?.full_name?.split(" ")[0] ?? "Artisan";
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col justify-between gap-4 sm:gap-5 sm:flex-row sm:items-end">
         <div>
           <p className="text-sm font-semibold text-[#b85f42]">
             {t("dash.greeting")}, {name}
           </p>
-          <h1 className="mt-2 text-4xl font-semibold text-[#302a23]">{t("dash.tagline")}</h1>
-          <p className="mt-2 text-sm text-[#81786c]">{t("dash.subtitle")}</p>
+          <h1 className="mt-1 text-3xl font-semibold text-[#302a23] sm:mt-2 sm:text-4xl">
+            {t("dash.tagline")}
+          </h1>
+          <p className="mt-1 text-sm text-[#81786c] sm:mt-2">{t("dash.subtitle")}</p>
         </div>
         <PrimaryButton onClick={onAdd}>
           <Plus size={18} /> {t("dash.addProduct")}

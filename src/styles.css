@@ -185,7 +185,9 @@
     background-color: var(--primary);
     opacity: 0.65;
     will-change: transform, height;
-    transition: transform 60ms linear, height 120ms ease-out;
+    transition:
+      transform 60ms linear,
+      height 120ms ease-out;
   }
 }
 
@@ -229,4 +231,3 @@
 @utility rounded-4xl {
   border-radius: 8px;
 }
-
