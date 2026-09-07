@@ -3502,6 +3502,24 @@ function Success({
   );
 }
 
+type BrowserSpeechRecognition = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  maxAlternatives: number;
+  onstart: (() => void) | null;
+  onresult:
+    | ((event: {
+        results: { [index: number]: { [index: number]: { transcript: string } }; length: number };
+      }) => void)
+    | null;
+  onerror: ((event: { error: string }) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+};
+
 function Marketplace({
   products,
   allProducts,
@@ -3521,7 +3539,143 @@ function Marketplace({
   onOpen: (product: MarketplaceProduct) => void;
   onRefresh: () => void;
 }) {
-  const { t } = useI18n();
+  const { language, t } = useI18n();
+  const [isListening, setIsListening] = useState(false);
+  const [voiceStatus, setVoiceStatus] = useState<string | null>(null);
+  const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
+
+  const stopListening = useCallback(() => {
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.abort();
+      } catch {
+        // ignore
+      }
+      recognitionRef.current = null;
+    }
+    setIsListening(false);
+  }, []);
+
+  const startListening = useCallback(() => {
+    const SpeechRecognitionClass =
+      (
+        window as unknown as {
+          SpeechRecognition?: new () => BrowserSpeechRecognition;
+          webkitSpeechRecognition?: new () => BrowserSpeechRecognition;
+        }
+      ).SpeechRecognition ||
+      (
+        window as unknown as {
+          SpeechRecognition?: new () => BrowserSpeechRecognition;
+          webkitSpeechRecognition?: new () => BrowserSpeechRecognition;
+        }
+      ).webkitSpeechRecognition;
+
+    if (!SpeechRecognitionClass) {
+      setVoiceStatus(
+        language === "hi"
+          ? "इस ब्राउज़र में वॉइस सर्च समर्थित नहीं है।"
+          : "Voice search is not supported in this browser.",
+      );
+      setTimeout(() => setVoiceStatus(null), 4000);
+      return;
+    }
+
+    if (isListening) {
+      stopListening();
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognitionClass();
+      recognitionRef.current = recognition;
+
+      const langMap: Record<string, string> = {
+        en: "en-IN",
+        hi: "hi-IN",
+        te: "te-IN",
+        ta: "ta-IN",
+        kn: "kn-IN",
+        mr: "mr-IN",
+      };
+      recognition.lang = langMap[language] || "en-IN";
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        setIsListening(true);
+        setVoiceStatus(language === "hi" ? "सुन रहा हूँ... बोलिए" : "Listening... Speak now");
+      };
+
+      recognition.onresult = (event) => {
+        const results = event.results;
+        if (results && results.length > 0) {
+          const transcript = results[0][0]?.transcript || "";
+          if (transcript) {
+            setSearch(transcript);
+          }
+        }
+      };
+
+      recognition.onerror = (event) => {
+        setIsListening(false);
+        recognitionRef.current = null;
+        if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+          setVoiceStatus(
+            language === "hi"
+              ? "माइक्रोफ़ोन की अनुमति अस्वीकृत है।"
+              : "Microphone permission was denied. Please allow microphone access.",
+          );
+        } else if (event.error === "no-speech") {
+          setVoiceStatus(
+            language === "hi"
+              ? "कोई आवाज़ नहीं सुनाई दी।"
+              : "No speech detected. Please try again.",
+          );
+        } else if (event.error !== "aborted") {
+          setVoiceStatus(
+            language === "hi" ? "वॉइस सर्च विफल हुआ।" : "Voice search error. Please try again.",
+          );
+        }
+        setTimeout(() => setVoiceStatus(null), 4000);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+        recognitionRef.current = null;
+        setTimeout(() => {
+          setVoiceStatus((prev) =>
+            prev?.startsWith("Listening") || prev?.startsWith("सुन रहा") ? null : prev,
+          );
+        }, 800);
+      };
+
+      recognition.start();
+    } catch {
+      setIsListening(false);
+      recognitionRef.current = null;
+      setVoiceStatus(
+        language === "hi"
+          ? "वॉइस सर्च शुरू नहीं हो सका।"
+          : "Could not start voice search. Please try typing.",
+      );
+      setTimeout(() => setVoiceStatus(null), 4000);
+    }
+  }, [isListening, language, setSearch, stopListening]);
+
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort();
+        } catch {
+          // ignore
+        }
+      }
+    };
+  }, []);
+
   const cats = [
     "All",
     ...Array.from(
@@ -3543,14 +3697,41 @@ function Marketplace({
           <Compass size={16} /> {t("common.retry")}
         </button>
       </div>
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9b9082]" size={19} />
-        <input
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder={t("market.search")}
-          className="w-full rounded-md border border-[#e5ded2] bg-white px-12 py-4 text-sm outline-none shadow-sm focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10"
-        />
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9b9082]" size={19} />
+            <input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder={t("market.search")}
+              className="w-full rounded-md border border-[#e5ded2] bg-white px-12 py-4 text-sm outline-none shadow-sm focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={isListening ? stopListening : startListening}
+            aria-label={isListening ? "Stop voice search" : "Voice search"}
+            title={isListening ? "Stop voice search" : "Voice search"}
+            className={cn(
+              "flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-md border shadow-sm transition",
+              isListening
+                ? "border-[#bb6547] bg-[#fbf2eb] text-[#bb6547] ring-4 ring-[#bb6547]/15 animate-pulse"
+                : "border-[#e5ded2] bg-white text-[#83796e] hover:border-[#bb6547] hover:text-[#bb6547]",
+            )}
+          >
+            <Mic size={20} className={cn(isListening && "animate-bounce text-[#bb6547]")} />
+          </button>
+        </div>
+        {voiceStatus && (
+          <div
+            role="status"
+            className="flex items-center gap-2 px-1 text-xs font-medium text-[#a2553a]"
+          >
+            {isListening && <span className="h-2 w-2 animate-ping rounded-full bg-[#bb6547]" />}
+            <span>{voiceStatus}</span>
+          </div>
+        )}
       </div>
       <div className="flex gap-2 overflow-x-auto pb-2">
         {cats.map((item) => (
