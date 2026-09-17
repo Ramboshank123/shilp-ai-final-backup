@@ -43,7 +43,6 @@ import {
   Share2,
   Shirt,
   Sparkles,
-  Sprout,
   Star,
   Store,
   Tag,
@@ -84,7 +83,7 @@ import {
 } from "@/lib/ai.functions";
 import { enhanceProductImage, blobToDataUrl } from "@/lib/image-studio";
 import { uploadProductImage, resolveImageUrl } from "@/lib/storage";
-import { LANGUAGES, hasStoredLanguage, useI18n, type TranslationKey } from "@/lib/i18n";
+import { LANGUAGES, useI18n, type TranslationKey } from "@/lib/i18n";
 import type {
   ArtisanProfile,
   BuyerEnquiry,
@@ -424,6 +423,7 @@ function PrimaryButton({
   disabled = false,
   className,
   variant = "primary",
+  id,
 }: {
   children: React.ReactNode;
   onClick?: () => void;
@@ -431,9 +431,11 @@ function PrimaryButton({
   disabled?: boolean;
   className?: string;
   variant?: "primary" | "secondary" | "ghost";
+  id?: string;
 }) {
   return (
     <button
+      id={id}
       type={type}
       onClick={onClick}
       disabled={disabled}
@@ -477,13 +479,17 @@ function PageTitle({
 function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="relative flex h-10 w-10 items-center justify-center rounded-md bg-[#b85f42] text-white shadow-[0_7px_18px_rgba(184,95,66,.25)]">
-        <Sprout size={20} strokeWidth={2.4} />
-        <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-[#d6a348]" />
+      <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-md shadow-[0_7px_18px_rgba(184,95,66,.25)]">
+        <img
+          src="/logo.png"
+          alt="SHILP"
+          className="h-full w-full object-cover"
+          referrerPolicy="no-referrer"
+        />
       </div>
       {!compact && (
         <div>
-          <p className="font-display text-lg font-bold tracking-tight text-[#342c24]">SHILP AI</p>
+          <p className="font-display text-lg font-bold tracking-tight text-[#342c24]">SHILP</p>
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9b9184]">
             Craft to customer
           </p>
@@ -648,7 +654,7 @@ function navItems(
 export function ShilpApp() {
   const { user, loading: authLoading } = useAuth();
   const { language, setLanguage, t } = useI18n();
-  const [view, setView] = useState<View>("splash");
+  const [view, setView] = useState<View>("language");
   const [demoMode, setDemoMode] = useState(false);
   const [profile, setProfile] = useState<AppProfile>({ profile: null, artisan: null });
   const [products, setProducts] = useState<MarketplaceProduct[]>([]);
@@ -672,18 +678,8 @@ export function ShilpApp() {
 
   const go = useCallback((next: View) => {
     setView(next);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
-
-  useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      if (authLoading) return;
-      if (user) go("dashboard");
-      else if (hasStoredLanguage()) go("auth");
-      else go("language");
-    }, 1500);
-    return () => window.clearTimeout(timeout);
-  }, [authLoading, go, user]);
 
   useEffect(() => {
     if (user && !demoMode) {
@@ -802,7 +798,7 @@ export function ShilpApp() {
     setDraft(initialDraft());
     await supabase.auth.signOut();
     notify("You have been signed out.");
-    go("auth");
+    go("language");
   }
 
   async function handleAuthSubmit(
@@ -1368,69 +1364,95 @@ export function ShilpApp() {
 
   const shellViews = new Set<View>(["dashboard", "products", "marketplace", "messages", "profile"]);
 
-  if (view === "splash") {
+  if (view === "splash" || view === "language" || view === "auth" || view === "profile-setup") {
     return (
-      <div className="craft-pattern flex min-h-screen items-center justify-center overflow-hidden bg-[#fbf7ef] px-6">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
+          key={view}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="min-h-screen"
         >
-          <motion.div
-            animate={{ y: [0, -8, 0], rotate: [0, -2, 2, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-lg bg-[#b85f42] text-white shadow-[0_20px_40px_rgba(184,95,66,.24)]"
-          >
-            <Sprout size={45} strokeWidth={1.6} />
-          </motion.div>
-          <h1 className="font-display text-5xl font-semibold tracking-tight text-[#302a23]">
-            SHILP AI
-          </h1>
-          <p className="mt-3 text-base font-semibold text-[#b85f42]">From craft to customer</p>
-          <p className="mt-2 text-sm text-[#887f73]">Your AI-powered digital business assistant</p>
-          <div className="mx-auto mt-12 h-1 w-24 overflow-hidden rounded-full bg-[#eadfd2]">
-            <motion.div
-              className="h-full rounded-full bg-[#b85f42]"
-              initial={{ x: "-100%" }}
-              animate={{ x: "0%" }}
-              transition={{ duration: 1.3 }}
+          {view === "splash" && (
+            <div className="craft-pattern flex min-h-screen items-center justify-center overflow-hidden bg-[#fbf7ef] px-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8 }}
+                className="text-center"
+              >
+                <motion.div
+                  animate={{ y: [0, -8, 0], rotate: [0, -2, 2, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="mx-auto mb-8 flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl shadow-[0_20px_40px_rgba(184,95,66,.24)]"
+                >
+                  <img
+                    src="/logo.png"
+                    alt="SHILP Logo"
+                    className="h-full w-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </motion.div>
+                <h1 className="font-display text-5xl font-semibold tracking-tight text-[#302a23]">
+                  SHILP
+                </h1>
+                <p className="mt-3 text-base font-semibold text-[#b85f42]">
+                  From craft to customer
+                </p>
+                <p className="mt-2 text-sm text-[#887f73]">
+                  Your AI-powered digital business assistant
+                </p>
+                <div className="mx-auto mt-12 h-1 w-24 overflow-hidden rounded-full bg-[#eadfd2]">
+                  <motion.div
+                    className="h-full rounded-full bg-[#b85f42]"
+                    initial={{ x: "-100%" }}
+                    animate={{ x: "0%" }}
+                    transition={{ duration: 1.3 }}
+                  />
+                </div>
+              </motion.div>
+            </div>
+          )}
+
+          {view === "language" && (
+            <LanguageScreen
+              language={language}
+              setLanguage={setLanguage}
+              onContinue={() => go(user || demoMode ? "dashboard" : "auth")}
             />
-          </div>
+          )}
+
+          {view === "auth" && (
+            <AuthScreen
+              onDemo={handleDemoLogin}
+              onSubmit={handleAuthSubmit}
+              onBackToLanguage={() => go("language")}
+            />
+          )}
+
+          {view === "profile-setup" && (
+            <ProfileSetup
+              profile={profile}
+              language={language}
+              onSave={saveProfile}
+              onBack={() => go("auth")}
+            />
+          )}
         </motion.div>
-      </div>
-    );
-  }
-
-  if (view === "language") {
-    return (
-      <LanguageScreen language={language} setLanguage={setLanguage} onContinue={() => go("auth")} />
-    );
-  }
-
-  if (view === "auth") {
-    return <AuthScreen onDemo={handleDemoLogin} onSubmit={handleAuthSubmit} />;
-  }
-
-  if (view === "profile-setup") {
-    return (
-      <ProfileSetup
-        profile={profile}
-        language={language}
-        onSave={saveProfile}
-        onBack={() => go("auth")}
-      />
+      </AnimatePresence>
     );
   }
 
   const primaryContent = (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={view}
-        initial={{ opacity: 0, y: 8 }}
+        initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.22 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
       >
         {view === "dashboard" && (
           <Dashboard
@@ -1614,7 +1636,10 @@ function LanguageScreen({
 }) {
   const { t } = useI18n();
   return (
-    <div className="craft-pattern min-h-screen bg-[#fbf7ef] px-5 py-8 sm:px-8">
+    <div
+      id="screen-language-selection"
+      className="craft-pattern min-h-screen bg-[#fbf7ef] px-5 py-8 sm:px-8"
+    >
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-xl flex-col justify-center">
         <Logo />
         <PageTitle
@@ -1623,33 +1648,43 @@ function LanguageScreen({
           description={t("lang.subtitle")}
         />
         <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {LANGUAGES.map((item) => (
-            <button
-              key={item.code}
-              onClick={() => setLanguage(item.code)}
-              className={cn(
-                "rounded-md border p-4 text-left transition",
-                language === item.code
-                  ? "border-[#b85f42] bg-[#fff7ef] shadow-[0_8px_20px_rgba(184,95,66,.1)]"
-                  : "border-[#e8dfd3] bg-white/70 hover:border-[#d2b39d]",
-              )}
-            >
-              <span className="block text-base font-bold text-[#3b332b]">{item.native}</span>
-              <span className="mt-1 block text-xs text-[#898075]">{item.label}</span>
-              {!item.complete && (
-                <span className="mt-3 block text-[10px] font-bold uppercase tracking-[0.08em] text-[#a69b8d]">
-                  Coming soon
-                </span>
-              )}
-              {language === item.code && (
-                <span className="mt-3 flex items-center gap-1 text-xs font-bold text-[#b85f42]">
-                  <Check size={13} /> {t("common.selected")}
-                </span>
-              )}
-            </button>
-          ))}
+          {LANGUAGES.map((item) => {
+            const isSelected = language === item.code;
+            return (
+              <button
+                key={item.code}
+                id={`lang-option-${item.code}`}
+                type="button"
+                onClick={() => setLanguage(item.code)}
+                className={cn(
+                  "rounded-md border p-4 text-left transition-all duration-150 cursor-pointer active:scale-[0.98]",
+                  isSelected
+                    ? "border-[#b85f42] bg-[#fff7ef] shadow-[0_8px_20px_rgba(184,95,66,.1)] ring-1 ring-[#b85f42]"
+                    : "border-[#e8dfd3] bg-white/70 hover:border-[#d2b39d] hover:bg-white",
+                )}
+              >
+                <span className="block text-base font-bold text-[#3b332b]">{item.native}</span>
+                <span className="mt-1 block text-xs text-[#898075]">{item.label}</span>
+                {!item.complete && (
+                  <span className="mt-3 block text-[10px] font-bold uppercase tracking-[0.08em] text-[#a69b8d]">
+                    Coming soon
+                  </span>
+                )}
+                {isSelected && (
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    className="mt-3 flex items-center gap-1 text-xs font-bold text-[#b85f42]"
+                  >
+                    <Check size={13} /> {t("common.selected")}
+                  </motion.span>
+                )}
+              </button>
+            );
+          })}
         </div>
-        <PrimaryButton className="mt-8 w-full" onClick={onContinue}>
+        <PrimaryButton id="btn-language-continue" className="mt-8 w-full" onClick={onContinue}>
           {t("common.continue")} <ArrowRight size={17} />
         </PrimaryButton>
       </div>
@@ -1660,12 +1695,14 @@ function LanguageScreen({
 function AuthScreen({
   onDemo,
   onSubmit,
+  onBackToLanguage,
 }: {
   onDemo: () => void;
   onSubmit: (
     event: React.FormEvent<HTMLFormElement>,
     mode: "login" | "signup",
   ) => Promise<void> | void;
+  onBackToLanguage?: () => void;
 }) {
   const { t } = useI18n();
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -1698,30 +1735,56 @@ function AuthScreen({
   };
 
   return (
-    <div className="craft-pattern min-h-screen bg-[#fbf7ef] px-5 py-8 sm:px-8">
+    <div id="screen-auth" className="craft-pattern min-h-screen bg-[#fbf7ef] px-5 py-8 sm:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center">
-        <Logo />
+        <div className="flex items-center justify-between">
+          <Logo />
+          {onBackToLanguage && (
+            <button
+              id="btn-back-to-language"
+              type="button"
+              onClick={onBackToLanguage}
+              className="flex items-center gap-1.5 rounded-md border border-[#e5ded2] bg-white px-2.5 py-1.5 text-xs font-bold text-[#675d50] shadow-sm hover:border-[#b85f42] hover:text-[#b85f42] transition"
+            >
+              <Globe2 size={14} className="text-[#b85f42]" />
+              <span>{t("lang.changeLanguage")}</span>
+            </button>
+          )}
+        </div>
         <div className="mt-10">
           <PageTitle
             title={mode === "login" ? t("auth.welcome") : t("auth.signup")}
             description={t("auth.sub")}
           />
           <div className="mt-7 flex rounded-md bg-[#eee6db] p-1">
-            {(["login", "signup"] as const).map((item) => (
-              <button
-                key={item}
-                onClick={() => {
-                  setMode(item);
-                  setValidationError(null);
-                }}
-                className={cn(
-                  "flex-1 rounded-sm py-3 text-sm font-bold transition",
-                  mode === item ? "bg-white text-[#3d332b] shadow-sm" : "text-[#887f73]",
-                )}
-              >
-                {item === "login" ? t("auth.login") : t("auth.signup")}
-              </button>
-            ))}
+            {(["login", "signup"] as const).map((item) => {
+              const isActive = mode === item;
+              return (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => {
+                    setMode(item);
+                    setValidationError(null);
+                  }}
+                  className={cn(
+                    "relative flex-1 rounded-sm py-3 text-sm font-bold transition-colors duration-150 cursor-pointer active:scale-[0.98]",
+                    isActive ? "text-[#3d332b]" : "text-[#887f73] hover:text-[#504538]",
+                  )}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="auth-active-tab-indicator"
+                      className="absolute inset-0 rounded-sm bg-white shadow-sm"
+                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10">
+                    {item === "login" ? t("auth.login") : t("auth.signup")}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {validationError && (
@@ -1968,8 +2031,10 @@ function Topbar({
     const fullName = profile?.profile?.full_name?.trim();
     if (!fullName) return "MD";
     const parts = fullName.split(/\s+/);
-    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    if (parts.length === 1) return (parts[0] ?? "").slice(0, 2).toUpperCase();
+    const first = parts[0]?.[0] ?? "";
+    const last = parts[parts.length - 1]?.[0] ?? "";
+    return (first + last).toUpperCase() || "MD";
   }, [profile?.profile?.full_name]);
   return (
     <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-[#eee5d9]/80 bg-[#fbf7ef]/90 px-4 backdrop-blur-xl sm:px-8 lg:static lg:border-0 lg:bg-transparent">
@@ -1978,8 +2043,9 @@ function Topbar({
           <Logo compact />
         ) : (
           <button
+            type="button"
             onClick={onBack}
-            className="flex items-center gap-2 text-sm font-bold text-[#756e63]"
+            className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-bold text-[#756e63] transition-all hover:bg-white/80 hover:text-[#382f25] active:scale-95 cursor-pointer"
           >
             <ArrowLeft size={17} /> {t("common.back")}
           </button>
@@ -2044,24 +2110,41 @@ function DesktopSidebar({
   t: (key: TranslationKey) => string;
 }) {
   return (
-    <aside className="hidden w-64 shrink-0 flex-col border-r border-[#eee5d9] px-5 py-8 lg:flex">
+    <aside className="hidden w-64 shrink-0 flex-col border-r border-[#eee5d9] px-5 py-8 lg:flex select-none">
       <Logo />
-      <div className="mt-14 space-y-1">
-        {navItems(t).map(({ id, label, icon: Icon }) => (
-          <button
-            key={id}
-            onClick={() => onNavigate(id)}
-            className={cn(
-              "flex w-full items-center gap-3 rounded-md px-4 py-3 text-left text-sm font-semibold transition",
-              view === id
-                ? "bg-[#f3e5d6] text-[#a2553a]"
-                : "text-[#7d7468] hover:bg-white hover:text-[#443a31]",
-            )}
-          >
-            <Icon size={18} />
-            {label}
-          </button>
-        ))}
+      <div className="mt-14 space-y-1.5">
+        {navItems(t).map(({ id, label, icon: Icon }) => {
+          const isActive = view === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              onClick={() => onNavigate(id)}
+              className={cn(
+                "group relative flex w-full items-center gap-3 rounded-md px-4 py-3 text-left text-sm font-semibold transition-colors duration-200 cursor-pointer active:scale-[0.98]",
+                isActive
+                  ? "text-[#a2553a]"
+                  : "text-[#7d7468] hover:bg-white/60 hover:text-[#443a31]",
+              )}
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="desktop-active-nav-indicator"
+                  className="absolute inset-0 rounded-md bg-[#f3e5d6] shadow-sm -z-0"
+                  transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                />
+              )}
+              <Icon
+                size={18}
+                className={cn(
+                  "relative z-10 transition-transform duration-200 group-hover:scale-110",
+                  isActive ? "text-[#a2553a]" : "text-[#8c8275] group-hover:text-[#443a31]",
+                )}
+              />
+              <span className="relative z-10">{label}</span>
+            </button>
+          );
+        })}
       </div>
       <div className="mt-auto rounded-lg bg-[#34483c] p-5 text-white">
         <Sparkles size={19} className="text-[#e8b06c]" />
@@ -2081,43 +2164,40 @@ function BottomNav({
   onNavigate: (view: View) => void;
   t: (key: TranslationKey) => string;
 }) {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-      setVisible(scrollY > 25);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [view]);
-
   return (
     <nav
       aria-label="Mobile Navigation"
-      className={cn(
-        "fixed bottom-0 left-0 right-0 z-40 border-t border-[#e9dfd3] bg-[#fffdf9]/95 px-2 py-2 shadow-[0_-8px_20px_-6px_rgba(48,42,35,0.12)] backdrop-blur-xl transition-all duration-300 ease-out lg:hidden",
-        visible
-          ? "translate-y-0 opacity-100 pointer-events-auto"
-          : "translate-y-full opacity-0 pointer-events-none",
-      )}
+      className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#e9dfd3] bg-[#fffdf9]/95 px-2 py-2 shadow-[0_-8px_20px_-6px_rgba(48,42,35,0.08)] backdrop-blur-xl lg:hidden select-none"
     >
       <div className="mx-auto flex max-w-lg justify-around">
-        {navItems(t).map(({ id, label, icon: Icon }) => (
-          <button
-            key={id}
-            onClick={() => onNavigate(id)}
-            className={cn(
-              "flex min-w-[58px] flex-col items-center gap-1 rounded-md px-2 py-2 text-[10px] font-bold transition",
-              view === id ? "bg-[#f3e5d6] text-[#a2553a]" : "text-[#93887b]",
-            )}
-          >
-            <Icon size={19} strokeWidth={view === id ? 2.5 : 1.8} />
-            {label}
-          </button>
-        ))}
+        {navItems(t).map(({ id, label, icon: Icon }) => {
+          const isActive = view === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              onClick={() => onNavigate(id)}
+              className={cn(
+                "group relative flex min-w-[62px] flex-col items-center gap-1 rounded-md px-2.5 py-1.5 text-[10px] font-bold transition-colors cursor-pointer active:scale-95",
+                isActive ? "text-[#a2553a]" : "text-[#93887b] hover:text-[#52483d]",
+              )}
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="mobile-active-nav-indicator"
+                  className="absolute inset-0 rounded-md bg-[#f3e5d6] -z-0"
+                  transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                />
+              )}
+              <Icon
+                size={19}
+                strokeWidth={isActive ? 2.4 : 1.8}
+                className="relative z-10 transition-transform duration-150 group-active:scale-90"
+              />
+              <span className="relative z-10">{label}</span>
+            </button>
+          );
+        })}
       </div>
     </nav>
   );
@@ -3611,7 +3691,7 @@ function Marketplace({
       recognition.onresult = (event) => {
         const results = event.results;
         if (results && results.length > 0) {
-          const transcript = results[0][0]?.transcript || "";
+          const transcript = results[0]?.[0]?.transcript || "";
           if (transcript) {
             setSearch(transcript);
           }
@@ -4045,104 +4125,127 @@ function MyProducts({
         </PrimaryButton>
       </div>
       <div className="flex gap-2 rounded-md bg-[#eee6db] p-1">
-        {(["draft", "published", "archived"] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setSelectedTab(tab)}
-            className={cn(
-              "flex-1 rounded-sm py-3 text-xs font-bold capitalize",
-              selectedTab === tab ? "bg-white text-[#3e342b] shadow-sm" : "text-[#887e72]",
-            )}
-          >
-            {tabLabel(tab)}{" "}
-            <span className="ml-1 text-[#a79b8c]">
-              ({products.filter((product) => product.status === tab).length})
-            </span>
-          </button>
-        ))}
-      </div>
-      {visible.length ? (
-        <div className="space-y-3">
-          {visible.map((product) => (
-            <div
-              key={product.id}
-              className="surface-card flex flex-col gap-4 p-4 sm:flex-row sm:items-center"
+        {(["draft", "published", "archived"] as const).map((tab) => {
+          const isActive = selectedTab === tab;
+          return (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => setSelectedTab(tab)}
+              className={cn(
+                "relative flex-1 rounded-sm py-3 text-xs font-bold capitalize transition-colors duration-150 cursor-pointer active:scale-[0.98]",
+                isActive ? "text-[#3e342b]" : "text-[#887e72] hover:text-[#504538]",
+              )}
             >
-              <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md bg-[#eee5d8]">
-                <ImageBox src={product.image_url} alt={product.name} />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-display text-xl font-semibold">{product.name}</h3>
-                  <span
-                    className={cn(
-                      "rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em]",
-                      product.status === "published"
-                        ? "bg-[#dcebdc] text-[#4c7954]"
-                        : product.status === "archived"
-                          ? "bg-[#eee9e3] text-[#81776b]"
-                          : "bg-[#f3e5d6] text-[#a2553a]",
+              {isActive && (
+                <motion.div
+                  layoutId="products-active-tab-indicator"
+                  className="absolute inset-0 rounded-sm bg-white shadow-sm"
+                  transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">
+                {tabLabel(tab)}{" "}
+                <span className="ml-1 text-[#a79b8c]">
+                  ({products.filter((product) => product.status === tab).length})
+                </span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={selectedTab}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.18, ease: "easeOut" }}
+        >
+          {visible.length ? (
+            <div className="space-y-3">
+              {visible.map((product) => (
+                <div
+                  key={product.id}
+                  className="surface-card flex flex-col gap-4 p-4 sm:flex-row sm:items-center"
+                >
+                  <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md bg-[#eee5d8]">
+                    <ImageBox src={product.image_url} alt={product.name} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="font-display text-xl font-semibold">{product.name}</h3>
+                      <span
+                        className={cn(
+                          "rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em]",
+                          product.status === "published"
+                            ? "bg-[#dcebdc] text-[#4c7954]"
+                            : product.status === "archived"
+                              ? "bg-[#eee9e3] text-[#81776b]"
+                              : "bg-[#f3e5d6] text-[#a2553a]",
+                        )}
+                      >
+                        {product.status === "published"
+                          ? t("products.published")
+                          : product.status === "archived"
+                            ? t("products.archived")
+                            : t("products.drafts")}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm text-[#81786c]">
+                      {formatPrice(product.price)} · {product.views} {t("dash.views")} ·{" "}
+                      {product.category_name ?? product.craft_type}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => onEdit(product)}
+                      className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5] active:scale-95 transition"
+                      title={t("common.edit")}
+                    >
+                      <Edit3 size={16} />
+                    </button>
+                    <button
+                      onClick={() => onView(product)}
+                      className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5] active:scale-95 transition"
+                      title={t("success.view")}
+                    >
+                      <Eye size={16} />
+                    </button>
+                    {product.status !== "archived" && (
+                      <button
+                        onClick={() => onArchive(product)}
+                        className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5] active:scale-95 transition"
+                        title={t("products.archived")}
+                      >
+                        <Archive size={16} />
+                      </button>
                     )}
-                  >
-                    {product.status === "published"
-                      ? t("products.published")
-                      : product.status === "archived"
-                        ? t("products.archived")
-                        : t("products.drafts")}
-                  </span>
+                    <button
+                      onClick={() => void onDelete(product)}
+                      className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#a85e4d] hover:bg-[#faece7] active:scale-95 transition"
+                      title={t("common.delete")}
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                 </div>
-                <p className="mt-1 text-sm text-[#81786c]">
-                  {formatPrice(product.price)} · {product.views} {t("dash.views")} ·{" "}
-                  {product.category_name ?? product.craft_type}
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => onEdit(product)}
-                  className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
-                  title={t("common.edit")}
-                >
-                  <Edit3 size={16} />
-                </button>
-                <button
-                  onClick={() => onView(product)}
-                  className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
-                  title={t("success.view")}
-                >
-                  <Eye size={16} />
-                </button>
-                {product.status !== "archived" && (
-                  <button
-                    onClick={() => onArchive(product)}
-                    className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5]"
-                    title={t("products.archived")}
-                  >
-                    <Archive size={16} />
-                  </button>
-                )}
-                <button
-                  onClick={() => void onDelete(product)}
-                  className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#a85e4d] hover:bg-[#faece7]"
-                  title={t("common.delete")}
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <EmptyState
-          icon={Package}
-          title={t("products.empty")}
-          description={t("dash.emptyDesc")}
-          action={
-            <PrimaryButton onClick={onAdd}>
-              <Plus size={16} /> {t("dash.addProduct")}
-            </PrimaryButton>
-          }
-        />
-      )}
+          ) : (
+            <EmptyState
+              icon={Package}
+              title={t("products.empty")}
+              description={t("dash.emptyDesc")}
+              action={
+                <PrimaryButton onClick={onAdd}>
+                  <Plus size={16} /> {t("dash.addProduct")}
+                </PrimaryButton>
+              }
+            />
+          )}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }

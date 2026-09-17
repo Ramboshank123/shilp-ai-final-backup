@@ -12,5 +12,15 @@ export default defineConfig({
     // and client entry to src/client.tsx.
     client: { entry: "client" },
     server: { entry: "server" },
+    prerender: {
+      enabled: true,
+    },
+  },
+  nitro: {
+    output: {
+      dir: "dist",
+      publicDir: "dist",
+      serverDir: "dist/server",
+    },
   },
 });
