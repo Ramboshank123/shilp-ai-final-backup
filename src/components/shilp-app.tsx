@@ -102,7 +102,7 @@ import {
   generateBusinessAdvice,
 } from "@/lib/ai.functions";
 import { enhanceProductImage, blobToDataUrl } from "@/lib/image-studio";
-import { uploadProductImage, resolveImageUrl } from "@/lib/storage";
+import { uploadProductImage, resolveImageUrl, getAssetUrl } from "@/lib/storage";
 import { LANGUAGES, useI18n, type TranslationKey } from "@/lib/i18n";
 import type {
   ArtisanProfile,
@@ -667,7 +667,7 @@ function Logo({ compact = false }: { compact?: boolean }) {
     <div className="flex items-center gap-3">
       <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-none shadow-[0_4px_14px_rgba(200,66,24,.22)] ring-1 ring-[#c84218]/20">
         <img
-          src="/logo.png"
+          src={getAssetUrl("/logo.png")}
           alt="SHILP AI"
           className="h-full w-full object-cover"
           referrerPolicy="no-referrer"
@@ -715,8 +715,12 @@ function ImageBox({
       setResolvedSrc(null);
       return;
     }
-    if (src.startsWith("/") || src.startsWith("http") || src.startsWith("data:")) {
+    if (src.startsWith("http") || src.startsWith("data:") || src.startsWith("blob:")) {
       setResolvedSrc(src);
+      return;
+    }
+    if (src.startsWith("/")) {
+      setResolvedSrc(getAssetUrl(src));
       return;
     }
     void resolveImageUrl(src).then((url) => {
@@ -1661,7 +1665,7 @@ export function ShilpApp() {
                     className="flex h-full w-full items-center justify-center overflow-hidden rounded-none shadow-[0_18px_40px_-6px_rgba(200,66,24,0.3)] ring-1 ring-[#c84218]/25"
                   >
                     <img
-                      src="/logo.png"
+                      src={getAssetUrl("/logo.png")}
                       alt="SHILP Logo"
                       className="h-full w-full object-cover"
                       referrerPolicy="no-referrer"

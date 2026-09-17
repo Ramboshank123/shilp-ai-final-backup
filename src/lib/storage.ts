@@ -24,10 +24,27 @@ export async function uploadProductImage(
 
 const signedCache = new Map<string, string>();
 
-/** Turns a stored value into a displayable URL (demo assets pass through). */
+/** Synchronously prefixes asset paths with Vite BASE_URL for GitHub Pages support. */
+export function getAssetUrl(path: string | null | undefined): string {
+  if (!path) return "";
+  if (path.startsWith("http") || path.startsWith("data:") || path.startsWith("blob:")) {
+    return path;
+  }
+  const base = import.meta.env.BASE_URL || "/";
+  if (path.startsWith("/")) {
+    return base.endsWith("/") ? `${base}${path.slice(1)}` : `${base}${path}`;
+  }
+  return `${base}${path}`;
+}
+
+/** Turns a stored value into a displayable URL (demo assets pass through and are base-normalized). */
 export async function resolveImageUrl(value: string | null): Promise<string | null> {
   if (!value) return null;
-  if (value.startsWith("/") || value.startsWith("http") || value.startsWith("data:")) return value;
+  if (value.startsWith("http") || value.startsWith("data:") || value.startsWith("blob:"))
+    return value;
+  if (value.startsWith("/")) {
+    return getAssetUrl(value);
+  }
   const cached = signedCache.get(value);
   if (cached) return cached;
   const { data, error } = await supabase.storage.from(BUCKET).createSignedUrl(value, 60 * 60);
