@@ -879,14 +879,27 @@ function navItems(
 export function ShilpApp() {
   const { user, loading: authLoading } = useAuth();
   const { language, setLanguage, t } = useI18n();
-  const [view, setView] = useState<View>("language");
-  const [demoMode, setDemoMode] = useState(false);
-  const [profile, setProfile] = useState<AppProfile>({ profile: null, artisan: null });
-  const [products, setProducts] = useState<MarketplaceProduct[]>([]);
-  const [marketProducts, setMarketProducts] = useState<MarketplaceProduct[]>([]);
+  const [view, setView] = useState<View>(() => {
+    if (typeof window !== "undefined") {
+      const isDemo = window.localStorage.getItem("shilp.demo") === "true";
+      if (isDemo) return "dashboard";
+    }
+    return "dashboard";
+  });
+  const [demoMode, setDemoMode] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem("shilp.demo") !== "false";
+    }
+    return true;
+  });
+  const [profile, setProfile] = useState<AppProfile>(localProfile);
+  const [products, setProducts] = useState<MarketplaceProduct[]>(() =>
+    demoProducts.filter((item) => item.artisan_id === "demo-artisan"),
+  );
+  const [marketProducts, setMarketProducts] = useState<MarketplaceProduct[]>(demoProducts);
   const [categories, setCategories] = useState<Category[]>(categoriesFallback);
-  const [enquiries, setEnquiries] = useState<EnquiryCard[]>([]);
-  const [stats, setStats] = useState({ total: 0, published: 0, views: 0, enquiries: 0 });
+  const [enquiries, setEnquiries] = useState<EnquiryCard[]>(localEnquiries);
+  const [stats, setStats] = useState({ total: 2, published: 2, views: 182, enquiries: 1 });
   const [draft, setDraft] = useState<ProductDraft>(initialDraft);
   const [selectedProduct, setSelectedProduct] = useState<MarketplaceProduct | null>(null);
   const [selectedTab, setSelectedTab] = useState<"draft" | "published" | "archived">("published");
@@ -913,17 +926,20 @@ export function ShilpApp() {
   }, []);
 
   useEffect(() => {
-    if (user && !demoMode) {
+    if (user) {
+      setDemoMode(false);
       void loadRemoteProfile(user.id);
     }
     // The profile is loaded only when the authenticated user changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id, demoMode]);
+  }, [user?.id]);
 
   useEffect(() => {
-    if (view === "marketplace" && !demoMode && user) void loadMarketplace();
+    if (view === "marketplace" && !demoMode) {
+      void loadMarketplace();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view]);
+  }, [view, demoMode]);
 
   async function loadRemoteProfile(userId: string) {
     setLoadingData(true);
@@ -975,10 +991,13 @@ export function ShilpApp() {
   async function loadMarketplace() {
     try {
       const remote = await listPublishedProducts();
-      setMarketProducts(await resolveProducts(remote));
+      if (remote && remote.length > 0) {
+        setMarketProducts(await resolveProducts(remote));
+      } else {
+        setMarketProducts(demoProducts);
+      }
     } catch (error) {
-      console.error(error);
-      notify("Showing the demo marketplace while cloud data reconnects.");
+      console.warn("Marketplace using fallback crafts:", error);
       setMarketProducts(demoProducts);
     }
   }
@@ -1710,7 +1729,8 @@ export function ShilpApp() {
             <LanguageScreen
               language={language}
               setLanguage={setLanguage}
-              onContinue={() => go(user || demoMode ? "dashboard" : "auth")}
+              onContinue={() => go(user || demoMode ? "dashboard" : "marketplace")}
+              onSkip={() => go("dashboard")}
             />
           )}
 
@@ -1719,6 +1739,11 @@ export function ShilpApp() {
               onDemo={handleDemoLogin}
               onSubmit={handleAuthSubmit}
               onBackToLanguage={() => go("language")}
+              onBackToDashboard={() => go("dashboard")}
+              onExploreMarketplace={() => {
+                setPersonaMode("buyer");
+                go("marketplace");
+              }}
             />
           )}
 
@@ -1958,10 +1983,12 @@ function LanguageScreen({
   language,
   setLanguage,
   onContinue,
+  onSkip,
 }: {
   language: string;
   setLanguage: (code: LanguageCode) => void;
   onContinue: () => void;
+  onSkip?: () => void;
 }) {
   const { t } = useI18n();
   return (
@@ -1970,7 +1997,18 @@ function LanguageScreen({
       className="craft-pattern min-h-screen bg-[#faf6ee] px-5 py-8 sm:px-8"
     >
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-xl flex-col justify-center">
-        <Logo />
+        <div className="flex items-center justify-between">
+          <Logo />
+          {onSkip && (
+            <button
+              type="button"
+              onClick={onSkip}
+              className="text-xs font-bold text-[#6e6258] hover:text-[#c84218] hover:underline"
+            >
+              Skip to App →
+            </button>
+          )}
+        </div>
         <PageTitle
           eyebrow={t("lang.eyebrow")}
           title={t("lang.title")}
@@ -2013,9 +2051,20 @@ function LanguageScreen({
             );
           })}
         </div>
-        <PrimaryButton id="btn-language-continue" className="mt-8 w-full" onClick={onContinue}>
-          {t("common.continue")} <ArrowRight size={17} />
-        </PrimaryButton>
+        <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <PrimaryButton id="btn-language-continue" className="flex-1" onClick={onContinue}>
+            {t("common.continue")} <ArrowRight size={17} />
+          </PrimaryButton>
+          {onSkip && (
+            <button
+              type="button"
+              onClick={onSkip}
+              className="flex items-center justify-center gap-1.5 border border-[#e6dfd5] bg-white px-5 py-3 text-sm font-bold text-[#6e6258] hover:border-[#1f1a17] hover:text-[#1f1a17] transition"
+            >
+              <span>Explore as Guest</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -2025,6 +2074,8 @@ function AuthScreen({
   onDemo,
   onSubmit,
   onBackToLanguage,
+  onExploreMarketplace,
+  onBackToDashboard,
 }: {
   onDemo: () => void;
   onSubmit: (
@@ -2032,6 +2083,8 @@ function AuthScreen({
     mode: "login" | "signup",
   ) => Promise<void> | void;
   onBackToLanguage?: () => void;
+  onExploreMarketplace?: () => void;
+  onBackToDashboard?: () => void;
 }) {
   const { t } = useI18n();
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -2068,17 +2121,30 @@ function AuthScreen({
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center">
         <div className="flex items-center justify-between">
           <Logo />
-          {onBackToLanguage && (
-            <button
-              id="btn-back-to-language"
-              type="button"
-              onClick={onBackToLanguage}
-              className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-2.5 py-1.5 text-xs font-bold text-[#6e6258] shadow-sm hover:border-[#c84218] hover:text-[#c84218] transition"
-            >
-              <Globe2 size={14} className="text-[#c84218]" />
-              <span>{t("lang.changeLanguage")}</span>
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {onBackToDashboard && (
+              <button
+                id="btn-back-to-dashboard"
+                type="button"
+                onClick={onBackToDashboard}
+                className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-2.5 py-1.5 text-xs font-bold text-[#6e6258] shadow-sm hover:border-[#c84218] hover:text-[#c84218] transition"
+              >
+                <ArrowLeft size={14} className="text-[#c84218]" />
+                <span>Dashboard</span>
+              </button>
+            )}
+            {onBackToLanguage && (
+              <button
+                id="btn-back-to-language"
+                type="button"
+                onClick={onBackToLanguage}
+                className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-2.5 py-1.5 text-xs font-bold text-[#6e6258] shadow-sm hover:border-[#c84218] hover:text-[#c84218] transition"
+              >
+                <Globe2 size={14} className="text-[#c84218]" />
+                <span>{t("lang.changeLanguage")}</span>
+              </button>
+            )}
+          </div>
         </div>
         <div className="mt-10">
           <PageTitle
@@ -2208,6 +2274,16 @@ function AuthScreen({
           <PrimaryButton variant="secondary" className="w-full" onClick={onDemo}>
             <Sparkles size={17} className="text-[#c84218]" /> {t("auth.demo")}
           </PrimaryButton>
+          {onExploreMarketplace && (
+            <button
+              type="button"
+              onClick={onExploreMarketplace}
+              className="mt-3 flex w-full items-center justify-center gap-2 border border-[#1f1a17] bg-white py-3 text-xs font-bold uppercase tracking-wider text-[#1f1a17] shadow-sm hover:bg-[#faf6ee] transition"
+            >
+              <Compass size={15} className="text-[#c84218]" />
+              Explore Public Marketplace
+            </button>
+          )}
           <p className="mt-4 text-center text-xs leading-5 text-[#6e6258]">
             Demo mode lets you explore the complete artisan-to-marketplace journey without setup.
           </p>

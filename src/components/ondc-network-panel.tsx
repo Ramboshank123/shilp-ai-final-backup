@@ -8,10 +8,21 @@ import {
   ExternalLink,
   ShieldCheck,
 } from "lucide-react";
+import type { MarketplaceProduct } from "@/lib/types";
 
-export function OndcNetworkPanel({ publishedCount = 4 }: { publishedCount?: number }) {
+export function OndcNetworkPanel({
+  products,
+  publishedCount,
+}: {
+  products?: MarketplaceProduct[];
+  publishedCount?: number;
+}) {
   const [syncing, setSyncing] = useState(false);
   const [lastSync, setLastSync] = useState("Just now");
+
+  const effectiveCount =
+    publishedCount ??
+    (products ? products.filter((p) => p.status === "published").length || products.length : 4);
 
   const buyerApps = [
     { name: "Paytm Shopping", active: true, orders: 12 },
@@ -40,7 +51,7 @@ export function OndcNetworkPanel({ publishedCount = 4 }: { publishedCount?: numb
               <span className="text-[10px] font-black uppercase tracking-[0.14em] text-[#0b2559]">
                 National Commerce Infrastructure
               </span>
-              <span className="bg-[#dcfce7] border border-[#0d6234] px-1.5 py-0.2 text-[9px] font-bold text-[#0d6234]">
+              <span className="bg-[#dcfce7] border border-[#0d6234] px-1.5 py-0.5 text-[9px] font-bold text-[#0d6234]">
                 ONDC Beckn v1.2 Live
               </span>
             </div>
@@ -68,7 +79,7 @@ export function OndcNetworkPanel({ publishedCount = 4 }: { publishedCount?: numb
             Live Catalogues
           </span>
           <span className="text-base font-bold text-[#0b2559]">
-            {publishedCount} SKUs Published
+            {effectiveCount} SKUs Published
           </span>
         </div>
         <div className="border border-[#0b2559]/20 bg-white p-3">

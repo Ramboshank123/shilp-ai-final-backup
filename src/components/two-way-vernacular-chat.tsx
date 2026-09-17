@@ -164,9 +164,7 @@ export function TwoWayVernacularChat({
                 </div>
 
                 {/* Primary display */}
-                <p className="mt-1.5 text-xs font-medium leading-relaxed">
-                  {isArtisan ? m.text_buyer : m.text_buyer}
-                </p>
+                <p className="mt-1.5 text-xs font-medium leading-relaxed">{m.text_buyer}</p>
 
                 {/* Translated Vernacular Accordion / Listen */}
                 <div className="mt-2 flex items-center justify-between border-t border-black/5 pt-1.5 text-[11px] text-[#6e6258]">
