@@ -116,6 +116,40 @@ export interface AIGeneration {
   created_at: string;
 }
 
+export interface GiTagInfo {
+  tag_number: string;
+  craft_name: string;
+  state: string;
+  registered_year: number;
+  verified: boolean;
+  heritage_seal: string;
+}
+
+export interface FairWageBreakdown {
+  material_cost: number;
+  artisan_labor_hours: number;
+  hourly_living_wage: number;
+  direct_artisan_pay: number;
+  middleman_markup_avoided: number;
+  traditional_retail_price: number;
+  savings_percentage: number;
+}
+
+export interface ArtisanAudioNote {
+  audio_url?: string;
+  dialect: string;
+  native_transcript: string;
+  english_translation: string;
+  duration_seconds: number;
+}
+
+export interface OndcStatus {
+  is_published: boolean;
+  network_node: string;
+  sync_timestamp: string;
+  buyer_apps_active: string[];
+}
+
 /** Structured catalogue produced by the AI catalogue generator. */
 export interface CatalogueDraft {
   name: string;
@@ -129,6 +163,10 @@ export interface CatalogueDraft {
   description_hindi: string;
   key_features: string[];
   ai_generated: boolean;
+  gi_tag?: GiTagInfo | null;
+  fair_wage?: FairWageBreakdown | null;
+  audio_note?: ArtisanAudioNote | null;
+  provenance_story?: string | null;
 }
 
 export interface MarketplaceProduct extends Product {
@@ -136,4 +174,10 @@ export interface MarketplaceProduct extends Product {
   artisan_name: string | null;
   artisan_location: string | null;
   category_name: string | null;
+  gi_tag?: GiTagInfo | null;
+  fair_wage?: FairWageBreakdown | null;
+  audio_note?: ArtisanAudioNote | null;
+  ondc_status?: OndcStatus | null;
+  shg_cluster?: string | null;
+  provenance_story?: string | null;
 }

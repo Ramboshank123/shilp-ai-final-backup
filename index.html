@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SHILP — From Craft to Customer</title>
+    <meta
+      name="description"
+      content="A gentle digital companion empowering Indian artisans, connecting authentic handmade craft from master hands to appreciative homes."
+    />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Single Page Application redirect handler for GitHub Pages
+      (function () {
+        var path = window.location.pathname;
+        var repoName = "/shilp-ai-final-backup";
+        // If loaded at root user page https://ramboshank123.github.io/, redirect to repository subpath if needed
+        if (path === "/" && window.location.hostname.endsWith("github.io")) {
+          // Check if repo path should be loaded
+          if (!path.startsWith(repoName)) {
+            // Stay or redirect smoothly
+          }
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/client.tsx"></script>
+  </body>
+</html>

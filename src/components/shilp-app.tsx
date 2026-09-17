@@ -4,12 +4,14 @@ import {
   ArrowLeft,
   ArrowRight,
   Archive,
+  Award,
   BadgeCheck,
   Bell,
   BookOpen,
   Box,
   Camera,
   Check,
+  CheckCircle2,
   ChevronRight,
   CircleHelp,
   Clock3,
@@ -21,6 +23,7 @@ import {
   Globe2,
   Hammer,
   Heart,
+  HelpCircle,
   Home,
   ImagePlus,
   IndianRupee,
@@ -33,14 +36,19 @@ import {
   Menu,
   MessageCircle,
   Mic,
+  Network,
   Package,
   Palette,
   Phone,
+  Play,
   Plus,
+  QrCode,
+  RefreshCw,
   Search,
   Send,
   Settings,
   Share2,
+  ShieldCheck,
   Shirt,
   Sparkles,
   Star,
@@ -48,12 +56,24 @@ import {
   Tag,
   Trash2,
   TrendingUp,
+  Truck,
   Upload,
   UserRound,
   Users,
+  Volume2,
   WandSparkles,
   X,
+  Zap,
 } from "lucide-react";
+import { GiTagBadge } from "./gi-tag-badge";
+import { ArtisanVoicePlayer } from "./artisan-voice-player";
+import { FairWageWidget } from "./fair-wage-breakdown";
+import { TwoWayVernacularChat } from "./two-way-vernacular-chat";
+import { OndcNetworkPanel } from "./ondc-network-panel";
+import { FutureRoadmapModal } from "./future-roadmap-modal";
+import { GuidedDemoModal } from "./guided-demo-modal";
+import { playAudioChime, speakVernacular } from "@/lib/speech-tts";
+import { matchGiCraft } from "@/lib/gi-registry";
 import { useAuth, signInAsDemo, DEMO_EMAIL, DEMO_PASSWORD } from "@/lib/auth";
 import {
   ensureProfile,
@@ -193,6 +213,40 @@ const demoProducts: MarketplaceProduct[] = [
     artisan_name: "Meera Devi",
     artisan_location: "Barpeta, Assam",
     category_name: "Bamboo",
+    gi_tag: {
+      tag_number: "GI-IN-AS0112",
+      craft_name: "Assam Bamboo & Cane Works",
+      state: "Assam",
+      registered_year: 2011,
+      verified: true,
+      heritage_seal: "Government of India GI Certified • Brahmaputra Valley Cluster",
+    },
+    audio_note: {
+      dialect: "Assamese / Hindi",
+      native_transcript:
+        "स्थानीय बांस से तीन दिनों में हाथ से बुनी हुई मजबूत टोकरी। हर विवरण हाथ से गढ़ा गया है।",
+      english_translation:
+        "Sturdy handwoven basket made from locally harvested bamboo over three full days.",
+      duration_seconds: 14,
+    },
+    fair_wage: {
+      material_cost: 210,
+      artisan_labor_hours: 18,
+      hourly_living_wage: 110,
+      direct_artisan_pay: 495,
+      middleman_markup_avoided: 850,
+      traditional_retail_price: 1599,
+      savings_percentage: 53,
+    },
+    ondc_status: {
+      is_published: true,
+      network_node: "BPP-SHILP-01",
+      sync_timestamp: "2026-08-21T08:00:00Z",
+      buyer_apps_active: ["Paytm", "Mystore", "Pincode"],
+    },
+    shg_cluster: "Barpeta Bamboo Weavers SHG",
+    provenance_story:
+      "Indigenous craft practiced in the Brahmaputra Valley, hand-split using curved dao blades with zero industrial chemicals.",
   },
   {
     id: "demo-diyas",
@@ -218,6 +272,39 @@ const demoProducts: MarketplaceProduct[] = [
     artisan_name: "Rakesh Kumhar",
     artisan_location: "Khurja, Uttar Pradesh",
     category_name: "Pottery",
+    gi_tag: {
+      tag_number: "GI-IN-UP0051",
+      craft_name: "Khurja Pottery & Ceramics",
+      state: "Uttar Pradesh",
+      registered_year: 2015,
+      verified: true,
+      heritage_seal: "Government of India GI Certified • Bulandshahr Ceramic Guild",
+    },
+    audio_note: {
+      dialect: "Awadhi / Hindi",
+      native_transcript: "हमारे पुरखों की मिट्टी की कला है। पारंपरिक धीमी भट्टी में पकाया गया है।",
+      english_translation:
+        "Ancestral terracotta craft from our community kilns in Khurja, wood-husk fired for thermal strength.",
+      duration_seconds: 12,
+    },
+    fair_wage: {
+      material_cost: 85,
+      artisan_labor_hours: 10,
+      hourly_living_wage: 110,
+      direct_artisan_pay: 220,
+      middleman_markup_avoided: 450,
+      traditional_retail_price: 799,
+      savings_percentage: 56,
+    },
+    ondc_status: {
+      is_published: true,
+      network_node: "BPP-SHILP-01",
+      sync_timestamp: "2026-08-20T08:00:00Z",
+      buyer_apps_active: ["Paytm", "Magicpin"],
+    },
+    shg_cluster: "Khurja Kumhar Sahakari Samiti",
+    provenance_story:
+      "Crafted from Yamuna alluvial clay, thrown on heavy stone wheels and baked in historic community kilns.",
   },
   {
     id: "demo-scarf",
@@ -242,6 +329,39 @@ const demoProducts: MarketplaceProduct[] = [
     artisan_name: "Lakshmi Bai",
     artisan_location: "Chanderi, Madhya Pradesh",
     category_name: "Handloom",
+    gi_tag: {
+      tag_number: "GI-IN-MP0018",
+      craft_name: "Chanderi Saree & Fabric",
+      state: "Madhya Pradesh",
+      registered_year: 2005,
+      verified: true,
+      heritage_seal: "Government of India GI Certified • Handloom Mark",
+    },
+    audio_note: {
+      dialect: "Bundeli / Hindi",
+      native_transcript: "प्राकृतिक नील और हल्दी के रंगों से हथकरघे पर बुना गया है।",
+      english_translation:
+        "Woven on traditional pit looms using botanical indigo and turmeric mordants.",
+      duration_seconds: 15,
+    },
+    fair_wage: {
+      material_cost: 290,
+      artisan_labor_hours: 24,
+      hourly_living_wage: 110,
+      direct_artisan_pay: 560,
+      middleman_markup_avoided: 1300,
+      traditional_retail_price: 2199,
+      savings_percentage: 59,
+    },
+    ondc_status: {
+      is_published: true,
+      network_node: "BPP-SHILP-01",
+      sync_timestamp: "2026-08-19T08:00:00Z",
+      buyer_apps_active: ["Paytm", "Mystore", "Pincode"],
+    },
+    shg_cluster: "Chanderi Bunkar Mahila Vikas",
+    provenance_story:
+      "Patronized by Central Indian royalty since the 13th century, famous for featherweight transparency and soft hand feel.",
   },
   {
     id: "demo-box",
@@ -266,6 +386,39 @@ const demoProducts: MarketplaceProduct[] = [
     artisan_name: "Meera Devi",
     artisan_location: "Barpeta, Assam",
     category_name: "Woodwork",
+    gi_tag: {
+      tag_number: "GI-IN-UP0045",
+      craft_name: "Varanasi Wooden Lacquerware & Toys",
+      state: "Uttar Pradesh",
+      registered_year: 2014,
+      verified: true,
+      heritage_seal: "Government of India GI Certified • Kashi Guild",
+    },
+    audio_note: {
+      dialect: "Bhojpuri / Hindi",
+      native_transcript: "शीशम की ठोस लकड़ी पर हाथ की नक्काशी और प्राकृतिक मोम की चमक।",
+      english_translation:
+        "Turned and carved in historic artisan quarters using heirloom chisel sets and child-safe organic lacquer.",
+      duration_seconds: 14,
+    },
+    fair_wage: {
+      material_cost: 380,
+      artisan_labor_hours: 28,
+      hourly_living_wage: 110,
+      direct_artisan_pay: 780,
+      middleman_markup_avoided: 1650,
+      traditional_retail_price: 2899,
+      savings_percentage: 57,
+    },
+    ondc_status: {
+      is_published: true,
+      network_node: "BPP-SHILP-01",
+      sync_timestamp: "2026-08-18T08:00:00Z",
+      buyer_apps_active: ["Mystore", "Magicpin"],
+    },
+    shg_cluster: "Kashi Kashta Kala Samiti",
+    provenance_story:
+      "Crafted by master joiners preserving medieval Gangetic floral motifs with hand-rubbed beeswax finish.",
   },
   {
     id: "demo-vase",
@@ -290,6 +443,39 @@ const demoProducts: MarketplaceProduct[] = [
     artisan_name: "Rakesh Kumhar",
     artisan_location: "Khurja, Uttar Pradesh",
     category_name: "Pottery",
+    gi_tag: {
+      tag_number: "GI-IN-UP0051",
+      craft_name: "Khurja Pottery & Ceramics",
+      state: "Uttar Pradesh",
+      registered_year: 2015,
+      verified: true,
+      heritage_seal: "Government of India GI Certified • Bulandshahr Ceramic Guild",
+    },
+    audio_note: {
+      dialect: "Awadhi / Hindi",
+      native_transcript: "प्राकृतिक मिट्टी से चाक पर गढ़ा गया फूलदान, घरेलू सजावट के लिए आदर्श।",
+      english_translation:
+        "Wheel-thrown earthenware vase, fired at 1100°C for exceptional durability.",
+      duration_seconds: 13,
+    },
+    fair_wage: {
+      material_cost: 260,
+      artisan_labor_hours: 22,
+      hourly_living_wage: 110,
+      direct_artisan_pay: 680,
+      middleman_markup_avoided: 1200,
+      traditional_retail_price: 2299,
+      savings_percentage: 52,
+    },
+    ondc_status: {
+      is_published: true,
+      network_node: "BPP-SHILP-01",
+      sync_timestamp: "2026-08-17T08:00:00Z",
+      buyer_apps_active: ["Paytm", "Pincode"],
+    },
+    shg_cluster: "Khurja Kumhar Sahakari Samiti",
+    provenance_story:
+      "Direct lineage from traditional potters supplying the imperial courts of Northern India.",
   },
 ];
 
@@ -585,7 +771,7 @@ function ProductCard({ product, onClick }: { product: MarketplaceProduct; onClic
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       onClick={onClick}
-      className="group overflow-hidden rounded-none border border-[#e6dfd5] bg-white text-left shadow-[0_6px_20px_rgba(65,47,29,.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(65,47,29,.1)]"
+      className="group overflow-hidden rounded-none border border-[#e6dfd5] bg-white text-left shadow-[0_6px_20px_rgba(65,47,29,.05)] transition hover:-translate-y-1 hover:border-[#c84218] hover:shadow-[0_12px_28px_rgba(65,47,29,.1)]"
     >
       <div className="relative aspect-[1.06] overflow-hidden bg-[#e6dfd5]">
         <ImageBox
@@ -593,22 +779,48 @@ function ProductCard({ product, onClick }: { product: MarketplaceProduct; onClic
           alt={product.name}
           className="transition duration-500 group-hover:scale-105"
         />
-        <span className="absolute left-3 top-3 rounded-none bg-white/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#6e6258] backdrop-blur">
-          {product.category_name ?? product.craft_type ?? "Handmade"}
-        </span>
-        <span className="absolute bottom-3 right-3 rounded-none bg-[#1f1a17]/85 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
-          {formatPrice(product.price)}
-        </span>
+        <div className="absolute left-2.5 top-2.5 flex flex-col gap-1">
+          <span className="rounded-none bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#6e6258] backdrop-blur shadow-sm">
+            {product.category_name ?? product.craft_type ?? "Handmade"}
+          </span>
+          {product.gi_tag && (
+            <span className="flex items-center gap-1 rounded-none border border-[#0d6234] bg-[#f0fdf4] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#0d6234] shadow-sm">
+              <Award size={10} /> GI Verified
+            </span>
+          )}
+        </div>
+        <div className="absolute bottom-2.5 right-2.5 flex flex-col items-end gap-1">
+          <span className="rounded-none bg-[#1f1a17]/90 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
+            {formatPrice(product.price)}
+          </span>
+          {product.ondc_status?.is_published && (
+            <span className="rounded-none bg-[#0b2559] px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+              ONDC Live
+            </span>
+          )}
+        </div>
       </div>
       <div className="p-4">
-        <h3 className="line-clamp-1 font-display text-lg font-semibold text-[#1f1a17]">
+        <h3 className="line-clamp-1 font-display text-base font-semibold text-[#1f1a17] group-hover:text-[#c84218] transition">
           {product.name}
         </h3>
         <div className="mt-2 flex items-center gap-1.5 text-xs text-[#6e6258]">
           <UserRound size={13} />
-          <span className="line-clamp-1">{product.artisan_name ?? "Artisan"}</span>
+          <span className="line-clamp-1 font-medium">{product.artisan_name ?? "Artisan"}</span>
           <span className="text-[#d8cfbf]">·</span>
           <span className="line-clamp-1">{product.artisan_location ?? "India"}</span>
+        </div>
+
+        {/* Ethical Fair Wage & Audio stamp indicators */}
+        <div className="mt-3 flex items-center justify-between border-t border-[#e6dfd5]/80 pt-2 text-[10px]">
+          <span className="font-bold text-[#0d6234] flex items-center gap-1">
+            <CheckCircle2 size={11} /> 100% Direct Payout
+          </span>
+          {product.audio_note && (
+            <span className="font-bold text-[#c84218] flex items-center gap-1">
+              <Volume2 size={11} /> Voice Note
+            </span>
+          )}
         </div>
       </div>
     </motion.button>
@@ -671,6 +883,12 @@ export function ShilpApp() {
   const [selectedTab, setSelectedTab] = useState<"draft" | "published" | "archived">("published");
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [giFilterOnly, setGiFilterOnly] = useState(false);
+  const [personaMode, setPersonaMode] = useState<"artisan" | "buyer">("artisan");
+  const [roadmapOpen, setRoadmapOpen] = useState(false);
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+  const [chatProduct, setChatProduct] = useState<MarketplaceProduct | null>(null);
+  const [shgClusterMode, setShgClusterMode] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [loadingData, setLoadingData] = useState(false);
   const [aiBusy, setAiBusy] = useState(false);
@@ -967,8 +1185,10 @@ export function ShilpApp() {
   function localCatalogue(transcript: string): CatalogueDraft {
     const craft = profile.artisan?.craft_type ?? "Bamboo";
     const isBamboo = /bamboo|basket|cane/i.test(`${transcript} ${craft}`);
+    const matchedGi = matchGiCraft(transcript, craft, profile.artisan?.state ?? "Assam");
+    const name = isBamboo ? "Handcrafted Bamboo Storage Basket" : `Handcrafted ${craft} Product`;
     return {
-      name: isBamboo ? "Handcrafted Bamboo Storage Basket" : `Handcrafted ${craft} Product`,
+      name,
       category: isBamboo ? "Bamboo" : craft,
       material: isBamboo ? "Locally sourced bamboo" : "Handmade natural materials",
       colour: "Natural",
@@ -980,14 +1200,30 @@ export function ShilpApp() {
       key_features: [
         "Completely handmade",
         "Locally sourced materials",
-        "Supports an artisan family",
+        "Supports an artisan family with fair living wage",
+        matchedGi
+          ? `Official Geographical Indication: ${matchedGi.craft_name}`
+          : "Heritage handicraft",
       ],
       ai_generated: false,
+      gi_tag: matchedGi,
+      fair_wage: {
+        material_cost: 180,
+        artisan_labor_hours: 14,
+        hourly_living_wage: 110,
+        direct_artisan_pay: 420,
+        middleman_markup_avoided: 750,
+        traditional_retail_price: 1399,
+        savings_percentage: 54,
+      },
+      provenance_story: `Crafted according to ancestral techniques passed down through artisan guilds of ${matchedGi?.state || "India"}, sustaining traditional heritage.`,
+      suggested_price: 699,
     };
   }
 
   async function generateDraft(transcript = draft.transcript) {
     setAiBusy(true);
+    playAudioChime("start");
     try {
       const result = await generateCatalogue({
         data: {
@@ -996,10 +1232,30 @@ export function ShilpApp() {
           craftHint: profile.artisan?.craft_type ?? draft.craft_type,
         },
       });
-      setDraft((current) => ({ ...current, ...result, transcript }));
+      setDraft((current) => ({
+        ...current,
+        ...result,
+        transcript,
+        price: result.suggested_price || current.price || 699,
+        gi_tag: result.gi_tag,
+        fair_wage: result.fair_wage,
+        audio_note: result.audio_note,
+        provenance_story: result.provenance_story,
+      }));
+      playAudioChime("success");
     } catch (error) {
       console.warn("Catalogue generation fell back to the local demo.", error);
-      setDraft((current) => ({ ...current, ...localCatalogue(transcript), transcript }));
+      const local = localCatalogue(transcript);
+      setDraft((current) => ({
+        ...current,
+        ...local,
+        transcript,
+        price: local.suggested_price || 699,
+        gi_tag: local.gi_tag,
+        fair_wage: local.fair_wage,
+        provenance_story: local.provenance_story,
+      }));
+      playAudioChime("success");
     } finally {
       setAiBusy(false);
     }
@@ -1349,6 +1605,8 @@ export function ShilpApp() {
   const filteredMarket = useMemo(() => {
     const query = search.toLowerCase().trim();
     return marketProducts.filter((product) => {
+      if (giFilterOnly && !product.gi_tag) return false;
+      if (shgClusterMode && !product.shg_cluster) return false;
       const matchesSearch =
         !query ||
         [
@@ -1357,6 +1615,9 @@ export function ShilpApp() {
           product.artisan_name,
           product.craft_type,
           product.category_name,
+          product.gi_tag?.craft_name,
+          product.gi_tag?.state,
+          product.shg_cluster,
         ].some((value) => value?.toLowerCase().includes(query));
       const matchesCategory =
         categoryFilter === "All" ||
@@ -1364,7 +1625,7 @@ export function ShilpApp() {
         product.craft_type === categoryFilter;
       return matchesSearch && matchesCategory;
     });
-  }, [categoryFilter, marketProducts, search]);
+  }, [categoryFilter, giFilterOnly, marketProducts, search, shgClusterMode]);
 
   const shellViews = new Set<View>(["dashboard", "products", "marketplace", "messages", "profile"]);
 
@@ -1501,6 +1762,11 @@ export function ShilpApp() {
             setSearch={setSearch}
             category={categoryFilter}
             setCategory={setCategoryFilter}
+            giFilterOnly={giFilterOnly}
+            setGiFilterOnly={setGiFilterOnly}
+            shgClusterMode={shgClusterMode}
+            setShgClusterMode={setShgClusterMode}
+            personaMode={personaMode}
             onOpen={openProduct}
             onRefresh={loadMarketplace}
           />
@@ -1594,6 +1860,9 @@ export function ShilpApp() {
           <Details
             product={selectedProduct}
             onContact={() => go("enquiry")}
+            onOpenChat={() => {
+              if (selectedProduct) setChatProduct(selectedProduct);
+            }}
             onBack={() => go("marketplace")}
           />
         )}
@@ -1617,6 +1886,10 @@ export function ShilpApp() {
             view={view}
             demoMode={demoMode}
             profile={profile}
+            personaMode={personaMode}
+            onTogglePersona={(mode) => setPersonaMode(mode)}
+            onOpenRoadmap={() => setRoadmapOpen(true)}
+            onOpenGuidedDemo={() => setDemoModalOpen(true)}
             onBack={() => go(view === "details" ? "marketplace" : "dashboard")}
             onNavigate={go}
             unreadCount={(enquiries || []).filter((e) => e.status === "new").length}
@@ -1627,6 +1900,33 @@ export function ShilpApp() {
           {shellViews.has(view) && <BottomNav view={view as MainView} onNavigate={go} t={t} />}
         </main>
       </div>
+
+      {/* Criteria & Future Roadmap Blueprint Modal */}
+      <FutureRoadmapModal isOpen={roadmapOpen} onClose={() => setRoadmapOpen(false)} />
+
+      {/* 30-Second AI Voice Listing Guided Simulation */}
+      <GuidedDemoModal
+        isOpen={demoModalOpen}
+        onClose={() => setDemoModalOpen(false)}
+        onApplyDraft={(appliedDraft) => {
+          setDraft((current) => ({ ...current, ...appliedDraft }));
+          go("catalogue");
+          notify("30s AI Demo generated draft loaded into Studio!");
+        }}
+      />
+
+      {/* Real-time Cross-Language Two-Way Vernacular Chat */}
+      {chatProduct && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          onClick={() => setChatProduct(null)}
+        >
+          <div className="w-full max-w-xl" onClick={(e) => e.stopPropagation()}>
+            <TwoWayVernacularChat product={chatProduct} onClose={() => setChatProduct(null)} />
+          </div>
+        </div>
+      )}
+
       {toast && (
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -2033,6 +2333,10 @@ function Topbar({
   onBack,
   onNavigate,
   unreadCount = 0,
+  personaMode = "artisan",
+  onTogglePersona,
+  onOpenRoadmap,
+  onOpenGuidedDemo,
 }: {
   view: View;
   demoMode: boolean;
@@ -2040,6 +2344,10 @@ function Topbar({
   onBack: () => void;
   onNavigate?: (view: View) => void;
   unreadCount?: number;
+  personaMode?: "artisan" | "buyer";
+  onTogglePersona?: (mode: "artisan" | "buyer") => void;
+  onOpenRoadmap?: () => void;
+  onOpenGuidedDemo?: () => void;
 }) {
   const isMain = ["dashboard", "products", "marketplace", "messages", "profile"].includes(view);
   const { language, setLanguage, t } = useI18n();
@@ -2053,7 +2361,7 @@ function Topbar({
     return (first + last).toUpperCase() || "MD";
   }, [profile?.profile?.full_name]);
   return (
-    <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-[#e6dfd5]/80 bg-[#faf6ee]/90 px-4 backdrop-blur-xl sm:px-8 lg:static lg:border-0 lg:bg-transparent">
+    <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-[#e6dfd5]/80 bg-[#faf6ee]/95 px-4 backdrop-blur-xl sm:px-8 lg:static lg:border-0 lg:bg-transparent gap-2">
       <div className="flex items-center gap-3 lg:hidden">
         {isMain ? (
           <Logo compact />
@@ -2067,14 +2375,70 @@ function Topbar({
           </button>
         )}
       </div>
-      <div className="hidden lg:block">
-        {demoMode && (
-          <span className="rounded-none bg-[#fef3c7] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#a8320a]">
-            {t("common.demo")}
-          </span>
-        )}
+
+      {/* Role Switcher (Artisan Studio vs Buyer & Exporter Hub) */}
+      <div className="hidden sm:flex items-center border border-[#1f1a17] bg-white p-0.5 shadow-sm">
+        <button
+          type="button"
+          onClick={() => {
+            onTogglePersona?.("artisan");
+            onNavigate?.("dashboard");
+          }}
+          className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
+            personaMode === "artisan"
+              ? "bg-[#c84218] text-white"
+              : "text-[#6e6258] hover:text-[#1f1a17]"
+          }`}
+        >
+          Artisan Studio
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            onTogglePersona?.("buyer");
+            onNavigate?.("marketplace");
+          }}
+          className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
+            personaMode === "buyer"
+              ? "bg-[#0b2559] text-white"
+              : "text-[#6e6258] hover:text-[#1f1a17]"
+          }`}
+        >
+          Buyer & Exporter Hub
+        </button>
       </div>
+
       <div className="flex items-center gap-2 lg:ml-auto">
+        {/* 30s Guided AI Voice Demo */}
+        <button
+          type="button"
+          onClick={onOpenGuidedDemo}
+          className="flex items-center gap-1.5 border border-[#c84218] bg-[#fef3c7] px-2.5 py-1.5 text-xs font-bold text-[#a8320a] hover:bg-[#c84218] hover:text-white transition shadow-sm"
+          title="Simulate 30s Voice-to-Listing with AI"
+        >
+          <Zap size={14} className="text-[#c84218]" />
+          <span className="hidden sm:inline">30s Voice Demo</span>
+          <span className="sm:hidden">Demo</span>
+        </button>
+
+        {/* Evaluation Blueprint Modal Button */}
+        <button
+          type="button"
+          onClick={onOpenRoadmap}
+          className="flex items-center gap-1.5 border border-[#0d6234] bg-[#f0fdf4] px-2.5 py-1.5 text-xs font-bold text-[#0d6234] hover:bg-[#0d6234] hover:text-white transition shadow-sm"
+          title="View Novelty, Complexity, Scale, and Evaluation Criteria"
+        >
+          <Award size={14} />
+          <span className="hidden sm:inline">Criteria Blueprint</span>
+          <span className="sm:hidden">Blueprint</span>
+        </button>
+
+        {/* Rural Offline Sync Indicator */}
+        <span className="hidden xl:inline-flex items-center gap-1 rounded-none border border-[#0d6234]/30 bg-white px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#0d6234] shadow-sm">
+          <span className="h-2 w-2 rounded-full bg-[#0d6234] animate-pulse" /> 2G Sync
+        </span>
+
+        {/* Language Selector */}
         <div className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-2.5 py-1.5 text-xs font-bold text-[#6e6258] shadow-sm">
           <Globe2 size={15} className="text-[#c84218]" />
           <select
@@ -2393,6 +2757,11 @@ function Dashboard({
           />
         )}
       </section>
+      {/* ONDC Open Network Syndication Hub */}
+      <section>
+        <OndcNetworkPanel products={safeProducts} />
+      </section>
+
       <section className="surface-card flex flex-col justify-between gap-4 p-5 sm:flex-row sm:items-center">
         <div className="flex items-center gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-none bg-[#dcfce7] text-[#0d6234]">
@@ -3424,6 +3793,13 @@ function Pricing({
           />
         </div>
       </div>
+
+      {/* Living Wage & Fair Price Audit breakdown */}
+      <FairWageWidget
+        fairWage={draft.fair_wage}
+        productPrice={draft.price || result?.recommended_min || base}
+      />
+
       <div className="flex justify-end">
         <PrimaryButton onClick={handleReview}>
           {t("price.reviewBtn")} <ArrowRight size={17} />
@@ -3478,13 +3854,19 @@ function Preview({
           <div className="aspect-square bg-[#e6dfd5] md:aspect-auto">
             <ImageBox src={previewImage} alt={draft.name || "Product preview"} />
           </div>
-          <div className="p-6 sm:p-9">
+          <div className="p-6 sm:p-9 space-y-4">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span className="rounded-none bg-[#fef3c7] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a8320a]">
-                  {draft.category || "Handmade"}
-                </span>
-                <h2 className="mt-4 font-display text-3xl font-semibold text-[#1f1a17]">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-none bg-[#fef3c7] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a8320a]">
+                    {draft.category || "Handmade"}
+                  </span>
+                  {draft.gi_tag && <GiTagBadge giTag={draft.gi_tag} showModalOnClick />}
+                  <span className="rounded-none bg-[#0b2559] px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+                    ONDC Syndication Ready
+                  </span>
+                </div>
+                <h2 className="mt-3 font-display text-2xl sm:text-3xl font-semibold text-[#1f1a17]">
                   {draft.name || "Untitled product"}
                 </h2>
               </div>
@@ -3496,33 +3878,57 @@ function Preview({
                 <Edit3 size={17} />
               </button>
             </div>
-            <p className="mt-5 text-sm leading-7 text-[#6e6258]">
+            <p className="text-sm leading-relaxed text-[#5c4d3c]">
               {draft.description || "Add a short description to help buyers understand your work."}
             </p>
-            <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
+
+            {draft.provenance_story && (
+              <div className="border-l-2 border-[#c84218] bg-[#fffbf2] p-3 text-xs text-[#5c4d3c]">
+                <span className="font-bold text-[#a8320a] uppercase tracking-wider block mb-0.5">
+                  Cultural Lineage
+                </span>
+                <p>{draft.provenance_story}</p>
+              </div>
+            )}
+
+            {draft.audio_note && (
+              <div className="flex items-center gap-2 border border-[#c84218]/30 bg-[#fffbf2] px-3 py-2 text-xs font-bold text-[#a8320a]">
+                <Volume2 size={14} className="text-[#c84218]" />
+                <span>Artisan Voice Note Stamp: "{draft.audio_note.transcript}"</span>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-4 text-xs border-y border-[#e6dfd5] py-3">
               <div>
-                <p className="text-xs text-[#6e6258]">{t("detail.material")}</p>
-                <p className="mt-1 font-semibold">{draft.material || "—"}</p>
+                <p className="text-[#6e6258] font-semibold">{t("detail.material")}</p>
+                <p className="mt-0.5 font-bold text-[#1f1a17]">{draft.material || "—"}</p>
               </div>
               <div>
-                <p className="text-xs text-[#6e6258]">{t("detail.size")}</p>
-                <p className="mt-1 font-semibold">{draft.size || "—"}</p>
+                <p className="text-[#6e6258] font-semibold">{t("detail.size")}</p>
+                <p className="mt-0.5 font-bold text-[#1f1a17]">{draft.size || "—"}</p>
               </div>
               <div>
-                <p className="text-xs text-[#6e6258]">{t("preview.madeIn")}</p>
-                <p className="mt-1 font-semibold">{profile.artisan?.location || "India"}</p>
+                <p className="text-[#6e6258] font-semibold">{t("preview.madeIn")}</p>
+                <p className="mt-0.5 font-bold text-[#1f1a17]">
+                  {profile.artisan?.location || "India"}
+                </p>
               </div>
               <div>
-                <p className="text-xs text-[#6e6258]">{t("detail.time")}</p>
-                <p className="mt-1 font-semibold">{draft.production_time || "—"}</p>
+                <p className="text-[#6e6258] font-semibold">{t("detail.time")}</p>
+                <p className="mt-0.5 font-bold text-[#1f1a17]">{draft.production_time || "—"}</p>
               </div>
             </div>
-            <div className="mt-7 flex items-center justify-between border-t border-[#e6dfd5] pt-5">
+            <div className="flex items-center justify-between pt-2">
               <div>
-                <p className="text-xs text-[#6e6258]">{t("preview.yourPrice")}</p>
-                <p className="mt-1 text-2xl font-bold text-[#c84218]">{formatPrice(draft.price)}</p>
+                <p className="text-xs text-[#6e6258] font-semibold">{t("preview.yourPrice")}</p>
+                <p className="mt-0.5 text-2xl font-bold text-[#c84218]">
+                  {formatPrice(draft.price)}
+                </p>
               </div>
-              <button onClick={onEditPricing} className="text-xs font-bold text-[#c84218]">
+              <button
+                onClick={onEditPricing}
+                className="text-xs font-bold text-[#c84218] hover:underline"
+              >
                 {t("preview.changePrice")}
               </button>
             </div>
@@ -3623,6 +4029,11 @@ function Marketplace({
   setSearch,
   category,
   setCategory,
+  giFilterOnly = false,
+  setGiFilterOnly,
+  shgClusterMode = false,
+  setShgClusterMode,
+  personaMode = "artisan",
   onOpen,
   onRefresh,
 }: {
@@ -3632,6 +4043,11 @@ function Marketplace({
   setSearch: (value: string) => void;
   category: string;
   setCategory: (value: string) => void;
+  giFilterOnly?: boolean;
+  setGiFilterOnly?: (val: boolean) => void;
+  shgClusterMode?: boolean;
+  setShgClusterMode?: (val: boolean) => void;
+  personaMode?: "artisan" | "buyer";
   onOpen: (product: MarketplaceProduct) => void;
   onRefresh: () => void;
 }) {
@@ -3829,6 +4245,71 @@ function Marketplace({
           </div>
         )}
       </div>
+      {/* Buyer & Exporter Mode Intelligence Banner */}
+      {personaMode === "buyer" && (
+        <div className="border border-[#0b2559] bg-[#0b2559] p-5 text-white shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span className="bg-white/20 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                B2B Exporter & Wholesale Hub
+              </span>
+              <h2 className="mt-1.5 font-display text-xl font-bold">
+                Direct Village Guild Procurement
+              </h2>
+              <p className="mt-1 text-xs text-white/80 max-w-xl">
+                Source directly from registered artisan cooperatives and Self-Help Groups. 100%
+                direct bank payout via UPI/PFMS, zero intermediary cuts, verified Geographical
+                Indication certification for international export.
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <span className="border border-white/30 bg-white/10 px-3 py-1.5 text-[11px] font-bold">
+                India Post Dak Ghar Niryat
+              </span>
+              <span className="border border-white/30 bg-white/10 px-3 py-1.5 text-[11px] font-bold">
+                Customs Pre-Cleared
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Novelty Filter Chips: All, GI Verified Only, SHG Clusters */}
+      <div className="flex flex-wrap items-center gap-2 pt-1">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#6e6258] mr-1">
+          Special Filters:
+        </span>
+        <button
+          type="button"
+          onClick={() => setGiFilterOnly?.(!giFilterOnly)}
+          className={cn(
+            "flex items-center gap-1.5 border px-3 py-1.5 text-xs font-bold transition",
+            giFilterOnly
+              ? "border-[#0d6234] bg-[#0d6234] text-white shadow-sm"
+              : "border-[#0d6234]/40 bg-[#f0fdf4] text-[#0d6234] hover:bg-[#dcfce7]",
+          )}
+        >
+          <Award size={13} />
+          <span>GI Verified Heritage Only</span>
+          {giFilterOnly && <Check size={12} className="ml-1" />}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setShgClusterMode?.(!shgClusterMode)}
+          className={cn(
+            "flex items-center gap-1.5 border px-3 py-1.5 text-xs font-bold transition",
+            shgClusterMode
+              ? "border-[#c84218] bg-[#c84218] text-white shadow-sm"
+              : "border-[#c84218]/40 bg-[#fffbf2] text-[#c84218] hover:bg-[#fef3c7]",
+          )}
+        >
+          <Sparkles size={13} />
+          <span>SHG Women Clusters Only</span>
+          {shgClusterMode && <Check size={12} className="ml-1" />}
+        </button>
+      </div>
+
       <div className="flex gap-2 overflow-x-auto pb-2">
         {cats.map((item) => (
           <button
@@ -3876,10 +4357,12 @@ function Marketplace({
 function Details({
   product,
   onContact,
+  onOpenChat,
   onBack,
 }: {
   product: MarketplaceProduct | null;
   onContact: () => void;
+  onOpenChat?: () => void;
   onBack: () => void;
 }) {
   const { t } = useI18n();
@@ -3894,7 +4377,10 @@ function Details({
     );
   return (
     <div className="mx-auto max-w-5xl space-y-7">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#6e6258]">
+      <button
+        onClick={onBack}
+        className="flex items-center gap-2 text-sm font-bold text-[#6e6258] hover:text-[#1f1a17]"
+      >
         <ArrowLeft size={16} /> {t("common.back")}
       </button>
       <div className="overflow-hidden rounded-none border border-[#e6dfd5] bg-white shadow-sm">
@@ -3902,47 +4388,109 @@ function Details({
           <div className="aspect-square bg-[#e6dfd5] md:aspect-auto">
             <ImageBox src={product.image_url} alt={product.name} />
           </div>
-          <div className="p-6 sm:p-10">
-            <span className="rounded-none bg-[#fef3c7] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a8320a]">
-              {product.category_name ?? product.craft_type}
-            </span>
-            <h1 className="mt-5 text-3xl font-semibold leading-tight sm:text-4xl">
-              {product.name}
-            </h1>
-            <p className="mt-4 text-3xl font-bold text-[#c84218]">{formatPrice(product.price)}</p>
-            <p className="mt-6 text-sm leading-7 text-[#6e6258]">{product.description}</p>
-            <div className="mt-7 grid grid-cols-2 gap-5 border-y border-[#e6dfd5] py-5 text-sm">
-              <div>
-                <p className="text-xs text-[#6e6258]">{t("detail.material")}</p>
-                <p className="mt-1 font-semibold">{product.material || "Handmade materials"}</p>
-              </div>
-              <div>
-                <p className="text-xs text-[#6e6258]">{t("detail.size")}</p>
-                <p className="mt-1 font-semibold">{product.size || "Made to order"}</p>
-              </div>
-              <div>
-                <p className="text-xs text-[#6e6258]">{t("detail.location")}</p>
-                <p className="mt-1 font-semibold">{product.artisan_location ?? "India"}</p>
-              </div>
-              <div>
-                <p className="text-xs text-[#6e6258]">{t("detail.time")}</p>
-                <p className="mt-1 font-semibold">{product.production_time || "—"}</p>
-              </div>
+          <div className="p-6 sm:p-10 space-y-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-none bg-[#fef3c7] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a8320a]">
+                {product.category_name ?? product.craft_type}
+              </span>
+              {product.gi_tag && <GiTagBadge giTag={product.gi_tag} showModalOnClick />}
+              {product.ondc_status?.is_published && (
+                <span className="rounded-none bg-[#0b2559] px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white">
+                  ONDC Protocol v1.2
+                </span>
+              )}
             </div>
-            <div className="mt-6 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-none bg-[#dcfce7] font-bold text-[#0d6234]">
-                {product.artisan_name?.slice(0, 1) ?? "A"}
+
+            <div>
+              <h1 className="text-2xl font-bold font-display leading-tight sm:text-3xl text-[#1f1a17]">
+                {product.name}
+              </h1>
+              <p className="mt-2 text-2xl font-bold text-[#c84218]">{formatPrice(product.price)}</p>
+            </div>
+
+            <p className="text-sm leading-relaxed text-[#5c4d3c]">{product.description}</p>
+
+            {/* Authenticated Artisan Voice Note Stamp */}
+            <ArtisanVoicePlayer audioNote={product.audio_note} artisanName={product.artisan_name} />
+
+            {/* Cultural Provenance & Lineage */}
+            {product.provenance_story && (
+              <div className="border-l-2 border-[#c84218] bg-[#fffbf2] p-3.5 text-xs text-[#5c4d3c]">
+                <span className="font-bold text-[#a8320a] uppercase tracking-wider block mb-1">
+                  Cultural Provenance & Guild Heritage
+                </span>
+                <p className="leading-relaxed">{product.provenance_story}</p>
               </div>
+            )}
+
+            {/* Specifications */}
+            <div className="grid grid-cols-2 gap-4 border-y border-[#e6dfd5] py-4 text-xs">
               <div>
-                <p className="font-semibold">{product.artisan_name}</p>
-                <p className="mt-1 flex items-center gap-1 text-xs text-[#6e6258]">
-                  <MapPin size={12} /> {product.artisan_location ?? "India"}
+                <p className="text-[#6e6258] font-semibold">{t("detail.material")}</p>
+                <p className="mt-0.5 font-bold text-[#1f1a17]">
+                  {product.material || "Handmade materials"}
                 </p>
               </div>
+              <div>
+                <p className="text-[#6e6258] font-semibold">{t("detail.size")}</p>
+                <p className="mt-0.5 font-bold text-[#1f1a17]">{product.size || "Made to order"}</p>
+              </div>
+              <div>
+                <p className="text-[#6e6258] font-semibold">{t("detail.location")}</p>
+                <p className="mt-0.5 font-bold text-[#1f1a17]">
+                  {product.artisan_location ?? "India"}
+                </p>
+              </div>
+              <div>
+                <p className="text-[#6e6258] font-semibold">{t("detail.time")}</p>
+                <p className="mt-0.5 font-bold text-[#1f1a17]">{product.production_time || "—"}</p>
+              </div>
             </div>
-            <div className="mt-7 flex gap-3">
-              <PrimaryButton className="flex-1" onClick={onContact}>
-                <MessageCircle size={17} /> {t("detail.contact")}
+
+            {/* Fair Wage Audit Widget */}
+            <FairWageWidget fairWage={product.fair_wage} productPrice={product.price} />
+
+            {/* India Post Logistics Notice */}
+            <div className="border border-[#e6dfd5] bg-white p-3 text-xs">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-[#1f1a17] flex items-center gap-1.5">
+                  <Truck size={14} className="text-[#c84218]" /> India Post Dak Ghar Delivery
+                </span>
+                <span className="text-[#0d6234] font-bold">Direct Pickup</span>
+              </div>
+              <p className="text-[11px] text-[#6e6258] mt-1">
+                Dispatches directly from {product.artisan_location ?? "village cluster"} with
+                insured fragile packaging.
+              </p>
+            </div>
+
+            {/* Artisan Profile Card */}
+            <div className="flex items-center justify-between border-t border-[#e6dfd5] pt-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-none bg-[#dcfce7] font-bold text-[#0d6234]">
+                  {product.artisan_name?.slice(0, 1) ?? "A"}
+                </div>
+                <div>
+                  <p className="font-bold text-sm text-[#1f1a17]">{product.artisan_name}</p>
+                  <p className="mt-0.5 flex items-center gap-1 text-xs text-[#6e6258]">
+                    <MapPin size={12} /> {product.artisan_location ?? "India"}
+                  </p>
+                </div>
+              </div>
+              {product.shg_cluster && (
+                <span className="text-[10px] font-bold text-[#6e6258] bg-[#faf6ee] px-2 py-1 border border-[#e6dfd5]">
+                  SHG: {product.shg_cluster}
+                </span>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
+              <PrimaryButton className="flex-1" onClick={onOpenChat}>
+                <Globe2 size={16} /> Vernacular AI Chat
+              </PrimaryButton>
+              <PrimaryButton variant="secondary" className="flex-1" onClick={onContact}>
+                <MessageCircle size={16} /> Bulk Inquiry
               </PrimaryButton>
               <PrimaryButton
                 variant="secondary"
@@ -3951,7 +4499,7 @@ function Details({
                   void navigator.clipboard?.writeText(window.location.href);
                 }}
               >
-                <Share2 size={17} />
+                <Share2 size={16} />
               </PrimaryButton>
             </div>
           </div>
