@@ -780,7 +780,7 @@ function ProductCard({ product, onClick }: { product: MarketplaceProduct; onClic
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       onClick={onClick}
-      className="group overflow-hidden rounded-none border border-[#e6dfd5] bg-white text-left shadow-[0_6px_20px_rgba(65,47,29,.05)] transition hover:-translate-y-1 hover:border-[#c84218] hover:shadow-[0_12px_28px_rgba(65,47,29,.1)]"
+      className="group overflow-hidden rounded-none border border-[#e6dfd5] bg-white text-left shadow-[0_6px_20px_rgba(65,47,29,.05)] transition hover:-translate-y-1 hover:border-[#c84218] hover:shadow-[0_12px_28px_rgba(65,47,29,.1)] active:scale-[0.98] w-full"
     >
       <div className="relative aspect-[1.06] overflow-hidden bg-[#e6dfd5]">
         <ImageBox
@@ -788,46 +788,46 @@ function ProductCard({ product, onClick }: { product: MarketplaceProduct; onClic
           alt={product.name}
           className="transition duration-500 group-hover:scale-105"
         />
-        <div className="absolute left-2.5 top-2.5 flex flex-col gap-1">
-          <span className="rounded-none bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#6e6258] backdrop-blur shadow-sm">
+        <div className="absolute left-2 top-2 sm:left-2.5 sm:top-2.5 flex flex-col gap-1">
+          <span className="rounded-none bg-white/95 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.08em] sm:tracking-[0.1em] text-[#6e6258] backdrop-blur shadow-sm">
             {product.category_name ?? product.craft_type ?? "Handmade"}
           </span>
           {product.gi_tag && (
-            <span className="flex items-center gap-1 rounded-none border border-[#0d6234] bg-[#f0fdf4] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#0d6234] shadow-sm">
-              <Award size={10} /> GI Verified
+            <span className="flex items-center gap-1 rounded-none border border-[#0d6234] bg-[#f0fdf4] px-1.5 py-0.5 text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-[#0d6234] shadow-sm">
+              <Award size={10} /> GI
             </span>
           )}
         </div>
-        <div className="absolute bottom-2.5 right-2.5 flex flex-col items-end gap-1">
-          <span className="rounded-none bg-[#1f1a17]/90 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
+        <div className="absolute bottom-2 right-2 sm:bottom-2.5 sm:right-2.5 flex flex-col items-end gap-1">
+          <span className="rounded-none bg-[#1f1a17]/90 px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-bold text-white backdrop-blur">
             {formatPrice(product.price)}
           </span>
           {product.ondc_status?.is_published && (
-            <span className="rounded-none bg-[#0b2559] px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
-              ONDC Live
+            <span className="rounded-none bg-[#0b2559] px-1.5 py-0.5 text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-white">
+              ONDC
             </span>
           )}
         </div>
       </div>
-      <div className="p-4">
-        <h3 className="line-clamp-1 font-display text-base font-semibold text-[#1f1a17] group-hover:text-[#c84218] transition">
+      <div className="p-3 sm:p-4">
+        <h3 className="line-clamp-1 font-display text-sm sm:text-base font-semibold text-[#1f1a17] group-hover:text-[#c84218] transition">
           {product.name}
         </h3>
-        <div className="mt-2 flex items-center gap-1.5 text-xs text-[#6e6258]">
-          <UserRound size={13} />
+        <div className="mt-1.5 sm:mt-2 flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs text-[#6e6258]">
+          <UserRound size={12} className="shrink-0" />
           <span className="line-clamp-1 font-medium">{product.artisan_name ?? "Artisan"}</span>
           <span className="text-[#d8cfbf]">·</span>
           <span className="line-clamp-1">{product.artisan_location ?? "India"}</span>
         </div>
 
         {/* Ethical Fair Wage & Audio stamp indicators */}
-        <div className="mt-3 flex items-center justify-between border-t border-[#e6dfd5]/80 pt-2 text-[10px]">
-          <span className="font-bold text-[#0d6234] flex items-center gap-1">
-            <CheckCircle2 size={11} /> 100% Direct Payout
+        <div className="mt-2.5 sm:mt-3 flex items-center justify-between border-t border-[#e6dfd5]/80 pt-2 text-[9px] sm:text-[10px]">
+          <span className="font-bold text-[#0d6234] flex items-center gap-1 truncate">
+            <CheckCircle2 size={10} className="shrink-0" /> Payout
           </span>
           {product.audio_note && (
-            <span className="font-bold text-[#c84218] flex items-center gap-1">
-              <Volume2 size={11} /> Voice Note
+            <span className="font-bold text-[#c84218] flex items-center gap-1 shrink-0 ml-1">
+              <Volume2 size={10} /> Voice
             </span>
           )}
         </div>
@@ -848,15 +848,18 @@ function StatCard({
   accent: string;
 }) {
   return (
-    <div className="surface-card flex items-start gap-3 p-4">
+    <div className="surface-card flex items-start gap-2.5 sm:gap-3 p-3 sm:p-4">
       <div
-        className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-none", accent)}
+        className={cn(
+          "flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-none",
+          accent,
+        )}
       >
-        <Icon size={18} />
+        <Icon size={16} />
       </div>
-      <div>
-        <p className="text-2xl font-semibold text-[#1f1a17]">{value}</p>
-        <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-[#6e6258]">
+      <div className="min-w-0">
+        <p className="text-xl sm:text-2xl font-semibold text-[#1f1a17] truncate">{value}</p>
+        <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.06em] sm:tracking-[0.08em] text-[#6e6258] truncate">
           {label}
         </p>
       </div>
@@ -1919,7 +1922,7 @@ export function ShilpApp() {
     <div className="min-h-screen bg-[#faf6ee] text-[#1f1a17]">
       <div className="mx-auto flex min-h-screen max-w-[1500px]">
         {shellViews.has(view) && <DesktopSidebar view={view as MainView} onNavigate={go} t={t} />}
-        <main className="flex min-w-0 flex-1 flex-col pb-24 lg:pb-8">
+        <main className="flex min-w-0 flex-1 flex-col pb-28 sm:pb-24 lg:pb-8">
           <Topbar
             view={view}
             demoMode={demoMode}
@@ -1932,10 +1935,25 @@ export function ShilpApp() {
             onNavigate={go}
             unreadCount={(enquiries || []).filter((e) => e.status === "new").length}
           />
-          <div className="mx-auto w-full max-w-6xl flex-1 px-4 py-5 sm:px-8 sm:py-9">
+          <div className="mx-auto w-full max-w-6xl flex-1 px-3.5 py-4 sm:px-8 sm:py-9">
             {primaryContent}
           </div>
           {shellViews.has(view) && <BottomNav view={view as MainView} onNavigate={go} t={t} />}
+
+          {/* Mobile Floating Action Button: Quick 1-Tap Craft Creation */}
+          {shellViews.has(view) && (view === "dashboard" || view === "products") && (
+            <motion.button
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              whileTap={{ scale: 0.92 }}
+              onClick={startProduct}
+              className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom,0px))] right-4 z-40 flex items-center gap-2 rounded-full border-2 border-white bg-[#c84218] px-4 py-3 text-white shadow-[0_8px_25px_rgba(200,66,24,0.45)] hover:bg-[#a8320a] active:scale-95 lg:hidden"
+              aria-label={t("dash.addProduct")}
+            >
+              <Plus size={18} strokeWidth={2.5} />
+              <span className="text-xs font-bold uppercase tracking-wider">New Craft</span>
+            </motion.button>
+          )}
         </main>
       </div>
 
@@ -2450,122 +2468,148 @@ function Topbar({
     return (first + last).toUpperCase() || "MD";
   }, [profile?.profile?.full_name]);
   return (
-    <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-[#e6dfd5]/80 bg-[#faf6ee]/95 px-4 backdrop-blur-xl sm:px-8 lg:static lg:border-0 lg:bg-transparent gap-2">
-      <div className="flex items-center gap-3 lg:hidden">
-        {isMain ? (
-          <Logo compact />
-        ) : (
+    <header className="sticky top-0 z-30 flex flex-col border-b border-[#e6dfd5]/80 bg-[#faf6ee]/95 backdrop-blur-xl lg:static lg:border-0 lg:bg-transparent">
+      {/* Primary Bar */}
+      <div className="flex h-16 sm:h-[76px] items-center justify-between px-3 sm:px-8 gap-2">
+        <div className="flex items-center gap-2 lg:hidden">
+          {isMain ? (
+            <Logo compact />
+          ) : (
+            <button
+              type="button"
+              onClick={onBack}
+              className="flex items-center gap-1.5 rounded-none px-2 py-1.5 text-xs sm:text-sm font-bold text-[#6e6258] transition-all hover:bg-white/80 hover:text-[#1f1a17] active:scale-95 cursor-pointer"
+            >
+              <ArrowLeft size={16} /> {t("common.back")}
+            </button>
+          )}
+        </div>
+
+        {/* Role Switcher (Artisan Studio vs Buyer & Exporter Hub) */}
+        <div className="flex items-center border border-[#1f1a17] bg-white p-0.5 shadow-sm shrink-0">
           <button
             type="button"
-            onClick={onBack}
-            className="flex items-center gap-2 rounded-none px-2 py-1.5 text-sm font-bold text-[#6e6258] transition-all hover:bg-white/80 hover:text-[#1f1a17] active:scale-95 cursor-pointer"
+            onClick={() => {
+              onTogglePersona?.("artisan");
+              onNavigate?.("dashboard");
+            }}
+            className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider transition ${
+              personaMode === "artisan"
+                ? "bg-[#c84218] text-white"
+                : "text-[#6e6258] hover:text-[#1f1a17]"
+            }`}
           >
-            <ArrowLeft size={17} /> {t("common.back")}
+            <span>Artisan</span>
+            <span className="hidden sm:inline"> Studio</span>
           </button>
-        )}
+          <button
+            type="button"
+            onClick={() => {
+              onTogglePersona?.("buyer");
+              onNavigate?.("marketplace");
+            }}
+            className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider transition ${
+              personaMode === "buyer"
+                ? "bg-[#0b2559] text-white"
+                : "text-[#6e6258] hover:text-[#1f1a17]"
+            }`}
+          >
+            <span>Buyer</span>
+            <span className="hidden sm:inline"> Hub</span>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-1.5 sm:gap-2 lg:ml-auto">
+          {/* Tablet & Desktop Guided AI Voice Demo */}
+          <button
+            type="button"
+            onClick={onOpenGuidedDemo}
+            className="hidden sm:flex items-center gap-1.5 border border-[#c84218] bg-[#fef3c7] px-2.5 py-1.5 text-xs font-bold text-[#a8320a] hover:bg-[#c84218] hover:text-white transition shadow-sm"
+            title="Simulate 30s Voice-to-Listing with AI"
+          >
+            <Zap size={14} className="text-[#c84218]" />
+            <span>30s Voice Demo</span>
+          </button>
+
+          {/* Tablet & Desktop Blueprint Modal Button */}
+          <button
+            type="button"
+            onClick={onOpenRoadmap}
+            className="hidden sm:flex items-center gap-1.5 border border-[#0d6234] bg-[#f0fdf4] px-2.5 py-1.5 text-xs font-bold text-[#0d6234] hover:bg-[#0d6234] hover:text-white transition shadow-sm"
+            title="View Novelty, Complexity, Scale, and Evaluation Criteria"
+          >
+            <Award size={14} />
+            <span>Criteria Blueprint</span>
+          </button>
+
+          {/* Rural Offline Sync Indicator */}
+          <span className="hidden xl:inline-flex items-center gap-1 rounded-none border border-[#0d6234]/30 bg-white px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#0d6234] shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-[#0d6234] animate-pulse" /> 2G Sync
+          </span>
+
+          {/* Language Selector */}
+          <div className="flex items-center gap-1 rounded-none border border-[#e6dfd5] bg-white px-2 py-1 sm:px-2.5 sm:py-1.5 text-xs font-bold text-[#6e6258] shadow-sm">
+            <Globe2 size={14} className="text-[#c84218] shrink-0" />
+            <select
+              value={language}
+              onChange={(event) => setLanguage(event.target.value as LanguageCode)}
+              className="cursor-pointer bg-transparent text-[11px] sm:text-xs font-bold text-[#1f1a17] outline-none max-w-[55px] sm:max-w-none"
+              aria-label={t("lang.changeLanguage")}
+            >
+              {LANGUAGES.map((item) => (
+                <option key={item.code} value={item.code}>
+                  {item.native}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onNavigate?.("messages")}
+            aria-label={t("nav.messages")}
+            title={t("nav.messages")}
+            className="relative flex h-8 w-8 sm:h-10 sm:w-10 cursor-pointer items-center justify-center rounded-none bg-white text-[#6e6258] shadow-sm transition hover:bg-[#faf6ee] hover:text-[#c84218] active:scale-95"
+          >
+            <Bell size={16} />
+            {unreadCount > 0 && (
+              <span className="absolute right-1.5 top-1.5 sm:right-2.5 sm:top-2.5 flex h-2 w-2 rounded-full bg-[#c84218] ring-2 ring-white" />
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onNavigate?.("profile")}
+            aria-label={t("nav.profile")}
+            title={t("nav.profile")}
+            className="flex h-8 w-8 sm:h-10 sm:w-10 cursor-pointer items-center justify-center rounded-none bg-[#dcfce7] text-xs sm:text-sm font-bold text-[#0d6234] shadow-sm transition hover:opacity-90 active:scale-95 shrink-0"
+          >
+            {initials}
+          </button>
+        </div>
       </div>
 
-      {/* Role Switcher (Artisan Studio vs Buyer & Exporter Hub) */}
-      <div className="flex items-center border border-[#1f1a17] bg-white p-0.5 shadow-sm">
-        <button
-          type="button"
-          onClick={() => {
-            onTogglePersona?.("artisan");
-            onNavigate?.("dashboard");
-          }}
-          className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider transition ${
-            personaMode === "artisan"
-              ? "bg-[#c84218] text-white"
-              : "text-[#6e6258] hover:text-[#1f1a17]"
-          }`}
-        >
-          <span className="sm:hidden">Artisan</span>
-          <span className="hidden sm:inline">Artisan Studio</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            onTogglePersona?.("buyer");
-            onNavigate?.("marketplace");
-          }}
-          className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider transition ${
-            personaMode === "buyer"
-              ? "bg-[#0b2559] text-white"
-              : "text-[#6e6258] hover:text-[#1f1a17]"
-          }`}
-        >
-          <span className="sm:hidden">Buyer</span>
-          <span className="hidden sm:inline">Buyer Hub</span>
-        </button>
-      </div>
-
-      <div className="flex items-center gap-2 lg:ml-auto">
-        {/* 30s Guided AI Voice Demo */}
+      {/* Mobile Quick Actions Row */}
+      <div className="flex sm:hidden items-center justify-between border-t border-[#e6dfd5]/60 bg-[#faf6ee] px-3 py-1.5 text-xs">
         <button
           type="button"
           onClick={onOpenGuidedDemo}
-          className="flex items-center gap-1.5 border border-[#c84218] bg-[#fef3c7] px-2.5 py-1.5 text-xs font-bold text-[#a8320a] hover:bg-[#c84218] hover:text-white transition shadow-sm"
-          title="Simulate 30s Voice-to-Listing with AI"
+          className="flex items-center gap-1 border border-[#c84218] bg-[#fef3c7] px-2 py-1 text-[11px] font-bold text-[#a8320a] active:scale-95 shadow-xs"
         >
-          <Zap size={14} className="text-[#c84218]" />
-          <span className="hidden sm:inline">30s Voice Demo</span>
-          <span className="sm:hidden">Demo</span>
+          <Zap size={12} className="text-[#c84218]" />
+          <span>30s Voice Demo</span>
         </button>
-
-        {/* Evaluation Blueprint Modal Button */}
         <button
           type="button"
           onClick={onOpenRoadmap}
-          className="flex items-center gap-1.5 border border-[#0d6234] bg-[#f0fdf4] px-2.5 py-1.5 text-xs font-bold text-[#0d6234] hover:bg-[#0d6234] hover:text-white transition shadow-sm"
-          title="View Novelty, Complexity, Scale, and Evaluation Criteria"
+          className="flex items-center gap-1 border border-[#0d6234] bg-[#f0fdf4] px-2 py-1 text-[11px] font-bold text-[#0d6234] active:scale-95 shadow-xs"
         >
-          <Award size={14} />
-          <span className="hidden sm:inline">Criteria Blueprint</span>
-          <span className="sm:hidden">Blueprint</span>
+          <Award size={12} />
+          <span>Criteria Blueprint</span>
         </button>
-
-        {/* Rural Offline Sync Indicator */}
-        <span className="hidden xl:inline-flex items-center gap-1 rounded-none border border-[#0d6234]/30 bg-white px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#0d6234] shadow-sm">
-          <span className="h-2 w-2 rounded-full bg-[#0d6234] animate-pulse" /> 2G Sync
+        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#0d6234]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#0d6234] animate-pulse" /> 2G Sync
         </span>
-
-        {/* Language Selector */}
-        <div className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-2.5 py-1.5 text-xs font-bold text-[#6e6258] shadow-sm">
-          <Globe2 size={15} className="text-[#c84218]" />
-          <select
-            value={language}
-            onChange={(event) => setLanguage(event.target.value as LanguageCode)}
-            className="cursor-pointer bg-transparent text-xs font-bold text-[#1f1a17] outline-none"
-            aria-label={t("lang.changeLanguage")}
-          >
-            {LANGUAGES.map((item) => (
-              <option key={item.code} value={item.code}>
-                {item.native}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button
-          type="button"
-          onClick={() => onNavigate?.("messages")}
-          aria-label={t("nav.messages")}
-          title={t("nav.messages")}
-          className="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-none bg-white text-[#6e6258] shadow-sm transition hover:bg-[#faf6ee] hover:text-[#c84218] active:scale-95 active:opacity-80"
-        >
-          <Bell size={18} />
-          {unreadCount > 0 && (
-            <span className="absolute right-2.5 top-2.5 flex h-2 w-2 rounded-full bg-[#c84218] ring-2 ring-white" />
-          )}
-        </button>
-        <button
-          type="button"
-          onClick={() => onNavigate?.("profile")}
-          aria-label={t("nav.profile")}
-          title={t("nav.profile")}
-          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-none bg-[#dcfce7] text-sm font-bold text-[#0d6234] shadow-sm transition hover:opacity-90 active:scale-95"
-        >
-          {initials}
-        </button>
       </div>
     </header>
   );
@@ -2638,7 +2682,7 @@ function BottomNav({
   return (
     <nav
       aria-label="Mobile Navigation"
-      className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#e6dfd5] bg-[#ffffff]/95 px-2 py-2 shadow-[0_-8px_20px_-6px_rgba(48,42,35,0.08)] backdrop-blur-xl lg:hidden select-none"
+      className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#e6dfd5] bg-[#ffffff]/95 px-1.5 py-1.5 shadow-[0_-8px_20px_-6px_rgba(48,42,35,0.08)] backdrop-blur-xl lg:hidden select-none pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))]"
     >
       <div className="mx-auto flex max-w-lg justify-around">
         {navItems(t).map(({ id, label, icon: Icon }) => {
@@ -2649,7 +2693,7 @@ function BottomNav({
               type="button"
               onClick={() => onNavigate(id)}
               className={cn(
-                "group relative flex min-w-[62px] flex-col items-center gap-1 rounded-none px-2.5 py-1.5 text-[10px] font-bold transition-colors cursor-pointer active:scale-95",
+                "group relative flex min-w-[54px] xs:min-w-[62px] flex-col items-center gap-1 rounded-none px-1.5 xs:px-2.5 py-1.5 text-[9px] xs:text-[10px] font-bold transition-colors cursor-pointer active:scale-95",
                 isActive ? "text-[#a8320a]" : "text-[#6e6258] hover:text-[#2c241e]",
               )}
             >
@@ -2661,11 +2705,11 @@ function BottomNav({
                 />
               )}
               <Icon
-                size={19}
+                size={18}
                 strokeWidth={isActive ? 2.4 : 1.8}
                 className="relative z-10 transition-transform duration-150 group-active:scale-90"
               />
-              <span className="relative z-10">{label}</span>
+              <span className="relative z-10 line-clamp-1">{label}</span>
             </button>
           );
         })}
@@ -4366,15 +4410,15 @@ function Marketplace({
       )}
 
       {/* Novelty Filter Chips: All, GI Verified Only, SHG Clusters */}
-      <div className="flex flex-wrap items-center gap-2 pt-1">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#6e6258] mr-1">
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar whitespace-nowrap pt-1 pb-1">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#6e6258] shrink-0 mr-1">
           Special Filters:
         </span>
         <button
           type="button"
           onClick={() => setGiFilterOnly?.(!giFilterOnly)}
           className={cn(
-            "flex items-center gap-1.5 border px-3 py-1.5 text-xs font-bold transition",
+            "flex shrink-0 items-center gap-1.5 border px-3 py-1.5 text-xs font-bold transition",
             giFilterOnly
               ? "border-[#0d6234] bg-[#0d6234] text-white shadow-sm"
               : "border-[#0d6234]/40 bg-[#f0fdf4] text-[#0d6234] hover:bg-[#dcfce7]",
@@ -4389,7 +4433,7 @@ function Marketplace({
           type="button"
           onClick={() => setShgClusterMode?.(!shgClusterMode)}
           className={cn(
-            "flex items-center gap-1.5 border px-3 py-1.5 text-xs font-bold transition",
+            "flex shrink-0 items-center gap-1.5 border px-3 py-1.5 text-xs font-bold transition",
             shgClusterMode
               ? "border-[#c84218] bg-[#c84218] text-white shadow-sm"
               : "border-[#c84218]/40 bg-[#fffbf2] text-[#c84218] hover:bg-[#fef3c7]",
@@ -4401,7 +4445,7 @@ function Marketplace({
         </button>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-2">
+      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
         {cats.map((item) => (
           <button
             key={item}
@@ -4479,7 +4523,7 @@ function Details({
           <div className="aspect-square bg-[#e6dfd5] md:aspect-auto">
             <ImageBox src={product.image_url} alt={product.name} />
           </div>
-          <div className="p-6 sm:p-10 space-y-5">
+          <div className="p-4 sm:p-7 md:p-10 space-y-4 sm:space-y-5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-none bg-[#fef3c7] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a8320a]">
                 {product.category_name ?? product.craft_type}
@@ -4576,22 +4620,25 @@ function Details({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-2.5 pt-2">
               <PrimaryButton className="flex-1" onClick={onOpenChat}>
                 <Globe2 size={16} /> Vernacular AI Chat
               </PrimaryButton>
-              <PrimaryButton variant="secondary" className="flex-1" onClick={onContact}>
-                <MessageCircle size={16} /> Bulk Inquiry
-              </PrimaryButton>
-              <PrimaryButton
-                variant="secondary"
-                className="px-4"
-                onClick={() => {
-                  void navigator.clipboard?.writeText(window.location.href);
-                }}
-              >
-                <Share2 size={16} />
-              </PrimaryButton>
+              <div className="flex gap-2 flex-1">
+                <PrimaryButton variant="secondary" className="flex-1" onClick={onContact}>
+                  <MessageCircle size={16} /> Bulk Inquiry
+                </PrimaryButton>
+                <PrimaryButton
+                  variant="secondary"
+                  className="px-3 sm:px-4 shrink-0"
+                  onClick={() => {
+                    void navigator.clipboard?.writeText(window.location.href);
+                  }}
+                  title="Share link"
+                >
+                  <Share2 size={16} />
+                </PrimaryButton>
+              </div>
             </div>
           </div>
         </div>

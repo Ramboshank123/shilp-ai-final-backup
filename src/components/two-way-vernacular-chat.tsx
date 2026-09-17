@@ -112,23 +112,23 @@ export function TwoWayVernacularChat({
   }
 
   return (
-    <div className="border-2 border-[#1f1a17] bg-[#faf6ee] p-5 shadow-2xl">
+    <div className="flex max-h-[92vh] flex-col border-2 border-[#1f1a17] bg-[#faf6ee] p-3.5 sm:p-5 shadow-2xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-[#e6dfd5] pb-3.5">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center bg-[#c84218] font-bold text-white">
+      <div className="flex items-center justify-between border-b border-[#e6dfd5] pb-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center bg-[#c84218] font-bold text-white text-xs sm:text-sm">
             {product.artisan_name?.[0] ?? "A"}
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <h3 className="font-bold text-sm text-[#1f1a17]">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <h3 className="font-bold text-xs sm:text-sm text-[#1f1a17]">
                 Live Chat with {product.artisan_name}
               </h3>
-              <span className="flex items-center gap-1 bg-[#dcfce7] px-1.5 py-0.5 text-[9px] font-bold uppercase text-[#0d6234]">
+              <span className="flex items-center gap-1 bg-[#dcfce7] px-1.5 py-0.5 text-[8px] sm:text-[9px] font-bold uppercase text-[#0d6234]">
                 <Globe size={10} /> Vernacular AI Bridge
               </span>
             </div>
-            <p className="text-[11px] text-[#6e6258]">
+            <p className="text-[10px] sm:text-[11px] text-[#6e6258] line-clamp-1">
               Artisan speaks in Hindi/Regional • You read & reply in English
             </p>
           </div>
@@ -137,14 +137,14 @@ export function TwoWayVernacularChat({
         <button
           type="button"
           onClick={onClose}
-          className="border border-[#e6dfd5] bg-white px-2.5 py-1 text-xs font-bold text-[#6e6258] hover:text-[#1f1a17]"
+          className="border border-[#e6dfd5] bg-white px-2 py-1 text-xs font-bold text-[#6e6258] hover:text-[#1f1a17] shrink-0 ml-2"
         >
-          Close Chat
+          Close
         </button>
       </div>
 
       {/* Message Timeline */}
-      <div className="my-4 max-h-72 space-y-3 overflow-y-auto pr-1">
+      <div className="my-3 flex-1 max-h-60 sm:max-h-72 space-y-2.5 sm:space-y-3 overflow-y-auto pr-1">
         {messages.map((m) => {
           const isArtisan = m.sender === "artisan";
           return (

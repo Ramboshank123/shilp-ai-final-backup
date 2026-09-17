@@ -40,14 +40,14 @@ export function OndcNetworkPanel({
   }
 
   return (
-    <div className="border border-[#0b2559] bg-[#f0f9ff] p-5 text-left">
+    <div className="border border-[#0b2559] bg-[#f0f9ff] p-4 sm:p-5 text-left">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#0b2559]/20 pb-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center border border-[#0b2559] bg-[#0b2559] text-white">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#0b2559] bg-[#0b2559] text-white">
             <Network size={20} />
           </div>
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[10px] font-black uppercase tracking-[0.14em] text-[#0b2559]">
                 National Commerce Infrastructure
               </span>
@@ -55,7 +55,7 @@ export function OndcNetworkPanel({
                 ONDC Beckn v1.2 Live
               </span>
             </div>
-            <h3 className="font-display text-base font-bold text-[#1f1a17]">
+            <h3 className="font-display text-sm sm:text-base font-bold text-[#1f1a17] mt-0.5">
               Open Network for Digital Commerce (ONDC) Syndication
             </h3>
           </div>
@@ -65,7 +65,7 @@ export function OndcNetworkPanel({
           type="button"
           onClick={triggerSync}
           disabled={syncing}
-          className="flex items-center gap-1.5 border border-[#0b2559] bg-white px-3 py-1.5 text-xs font-bold text-[#0b2559] transition hover:bg-[#e0f2fe] disabled:opacity-50"
+          className="flex w-full sm:w-auto justify-center items-center gap-1.5 border border-[#0b2559] bg-white px-3.5 py-2 sm:py-1.5 text-xs font-bold text-[#0b2559] transition hover:bg-[#e0f2fe] active:scale-95 disabled:opacity-50 shrink-0"
         >
           <RefreshCw size={13} className={syncing ? "animate-spin" : ""} />
           <span>{syncing ? "Syncing Network..." : "Broadcast Catalog"}</span>

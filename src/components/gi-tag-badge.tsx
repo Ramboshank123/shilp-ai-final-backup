@@ -53,24 +53,24 @@ export function GiTagBadge({
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-2 sm:p-4 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         >
           <div
-            className="w-full max-w-lg border-2 border-[#0d6234] bg-[#faf6ee] p-6 text-left shadow-2xl"
+            className="flex max-h-[92vh] w-full max-w-lg flex-col border-2 border-[#0d6234] bg-[#faf6ee] p-4 sm:p-6 text-left shadow-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header with National Heritage Framing */}
-            <div className="flex items-start justify-between border-b border-[#0d6234]/30 pb-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center border border-[#0d6234] bg-[#0d6234] text-white">
-                  <Landmark size={24} />
+            <div className="flex items-start justify-between border-b border-[#0d6234]/30 pb-3 sm:pb-4">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center border border-[#0d6234] bg-[#0d6234] text-white">
+                  <Landmark size={20} />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.14em] text-[#0d6234]">
+                  <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.12em] sm:tracking-[0.14em] text-[#0d6234]">
                     Government of India • Ministry of Commerce & Industry
                   </span>
-                  <h3 className="text-xl font-serif font-bold text-[#1f1a17]">
+                  <h3 className="text-base sm:text-xl font-serif font-bold text-[#1f1a17]">
                     GI Certificate of Authenticity
                   </h3>
                 </div>
@@ -78,14 +78,14 @@ export function GiTagBadge({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="border border-[#e6dfd5] bg-white p-1 text-[#6e6258] hover:text-[#1f1a17]"
+                className="border border-[#e6dfd5] bg-white p-1 text-[#6e6258] hover:text-[#1f1a17] shrink-0 ml-2"
               >
                 <X size={18} />
               </button>
             </div>
 
             {/* Certificate Details */}
-            <div className="mt-5 space-y-4 text-sm">
+            <div className="flex-1 overflow-y-auto mt-4 space-y-3 sm:space-y-4 text-xs sm:text-sm pr-0.5">
               <div className="border border-[#0d6234]/20 bg-white p-4">
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>

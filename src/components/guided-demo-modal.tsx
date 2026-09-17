@@ -87,24 +87,24 @@ export function GuidedDemoModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-2 sm:p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl border-2 border-[#1f1a17] bg-[#faf6ee] shadow-2xl"
+        className="flex max-h-[92vh] w-full max-w-xl flex-col border-2 border-[#1f1a17] bg-[#faf6ee] shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top bar */}
-        <div className="flex items-center justify-between border-b border-[#e6dfd5] bg-white px-5 py-4">
+        <div className="flex items-center justify-between border-b border-[#e6dfd5] bg-white px-4 py-3 sm:px-5 sm:py-4">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center bg-[#c84218] text-white">
+            <span className="flex h-7 w-7 items-center justify-center bg-[#c84218] text-white shrink-0">
               <Zap size={16} />
             </span>
             <div>
               <span className="text-[10px] font-black uppercase tracking-wider text-[#c84218]">
                 Interactive Simulation
               </span>
-              <h3 className="text-sm font-bold text-[#1f1a17]">
+              <h3 className="text-xs sm:text-sm font-bold text-[#1f1a17]">
                 30-Second AI Voice Cataloging Demo
               </h3>
             </div>
@@ -112,16 +112,16 @@ export function GuidedDemoModal({
           <button
             type="button"
             onClick={onClose}
-            className="border border-[#e6dfd5] p-1 text-[#6e6258] hover:text-[#1f1a17]"
+            className="border border-[#e6dfd5] p-1 text-[#6e6258] hover:text-[#1f1a17] shrink-0 ml-2"
           >
             <X size={16} />
           </button>
         </div>
 
         {/* Progress Tracker */}
-        <div className="grid grid-cols-4 border-b border-[#e6dfd5] bg-[#f5efe4] text-center text-[10px] font-bold uppercase tracking-wider">
+        <div className="grid grid-cols-4 border-b border-[#e6dfd5] bg-[#f5efe4] text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-wider">
           <div
-            className={`py-2 border-r border-[#e6dfd5] ${
+            className={`py-1.5 sm:py-2 border-r border-[#e6dfd5] ${
               step === 1
                 ? "bg-[#c84218] text-white"
                 : step > 1
@@ -129,10 +129,10 @@ export function GuidedDemoModal({
                   : "text-[#6e6258]"
             }`}
           >
-            1. Voice Input
+            1. Voice
           </div>
           <div
-            className={`py-2 border-r border-[#e6dfd5] ${
+            className={`py-1.5 sm:py-2 border-r border-[#e6dfd5] ${
               step === 2
                 ? "bg-[#c84218] text-white"
                 : step > 2
@@ -143,7 +143,7 @@ export function GuidedDemoModal({
             2. Gemini AI
           </div>
           <div
-            className={`py-2 border-r border-[#e6dfd5] ${
+            className={`py-1.5 sm:py-2 border-r border-[#e6dfd5] ${
               step === 3
                 ? "bg-[#c84218] text-white"
                 : step > 3
@@ -151,15 +151,17 @@ export function GuidedDemoModal({
                   : "text-[#6e6258]"
             }`}
           >
-            3. GI & Pricing
+            3. Pricing
           </div>
-          <div className={`py-2 ${step === 4 ? "bg-[#c84218] text-white" : "text-[#6e6258]"}`}>
-            4. Live ONDC
+          <div
+            className={`py-1.5 sm:py-2 ${step === 4 ? "bg-[#c84218] text-white" : "text-[#6e6258]"}`}
+          >
+            4. ONDC
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6 text-left space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 text-left space-y-4">
           {step === 1 && (
             <div className="space-y-4 text-center">
               <div className="mx-auto flex h-20 w-20 items-center justify-center border-2 border-[#c84218] bg-white text-[#c84218]">

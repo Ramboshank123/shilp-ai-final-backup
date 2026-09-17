@@ -103,24 +103,24 @@ export function FutureRoadmapModal({ isOpen, onClose }: { isOpen: boolean; onClo
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-2 sm:p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="flex max-h-[90vh] w-full max-w-4xl flex-col border-2 border-[#1f1a17] bg-[#faf6ee] shadow-2xl"
+        className="flex max-h-[92vh] w-full max-w-4xl flex-col border-2 border-[#1f1a17] bg-[#faf6ee] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between border-b border-[#e6dfd5] bg-white p-6">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center bg-[#c84218] text-white">
-              <Sparkles size={22} />
+        <div className="flex items-start justify-between border-b border-[#e6dfd5] bg-white p-4 sm:p-6">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center bg-[#c84218] text-white">
+              <Sparkles size={20} />
             </div>
             <div>
               <span className="text-[10px] font-black uppercase tracking-[0.16em] text-[#c84218]">
                 Evaluation & Architecture Blueprint
               </span>
-              <h2 className="font-display text-2xl font-bold text-[#1f1a17]">
+              <h2 className="font-display text-lg sm:text-2xl font-bold text-[#1f1a17] leading-tight">
                 SHILP AI: Platform Criteria & Innovation Blueprint
               </h2>
             </div>
@@ -128,18 +128,18 @@ export function FutureRoadmapModal({ isOpen, onClose }: { isOpen: boolean; onClo
           <button
             type="button"
             onClick={onClose}
-            className="border border-[#e6dfd5] p-1.5 text-[#6e6258] hover:text-[#1f1a17]"
+            className="border border-[#e6dfd5] p-1.5 text-[#6e6258] hover:text-[#1f1a17] shrink-0 ml-2"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="flex flex-wrap border-b border-[#e6dfd5] bg-[#f5efe4] px-4 pt-2">
+        {/* Navigation Tabs - swipeable horizontal row on mobile */}
+        <div className="flex overflow-x-auto no-scrollbar whitespace-nowrap border-b border-[#e6dfd5] bg-[#f5efe4] px-3 sm:px-4 pt-2">
           <button
             type="button"
             onClick={() => setActiveTab("overview")}
-            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition ${
+            className={`shrink-0 px-3.5 py-2 sm:px-4 sm:py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition ${
               activeTab === "overview"
                 ? "border-[#c84218] bg-white text-[#c84218]"
                 : "border-transparent text-[#6e6258] hover:text-[#1f1a17]"
@@ -152,7 +152,7 @@ export function FutureRoadmapModal({ isOpen, onClose }: { isOpen: boolean; onClo
               key={item.id}
               type="button"
               onClick={() => setActiveTab(item.id as typeof activeTab)}
-              className={`flex items-center gap-1.5 px-3.5 py-2.5 text-xs font-bold border-b-2 transition ${
+              className={`shrink-0 flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs font-bold border-b-2 transition ${
                 activeTab === item.id
                   ? "border-[#c84218] bg-white text-[#c84218]"
                   : "border-transparent text-[#6e6258] hover:text-[#1f1a17]"
@@ -165,7 +165,7 @@ export function FutureRoadmapModal({ isOpen, onClose }: { isOpen: boolean; onClo
         </div>
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-6 text-left">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 text-left">
           {activeTab === "overview" && (
             <div className="space-y-6">
               <div className="border-l-4 border-[#c84218] bg-[#fef3c7] p-4 text-[#1f1a17]">
