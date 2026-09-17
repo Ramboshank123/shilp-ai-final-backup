@@ -209,7 +209,7 @@ const demoProducts: MarketplaceProduct[] = [
     views: 124,
     created_at: "2026-08-21T08:00:00.000Z",
     updated_at: "2026-08-21T08:00:00.000Z",
-    image_url: "/demo/bamboo-basket.jpg",
+    image_url: "/assets/images/bamboo-basket.jpg",
     artisan_name: "Meera Devi",
     artisan_location: "Barpeta, Assam",
     category_name: "Bamboo",
@@ -268,7 +268,7 @@ const demoProducts: MarketplaceProduct[] = [
     views: 210,
     created_at: "2026-08-20T08:00:00.000Z",
     updated_at: "2026-08-20T08:00:00.000Z",
-    image_url: "/demo/terracotta-diya.jpg",
+    image_url: "/assets/images/terracotta-diya.jpg",
     artisan_name: "Rakesh Kumhar",
     artisan_location: "Khurja, Uttar Pradesh",
     category_name: "Pottery",
@@ -325,7 +325,7 @@ const demoProducts: MarketplaceProduct[] = [
     views: 96,
     created_at: "2026-08-19T08:00:00.000Z",
     updated_at: "2026-08-19T08:00:00.000Z",
-    image_url: "/demo/cotton-scarf.jpg",
+    image_url: "/assets/images/cotton-scarf.jpg",
     artisan_name: "Lakshmi Bai",
     artisan_location: "Chanderi, Madhya Pradesh",
     category_name: "Handloom",
@@ -382,7 +382,7 @@ const demoProducts: MarketplaceProduct[] = [
     views: 58,
     created_at: "2026-08-18T08:00:00.000Z",
     updated_at: "2026-08-18T08:00:00.000Z",
-    image_url: "/demo/wooden-box.jpg",
+    image_url: "/assets/images/wooden-box.jpg",
     artisan_name: "Meera Devi",
     artisan_location: "Barpeta, Assam",
     category_name: "Woodwork",
@@ -439,7 +439,7 @@ const demoProducts: MarketplaceProduct[] = [
     views: 143,
     created_at: "2026-08-17T08:00:00.000Z",
     updated_at: "2026-08-17T08:00:00.000Z",
-    image_url: "/demo/pottery-vase.jpg",
+    image_url: "/assets/images/pottery-vase.jpg",
     artisan_name: "Rakesh Kumhar",
     artisan_location: "Khurja, Uttar Pradesh",
     category_name: "Pottery",
@@ -667,7 +667,7 @@ function Logo({ compact = false }: { compact?: boolean }) {
     <div className="flex items-center gap-3">
       <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-none shadow-[0_4px_14px_rgba(200,66,24,.22)] ring-1 ring-[#c84218]/20">
         <img
-          src={getAssetUrl("/logo.png")}
+          src={getAssetUrl("/assets/images/logo.png")}
           alt="SHILP AI"
           className="h-full w-full object-cover"
           referrerPolicy="no-referrer"
@@ -1665,7 +1665,7 @@ export function ShilpApp() {
                     className="flex h-full w-full items-center justify-center overflow-hidden rounded-none shadow-[0_18px_40px_-6px_rgba(200,66,24,0.3)] ring-1 ring-[#c84218]/25"
                   >
                     <img
-                      src={getAssetUrl("/logo.png")}
+                      src={getAssetUrl("/assets/images/logo.png")}
                       alt="SHILP Logo"
                       className="h-full w-full object-cover"
                       referrerPolicy="no-referrer"
