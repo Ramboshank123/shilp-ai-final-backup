@@ -15,7 +15,7 @@ export const LANGUAGES: { code: LanguageCode; label: string; native: string; com
 const en = {
   "app.name": "SHILP AI",
   "app.tagline": "From Craft to Customer",
-  "app.subtitle": "Your AI-powered digital business assistant",
+  "app.subtitle": "A digital companion crafted for Indian artisans",
   "common.continue": "Continue",
   "common.back": "Back",
   "common.next": "Next",
@@ -243,7 +243,7 @@ export type TranslationKey = keyof Dict;
 const hi: Record<TranslationKey, string> = {
   "app.name": "शिल्प एआई",
   "app.tagline": "शिल्प से ग्राहक तक",
-  "app.subtitle": "आपका एआई डिजिटल व्यापार सहायक",
+  "app.subtitle": "कारीगरों के लिए बना डिजिटल साथी",
   "common.continue": "आगे बढ़ें",
   "common.back": "वापस",
   "common.next": "अगला",
@@ -469,7 +469,7 @@ const hi: Record<TranslationKey, string> = {
 const te: Record<TranslationKey, string> = {
   "app.name": "శిల్ప్ AI",
   "app.tagline": "చేతివృత్తి నుండి వినియోగదారుడి వరకు",
-  "app.subtitle": "మీ AI ఆధారిత డిజిటల్ వ్యాపార సహాయకుడు",
+  "app.subtitle": "చేతివృత్తుల వారి కోసం తోడ్పాటు అందించే డిజిటల్ సహచరుడు",
   "common.continue": "కొనసాగించండి",
   "common.back": "వెనుకకు",
   "common.next": "తదుపరి",
@@ -693,7 +693,7 @@ const te: Record<TranslationKey, string> = {
 const ta: Record<TranslationKey, string> = {
   "app.name": "சில்ப் AI",
   "app.tagline": "கைவினையிலிருந்து வாடிக்கையாளருக்கு",
-  "app.subtitle": "உங்கள் AI டிஜிட்டல் வணிக உதவியாளர்",
+  "app.subtitle": "பாரம்பரிய கைவினைஞர்களுக்கான அன்பான டிஜிட்டல் துணை",
   "common.continue": "தொடரவும்",
   "common.back": "பின்செல்",
   "common.next": "அடுத்து",
@@ -919,7 +919,7 @@ const ta: Record<TranslationKey, string> = {
 const kn: Record<TranslationKey, string> = {
   "app.name": "ಶಿಲ್ಪ್ AI",
   "app.tagline": "ಕರಕುಶಲತೆಯಿಂದ ಗ್ರಾಹಕರವರೆಗೆ",
-  "app.subtitle": "ನಿಮ್ಮ AI ಡಿಜಿಟಲ್ ವ್ಯಾಪಾರ ಸಹಾಯಕ",
+  "app.subtitle": "ಭಾರತೀಯ ಕುಶಲಕರ್ಮಿಗಳಿಗೆ ನೆರವಾಗುವ ಆಪ್ತ ಡಿಜಿಟಲ್ ಒಡನಾಡಿ",
   "common.continue": "ಮುಂದುವರಿಯಿರಿ",
   "common.back": "ಹಿಂದೆ",
   "common.next": "ಮುಂದೆ",
@@ -1142,7 +1142,7 @@ const kn: Record<TranslationKey, string> = {
 const mr: Record<TranslationKey, string> = {
   "app.name": "शिल्प AI",
   "app.tagline": "हस्तकलानिर्मितीपासून ग्राहकापर्यंत",
-  "app.subtitle": "तुमचा AI डिजिटल व्यवसाय सहाय्यक",
+  "app.subtitle": "भारतीय कारागिरांसाठी हक्काचा डिजिटल सोबती",
   "common.continue": "पुढे जा",
   "common.back": "मागे",
   "common.next": "पुढील",

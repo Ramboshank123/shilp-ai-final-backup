@@ -80,22 +80,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SHILP AI — From Craft to Customer" },
+      { title: "SHILP — From Craft to Customer" },
       {
         name: "description",
-        content: "A simple AI-powered digital business assistant for Indian artisans.",
+        content:
+          "A gentle digital companion empowering Indian artisans, connecting authentic handmade craft from master hands to appreciative homes.",
       },
-      { name: "author", content: "SHILP AI" },
-      { property: "og:title", content: "SHILP AI — From Craft to Customer" },
+      { name: "author", content: "SHILP" },
+      { property: "og:title", content: "SHILP — From Craft to Customer" },
       {
         property: "og:description",
-        content: "Help handmade craft travel from the workshop to the right customer.",
+        content: "Helping authentic handmade craft travel from the workshop to the right customer.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@shilpai" },
     ],
     links: [
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,

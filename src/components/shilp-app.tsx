@@ -389,10 +389,10 @@ function Field({
   multiline?: boolean;
 }) {
   const className =
-    "w-full rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-[15px] text-[#29251f] outline-none transition focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10";
+    "w-full rounded-none border border-[#e6dfd5] bg-white/80 px-4 py-3.5 text-[15px] text-[#1f1a17] outline-none transition focus:border-[#c84218] focus:ring-4 focus:ring-[#c84218]/10";
   return (
     <label className="block space-y-2">
-      <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">{label}</span>
+      <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258]">{label}</span>
       {multiline ? (
         <textarea
           name={name}
@@ -440,12 +440,12 @@ function PrimaryButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-5 text-sm font-bold transition active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex min-h-12 items-center justify-center gap-2 rounded-none px-5 text-sm font-bold transition active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50",
         variant === "primary" &&
-          "bg-[#b85f42] text-white shadow-[0_8px_20px_rgba(184,95,66,.2)] hover:bg-[#a85338]",
+          "bg-[#c84218] text-white shadow-[0_8px_22px_rgba(200,66,24,.25)] hover:bg-[#a8320a]",
         variant === "secondary" &&
-          "border border-[#ded3c5] bg-white text-[#3c352d] hover:bg-[#f8f1e7]",
-        variant === "ghost" && "text-[#756e63] hover:bg-[#f3ece2] hover:text-[#3c352d]",
+          "border border-[#e6dfd5] bg-white text-[#1f1a17] hover:bg-[#ffffff]",
+        variant === "ghost" && "text-[#6e6258] hover:bg-[#f4eee6] hover:text-[#1f1a17]",
         className,
       )}
     >
@@ -466,12 +466,12 @@ function PageTitle({
   return (
     <div className="max-w-2xl">
       {eyebrow && (
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#b85f42]">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#c84218]">
           {eyebrow}
         </p>
       )}
-      <h1 className="text-3xl font-semibold leading-tight text-[#302a23] sm:text-4xl">{title}</h1>
-      {description && <p className="mt-3 text-[15px] leading-7 text-[#766e63]">{description}</p>}
+      <h1 className="text-3xl font-semibold leading-tight text-[#1f1a17] sm:text-4xl">{title}</h1>
+      {description && <p className="mt-3 text-[15px] leading-7 text-[#6e6258]">{description}</p>}
     </div>
   );
 }
@@ -479,7 +479,7 @@ function PageTitle({
 function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-md shadow-[0_7px_18px_rgba(184,95,66,.25)]">
+      <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-none shadow-[0_4px_14px_rgba(200,66,24,.22)] ring-1 ring-[#c84218]/20">
         <img
           src="/logo.png"
           alt="SHILP"
@@ -489,8 +489,10 @@ function Logo({ compact = false }: { compact?: boolean }) {
       </div>
       {!compact && (
         <div>
-          <p className="font-display text-lg font-bold tracking-tight text-[#342c24]">SHILP</p>
-          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9b9184]">
+          <p className="font-display text-[19px] font-bold tracking-tight text-[#1f1a17] leading-tight">
+            SHILP
+          </p>
+          <p className="text-[10px] font-medium tracking-[0.15em] text-[#6e6258] uppercase">
             Craft to customer
           </p>
         </div>
@@ -544,7 +546,7 @@ function ImageBox({
   ) : (
     <div
       className={cn(
-        "flex h-full w-full items-center justify-center bg-[#eee5d8] text-[#b5a895]",
+        "flex h-full w-full items-center justify-center bg-[#e6dfd5] text-[#998c80]",
         className,
       )}
     >
@@ -566,11 +568,11 @@ function EmptyState({
 }) {
   return (
     <div className="surface-card flex flex-col items-center justify-center px-6 py-14 text-center">
-      <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-md bg-[#f4e7da] text-[#b85f42]">
+      <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-none bg-[#fef3c7] text-[#c84218]">
         <Icon size={28} strokeWidth={1.7} />
       </div>
-      <h3 className="text-xl font-semibold text-[#382f27]">{title}</h3>
-      <p className="mt-2 max-w-sm text-sm leading-6 text-[#7a7268]">{description}</p>
+      <h3 className="text-xl font-semibold text-[#1f1a17]">{title}</h3>
+      <p className="mt-2 max-w-sm text-sm leading-6 text-[#6e6258]">{description}</p>
       {action && <div className="mt-6">{action}</div>}
     </div>
   );
@@ -583,29 +585,29 @@ function ProductCard({ product, onClick }: { product: MarketplaceProduct; onClic
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       onClick={onClick}
-      className="group overflow-hidden rounded-lg border border-[#e8dfd3] bg-white text-left shadow-[0_6px_20px_rgba(65,47,29,.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(65,47,29,.1)]"
+      className="group overflow-hidden rounded-none border border-[#e6dfd5] bg-white text-left shadow-[0_6px_20px_rgba(65,47,29,.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(65,47,29,.1)]"
     >
-      <div className="relative aspect-[1.06] overflow-hidden bg-[#eee5d8]">
+      <div className="relative aspect-[1.06] overflow-hidden bg-[#e6dfd5]">
         <ImageBox
           src={product.image_url}
           alt={product.name}
           className="transition duration-500 group-hover:scale-105"
         />
-        <span className="absolute left-3 top-3 rounded-md bg-white/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#685f53] backdrop-blur">
+        <span className="absolute left-3 top-3 rounded-none bg-white/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#6e6258] backdrop-blur">
           {product.category_name ?? product.craft_type ?? "Handmade"}
         </span>
-        <span className="absolute bottom-3 right-3 rounded-md bg-[#342c24]/85 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
+        <span className="absolute bottom-3 right-3 rounded-none bg-[#1f1a17]/85 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
           {formatPrice(product.price)}
         </span>
       </div>
       <div className="p-4">
-        <h3 className="line-clamp-1 font-display text-lg font-semibold text-[#382f27]">
+        <h3 className="line-clamp-1 font-display text-lg font-semibold text-[#1f1a17]">
           {product.name}
         </h3>
-        <div className="mt-2 flex items-center gap-1.5 text-xs text-[#82796d]">
+        <div className="mt-2 flex items-center gap-1.5 text-xs text-[#6e6258]">
           <UserRound size={13} />
           <span className="line-clamp-1">{product.artisan_name ?? "Artisan"}</span>
-          <span className="text-[#c7bbae]">·</span>
+          <span className="text-[#d8cfbf]">·</span>
           <span className="line-clamp-1">{product.artisan_location ?? "India"}</span>
         </div>
       </div>
@@ -626,12 +628,14 @@ function StatCard({
 }) {
   return (
     <div className="surface-card flex items-start gap-3 p-4">
-      <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-md", accent)}>
+      <div
+        className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-none", accent)}
+      >
         <Icon size={18} />
       </div>
       <div>
-        <p className="text-2xl font-semibold text-[#352e27]">{value}</p>
-        <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-[#887f73]">
+        <p className="text-2xl font-semibold text-[#1f1a17]">{value}</p>
+        <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-[#6e6258]">
           {label}
         </p>
       </div>
@@ -1376,40 +1380,52 @@ export function ShilpApp() {
           className="min-h-screen"
         >
           {view === "splash" && (
-            <div className="craft-pattern flex min-h-screen items-center justify-center overflow-hidden bg-[#fbf7ef] px-6">
+            <div className="craft-pattern flex min-h-screen items-center justify-center overflow-hidden bg-[#faf6ee] px-6">
               <motion.div
                 initial={{ opacity: 0, scale: 0.94 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
                 className="text-center"
               >
-                <motion.div
-                  animate={{ y: [0, -8, 0], rotate: [0, -2, 2, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  className="mx-auto mb-8 flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl shadow-[0_20px_40px_rgba(184,95,66,.24)]"
-                >
-                  <img
-                    src="/logo.png"
-                    alt="SHILP Logo"
-                    className="h-full w-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                </motion.div>
-                <h1 className="font-display text-5xl font-semibold tracking-tight text-[#302a23]">
+                <div className="relative mx-auto mb-8 flex h-24 w-24 items-center justify-center">
+                  <div className="absolute -inset-3 rounded-none bg-[#c84218]/15 blur-md -z-10" />
+                  <motion.div
+                    animate={{ y: [0, -5, 0], scale: [1, 1.018, 1] }}
+                    transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+                    className="flex h-full w-full items-center justify-center overflow-hidden rounded-none shadow-[0_18px_40px_-6px_rgba(200,66,24,0.3)] ring-1 ring-[#c84218]/25"
+                  >
+                    <img
+                      src="/logo.png"
+                      alt="SHILP Logo"
+                      className="h-full w-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  </motion.div>
+                </div>
+                <h1 className="font-display text-5xl font-semibold tracking-tight text-[#1f1a17]">
                   SHILP
                 </h1>
-                <p className="mt-3 text-base font-semibold text-[#b85f42]">
+                <p className="mt-3 font-display text-lg font-medium text-[#c84218]">
                   From craft to customer
                 </p>
-                <p className="mt-2 text-sm text-[#887f73]">
-                  Your AI-powered digital business assistant
+                <p className="mt-2 text-sm text-[#6e6258]">
+                  Dedicated craft companion · Connecting handmade heritage to customers
                 </p>
-                <div className="mx-auto mt-12 h-1 w-24 overflow-hidden rounded-full bg-[#eadfd2]">
-                  <motion.div
-                    className="h-full rounded-full bg-[#b85f42]"
-                    initial={{ x: "-100%" }}
-                    animate={{ x: "0%" }}
-                    transition={{ duration: 1.3 }}
+                <div className="mx-auto mt-10 flex items-center justify-center gap-2">
+                  <motion.span
+                    animate={{ opacity: [0.35, 1, 0.35], scale: [0.9, 1.15, 0.9] }}
+                    transition={{ duration: 1.8, repeat: Infinity, delay: 0 }}
+                    className="h-2 w-2 rounded-full bg-[#c84218]"
+                  />
+                  <motion.span
+                    animate={{ opacity: [0.35, 1, 0.35], scale: [0.9, 1.15, 0.9] }}
+                    transition={{ duration: 1.8, repeat: Infinity, delay: 0.3 }}
+                    className="h-2 w-2 rounded-full bg-[#f59e0b]"
+                  />
+                  <motion.span
+                    animate={{ opacity: [0.35, 1, 0.35], scale: [0.9, 1.15, 0.9] }}
+                    transition={{ duration: 1.8, repeat: Infinity, delay: 0.6 }}
+                    className="h-2 w-2 rounded-full bg-[#c84218]"
                   />
                 </div>
               </motion.div>
@@ -1593,7 +1609,7 @@ export function ShilpApp() {
   );
 
   return (
-    <div className="min-h-screen bg-[#fbf7ef] text-[#302a23]">
+    <div className="min-h-screen bg-[#faf6ee] text-[#1f1a17]">
       <div className="mx-auto flex min-h-screen max-w-[1500px]">
         {shellViews.has(view) && <DesktopSidebar view={view as MainView} onNavigate={go} t={t} />}
         <main className="flex min-w-0 flex-1 flex-col pb-24 lg:pb-8">
@@ -1615,9 +1631,9 @@ export function ShilpApp() {
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-20 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-3 rounded-md bg-[#342c24] px-4 py-3 text-sm font-semibold text-white shadow-xl lg:bottom-7"
+          className="fixed bottom-20 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-3 rounded-none bg-[#1f1a17] px-4 py-3 text-sm font-semibold text-white shadow-xl lg:bottom-7"
         >
-          <BadgeCheck size={18} className="text-[#e3aa68]" />
+          <BadgeCheck size={18} className="text-[#f59e0b]" />
           {toast}
         </motion.div>
       )}
@@ -1638,7 +1654,7 @@ function LanguageScreen({
   return (
     <div
       id="screen-language-selection"
-      className="craft-pattern min-h-screen bg-[#fbf7ef] px-5 py-8 sm:px-8"
+      className="craft-pattern min-h-screen bg-[#faf6ee] px-5 py-8 sm:px-8"
     >
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-xl flex-col justify-center">
         <Logo />
@@ -1657,16 +1673,16 @@ function LanguageScreen({
                 type="button"
                 onClick={() => setLanguage(item.code)}
                 className={cn(
-                  "rounded-md border p-4 text-left transition-all duration-150 cursor-pointer active:scale-[0.98]",
+                  "rounded-none border p-4 text-left transition-all duration-150 cursor-pointer active:scale-[0.98]",
                   isSelected
-                    ? "border-[#b85f42] bg-[#fff7ef] shadow-[0_8px_20px_rgba(184,95,66,.1)] ring-1 ring-[#b85f42]"
-                    : "border-[#e8dfd3] bg-white/70 hover:border-[#d2b39d] hover:bg-white",
+                    ? "border-[#c84218] bg-[#ffffff] shadow-[0_8px_20px_rgba(200,66,24,.18)] ring-1 ring-[#c84218]"
+                    : "border-[#e6dfd5] bg-white/70 hover:border-[#d8cfbf] hover:bg-white",
                 )}
               >
-                <span className="block text-base font-bold text-[#3b332b]">{item.native}</span>
-                <span className="mt-1 block text-xs text-[#898075]">{item.label}</span>
+                <span className="block text-base font-bold text-[#1f1a17]">{item.native}</span>
+                <span className="mt-1 block text-xs text-[#6e6258]">{item.label}</span>
                 {!item.complete && (
-                  <span className="mt-3 block text-[10px] font-bold uppercase tracking-[0.08em] text-[#a69b8d]">
+                  <span className="mt-3 block text-[10px] font-bold uppercase tracking-[0.08em] text-[#998c80]">
                     Coming soon
                   </span>
                 )}
@@ -1675,7 +1691,7 @@ function LanguageScreen({
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    className="mt-3 flex items-center gap-1 text-xs font-bold text-[#b85f42]"
+                    className="mt-3 flex items-center gap-1 text-xs font-bold text-[#c84218]"
                   >
                     <Check size={13} /> {t("common.selected")}
                   </motion.span>
@@ -1735,7 +1751,7 @@ function AuthScreen({
   };
 
   return (
-    <div id="screen-auth" className="craft-pattern min-h-screen bg-[#fbf7ef] px-5 py-8 sm:px-8">
+    <div id="screen-auth" className="craft-pattern min-h-screen bg-[#faf6ee] px-5 py-8 sm:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center">
         <div className="flex items-center justify-between">
           <Logo />
@@ -1744,9 +1760,9 @@ function AuthScreen({
               id="btn-back-to-language"
               type="button"
               onClick={onBackToLanguage}
-              className="flex items-center gap-1.5 rounded-md border border-[#e5ded2] bg-white px-2.5 py-1.5 text-xs font-bold text-[#675d50] shadow-sm hover:border-[#b85f42] hover:text-[#b85f42] transition"
+              className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-2.5 py-1.5 text-xs font-bold text-[#6e6258] shadow-sm hover:border-[#c84218] hover:text-[#c84218] transition"
             >
-              <Globe2 size={14} className="text-[#b85f42]" />
+              <Globe2 size={14} className="text-[#c84218]" />
               <span>{t("lang.changeLanguage")}</span>
             </button>
           )}
@@ -1756,7 +1772,7 @@ function AuthScreen({
             title={mode === "login" ? t("auth.welcome") : t("auth.signup")}
             description={t("auth.sub")}
           />
-          <div className="mt-7 flex rounded-md bg-[#eee6db] p-1">
+          <div className="mt-7 flex rounded-none bg-[#e6dfd5] p-1">
             {(["login", "signup"] as const).map((item) => {
               const isActive = mode === item;
               return (
@@ -1768,14 +1784,14 @@ function AuthScreen({
                     setValidationError(null);
                   }}
                   className={cn(
-                    "relative flex-1 rounded-sm py-3 text-sm font-bold transition-colors duration-150 cursor-pointer active:scale-[0.98]",
-                    isActive ? "text-[#3d332b]" : "text-[#887f73] hover:text-[#504538]",
+                    "relative flex-1 rounded-none py-3 text-sm font-bold transition-colors duration-150 cursor-pointer active:scale-[0.98]",
+                    isActive ? "text-[#1f1a17]" : "text-[#6e6258] hover:text-[#2c241e]",
                   )}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="auth-active-tab-indicator"
-                      className="absolute inset-0 rounded-sm bg-white shadow-sm"
+                      className="absolute inset-0 rounded-none bg-white shadow-sm"
                       transition={{ type: "spring", stiffness: 450, damping: 32 }}
                     />
                   )}
@@ -1788,7 +1804,7 @@ function AuthScreen({
           </div>
 
           {validationError && (
-            <div className="mt-4 rounded-md border border-red-200 bg-red-50 p-3 text-xs font-semibold text-red-700">
+            <div className="mt-4 rounded-none border border-red-200 bg-red-50 p-3 text-xs font-semibold text-red-700">
               {validationError}
             </div>
           )}
@@ -1814,7 +1830,7 @@ function AuthScreen({
               placeholder="you@example.com"
             />
             <label className="block space-y-2">
-              <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">
+              <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258]">
                 {t("auth.password")}
               </span>
               <input
@@ -1826,11 +1842,11 @@ function AuthScreen({
                   if (validationError) setValidationError(null);
                 }}
                 autoComplete={mode === "login" ? "current-password" : "new-password"}
-                className="w-full rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-[15px] outline-none focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10"
+                className="w-full rounded-none border border-[#e6dfd5] bg-white/80 px-4 py-3.5 text-[15px] outline-none focus:border-[#c84218] focus:ring-4 focus:ring-[#c84218]/10"
                 placeholder="At least 6 characters"
               />
             </label>
-            <div className="flex items-center justify-between text-xs text-[#887f73]">
+            <div className="flex items-center justify-between text-xs text-[#6e6258]">
               <span>
                 {mode === "login" ? t("auth.dontHaveAccount") : t("auth.alreadyHaveAccount")}
               </span>
@@ -1840,7 +1856,7 @@ function AuthScreen({
                   setMode(mode === "login" ? "signup" : "login");
                   setValidationError(null);
                 }}
-                className="font-semibold text-[#b85f42] hover:underline"
+                className="font-semibold text-[#c84218] hover:underline"
               >
                 {mode === "login" ? t("auth.signup") : t("auth.login")}
               </button>
@@ -1866,20 +1882,20 @@ function AuthScreen({
                 setPassword(DEMO_PASSWORD);
                 setValidationError(null);
               }}
-              className="mt-3 w-full text-center text-xs font-medium text-[#b85f42] hover:underline"
+              className="mt-3 w-full text-center text-xs font-medium text-[#c84218] hover:underline"
             >
               Fill demo credentials ({DEMO_EMAIL})
             </button>
           )}
-          <div className="my-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.12em] text-[#a69b8d]">
-            <span className="h-px flex-1 bg-[#e2d8cc]" />
+          <div className="my-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.12em] text-[#998c80]">
+            <span className="h-px flex-1 bg-[#e6dfd5]" />
             or
-            <span className="h-px flex-1 bg-[#e2d8cc]" />
+            <span className="h-px flex-1 bg-[#e6dfd5]" />
           </div>
           <PrimaryButton variant="secondary" className="w-full" onClick={onDemo}>
-            <Sparkles size={17} className="text-[#b85f42]" /> {t("auth.demo")}
+            <Sparkles size={17} className="text-[#c84218]" /> {t("auth.demo")}
           </PrimaryButton>
-          <p className="mt-4 text-center text-xs leading-5 text-[#8d8376]">
+          <p className="mt-4 text-center text-xs leading-5 text-[#6e6258]">
             Demo mode lets you explore the complete artisan-to-marketplace journey without setup.
           </p>
         </div>
@@ -1925,11 +1941,11 @@ function ProfileSetup({
   ];
   const langLabel = LANGUAGES.find((l) => l.code === language)?.native || language;
   return (
-    <div className="min-h-screen bg-[#fbf7ef] px-5 py-8 sm:px-8">
+    <div className="min-h-screen bg-[#faf6ee] px-5 py-8 sm:px-8">
       <div className="mx-auto max-w-2xl">
         <button
           onClick={onBack}
-          className="mb-10 flex items-center gap-2 text-sm font-bold text-[#756e63]"
+          className="mb-10 flex items-center gap-2 text-sm font-bold text-[#6e6258]"
         >
           <ArrowLeft size={16} /> {t("common.back")}
         </button>
@@ -1938,7 +1954,7 @@ function ProfileSetup({
           title={t("profile.title")}
           description={t("profile.subtitle")}
         />
-        <div className="mt-8 space-y-5 rounded-lg border border-[#e8dfd3] bg-white/70 p-5 shadow-[0_8px_24px_rgba(65,47,29,.05)] sm:p-8">
+        <div className="mt-8 space-y-5 rounded-none border border-[#e6dfd5] bg-white/70 p-5 shadow-[0_8px_24px_rgba(65,47,29,.05)] sm:p-8">
           <Field
             label={t("profile.fullName")}
             value={fullName}
@@ -1946,7 +1962,7 @@ function ProfileSetup({
             placeholder="Your name"
           />
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">
+            <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258]">
               {t("profile.craft")}
             </span>
             <div className="flex flex-wrap gap-2">
@@ -1955,10 +1971,10 @@ function ProfileSetup({
                   key={item}
                   onClick={() => setCraft(item)}
                   className={cn(
-                    "rounded-md border px-4 py-2.5 text-sm font-semibold transition",
+                    "rounded-none border px-4 py-2.5 text-sm font-semibold transition",
                     craft === item
-                      ? "border-[#b85f42] bg-[#b85f42] text-white"
-                      : "border-[#e3d9cb] bg-white text-[#645b50] hover:border-[#c89e89]",
+                      ? "border-[#c84218] bg-[#c84218] text-white"
+                      : "border-[#e6dfd5] bg-white text-[#6e6258] hover:border-[#d8cfbf]",
                   )}
                 >
                   {item}
@@ -2037,7 +2053,7 @@ function Topbar({
     return (first + last).toUpperCase() || "MD";
   }, [profile?.profile?.full_name]);
   return (
-    <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-[#eee5d9]/80 bg-[#fbf7ef]/90 px-4 backdrop-blur-xl sm:px-8 lg:static lg:border-0 lg:bg-transparent">
+    <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-[#e6dfd5]/80 bg-[#faf6ee]/90 px-4 backdrop-blur-xl sm:px-8 lg:static lg:border-0 lg:bg-transparent">
       <div className="flex items-center gap-3 lg:hidden">
         {isMain ? (
           <Logo compact />
@@ -2045,7 +2061,7 @@ function Topbar({
           <button
             type="button"
             onClick={onBack}
-            className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-bold text-[#756e63] transition-all hover:bg-white/80 hover:text-[#382f25] active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 rounded-none px-2 py-1.5 text-sm font-bold text-[#6e6258] transition-all hover:bg-white/80 hover:text-[#1f1a17] active:scale-95 cursor-pointer"
           >
             <ArrowLeft size={17} /> {t("common.back")}
           </button>
@@ -2053,18 +2069,18 @@ function Topbar({
       </div>
       <div className="hidden lg:block">
         {demoMode && (
-          <span className="rounded-md bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#a2553a]">
+          <span className="rounded-none bg-[#fef3c7] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#a8320a]">
             {t("common.demo")}
           </span>
         )}
       </div>
       <div className="flex items-center gap-2 lg:ml-auto">
-        <div className="flex items-center gap-1.5 rounded-md border border-[#e5ded2] bg-white px-2.5 py-1.5 text-xs font-bold text-[#675d50] shadow-sm">
-          <Globe2 size={15} className="text-[#b85f42]" />
+        <div className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-2.5 py-1.5 text-xs font-bold text-[#6e6258] shadow-sm">
+          <Globe2 size={15} className="text-[#c84218]" />
           <select
             value={language}
             onChange={(event) => setLanguage(event.target.value as LanguageCode)}
-            className="cursor-pointer bg-transparent text-xs font-bold text-[#4c4235] outline-none"
+            className="cursor-pointer bg-transparent text-xs font-bold text-[#1f1a17] outline-none"
             aria-label={t("lang.changeLanguage")}
           >
             {LANGUAGES.map((item) => (
@@ -2079,11 +2095,11 @@ function Topbar({
           onClick={() => onNavigate?.("messages")}
           aria-label={t("nav.messages")}
           title={t("nav.messages")}
-          className="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white text-[#71685d] shadow-sm transition hover:bg-[#faf7f2] hover:text-[#b85f42] active:scale-95 active:opacity-80"
+          className="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-none bg-white text-[#6e6258] shadow-sm transition hover:bg-[#faf6ee] hover:text-[#c84218] active:scale-95 active:opacity-80"
         >
           <Bell size={18} />
           {unreadCount > 0 && (
-            <span className="absolute right-2.5 top-2.5 flex h-2 w-2 rounded-full bg-[#b85f42] ring-2 ring-white" />
+            <span className="absolute right-2.5 top-2.5 flex h-2 w-2 rounded-full bg-[#c84218] ring-2 ring-white" />
           )}
         </button>
         <button
@@ -2091,7 +2107,7 @@ function Topbar({
           onClick={() => onNavigate?.("profile")}
           aria-label={t("nav.profile")}
           title={t("nav.profile")}
-          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-[#d7eadb] text-sm font-bold text-[#44694d] shadow-sm transition hover:opacity-90 active:scale-95"
+          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-none bg-[#dcfce7] text-sm font-bold text-[#0d6234] shadow-sm transition hover:opacity-90 active:scale-95"
         >
           {initials}
         </button>
@@ -2110,7 +2126,7 @@ function DesktopSidebar({
   t: (key: TranslationKey) => string;
 }) {
   return (
-    <aside className="hidden w-64 shrink-0 flex-col border-r border-[#eee5d9] px-5 py-8 lg:flex select-none">
+    <aside className="hidden w-64 shrink-0 flex-col border-r border-[#e6dfd5] px-5 py-8 lg:flex select-none">
       <Logo />
       <div className="mt-14 space-y-1.5">
         {navItems(t).map(({ id, label, icon: Icon }) => {
@@ -2121,16 +2137,16 @@ function DesktopSidebar({
               type="button"
               onClick={() => onNavigate(id)}
               className={cn(
-                "group relative flex w-full items-center gap-3 rounded-md px-4 py-3 text-left text-sm font-semibold transition-colors duration-200 cursor-pointer active:scale-[0.98]",
+                "group relative flex w-full items-center gap-3 rounded-none px-4 py-3 text-left text-sm font-semibold transition-colors duration-200 cursor-pointer active:scale-[0.98]",
                 isActive
-                  ? "text-[#a2553a]"
-                  : "text-[#7d7468] hover:bg-white/60 hover:text-[#443a31]",
+                  ? "text-[#a8320a]"
+                  : "text-[#6e6258] hover:bg-white/60 hover:text-[#1f1a17]",
               )}
             >
               {isActive && (
                 <motion.div
                   layoutId="desktop-active-nav-indicator"
-                  className="absolute inset-0 rounded-md bg-[#f3e5d6] shadow-sm -z-0"
+                  className="absolute inset-0 rounded-none bg-[#fef3c7] shadow-sm -z-0"
                   transition={{ type: "spring", stiffness: 420, damping: 32 }}
                 />
               )}
@@ -2138,7 +2154,7 @@ function DesktopSidebar({
                 size={18}
                 className={cn(
                   "relative z-10 transition-transform duration-200 group-hover:scale-110",
-                  isActive ? "text-[#a2553a]" : "text-[#8c8275] group-hover:text-[#443a31]",
+                  isActive ? "text-[#a8320a]" : "text-[#6e6258] group-hover:text-[#1f1a17]",
                 )}
               />
               <span className="relative z-10">{label}</span>
@@ -2146,8 +2162,8 @@ function DesktopSidebar({
           );
         })}
       </div>
-      <div className="mt-auto rounded-lg bg-[#34483c] p-5 text-white">
-        <Sparkles size={19} className="text-[#e8b06c]" />
+      <div className="mt-auto rounded-none bg-[#0b2559] p-5 text-white">
+        <Sparkles size={19} className="text-[#fbbf24]" />
         <p className="mt-4 font-display text-lg">{t("nav.story")}</p>
         <p className="mt-2 text-xs leading-5 text-white/65">{t("app.subtitle")}</p>
       </div>
@@ -2167,7 +2183,7 @@ function BottomNav({
   return (
     <nav
       aria-label="Mobile Navigation"
-      className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#e9dfd3] bg-[#fffdf9]/95 px-2 py-2 shadow-[0_-8px_20px_-6px_rgba(48,42,35,0.08)] backdrop-blur-xl lg:hidden select-none"
+      className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#e6dfd5] bg-[#ffffff]/95 px-2 py-2 shadow-[0_-8px_20px_-6px_rgba(48,42,35,0.08)] backdrop-blur-xl lg:hidden select-none"
     >
       <div className="mx-auto flex max-w-lg justify-around">
         {navItems(t).map(({ id, label, icon: Icon }) => {
@@ -2178,14 +2194,14 @@ function BottomNav({
               type="button"
               onClick={() => onNavigate(id)}
               className={cn(
-                "group relative flex min-w-[62px] flex-col items-center gap-1 rounded-md px-2.5 py-1.5 text-[10px] font-bold transition-colors cursor-pointer active:scale-95",
-                isActive ? "text-[#a2553a]" : "text-[#93887b] hover:text-[#52483d]",
+                "group relative flex min-w-[62px] flex-col items-center gap-1 rounded-none px-2.5 py-1.5 text-[10px] font-bold transition-colors cursor-pointer active:scale-95",
+                isActive ? "text-[#a8320a]" : "text-[#6e6258] hover:text-[#2c241e]",
               )}
             >
               {isActive && (
                 <motion.div
                   layoutId="mobile-active-nav-indicator"
-                  className="absolute inset-0 rounded-md bg-[#f3e5d6] -z-0"
+                  className="absolute inset-0 rounded-none bg-[#fef3c7] -z-0"
                   transition={{ type: "spring", stiffness: 450, damping: 32 }}
                 />
               )}
@@ -2253,13 +2269,13 @@ function Dashboard({
     <div className="space-y-6 sm:space-y-8">
       <div className="flex flex-col justify-between gap-4 sm:gap-5 sm:flex-row sm:items-end">
         <div>
-          <p className="text-sm font-semibold text-[#b85f42]">
+          <p className="text-sm font-semibold text-[#c84218]">
             {t("dash.greeting")}, {name}
           </p>
-          <h1 className="mt-1 text-3xl font-semibold text-[#302a23] sm:mt-2 sm:text-4xl">
+          <h1 className="mt-1 text-3xl font-semibold text-[#1f1a17] sm:mt-2 sm:text-4xl">
             {t("dash.tagline")}
           </h1>
-          <p className="mt-1 text-sm text-[#81786c] sm:mt-2">{t("dash.subtitle")}</p>
+          <p className="mt-1 text-sm text-[#6e6258] sm:mt-2">{t("dash.subtitle")}</p>
         </div>
         <PrimaryButton onClick={onAdd}>
           <Plus size={18} /> {t("dash.addProduct")}
@@ -2270,31 +2286,31 @@ function Dashboard({
           icon={Package}
           label={t("dash.total")}
           value={stats.total}
-          accent="bg-[#f3e5d6] text-[#b85f42]"
+          accent="bg-[#fef3c7] text-[#c84218]"
         />
         <StatCard
           icon={BadgeCheck}
           label={t("dash.published")}
           value={stats.published}
-          accent="bg-[#dcebdc] text-[#4c7954]"
+          accent="bg-[#dcfce7] text-[#0d6234]"
         />
         <StatCard
           icon={Eye}
           label={t("dash.views")}
           value={stats.views}
-          accent="bg-[#e2ebef] text-[#53788a]"
+          accent="bg-[#e0f2fe] text-[#0b2559]"
         />
         <StatCard
           icon={MessageCircle}
           label={t("dash.enquiries")}
           value={stats.enquiries}
-          accent="bg-[#eee0ed] text-[#8c5b85]"
+          accent="bg-[#fef3c7] text-[#c84218]"
         />
       </div>
       <div className="grid gap-5 lg:grid-cols-[1.35fr_.65fr]">
-        <section className="warm-gradient relative overflow-hidden rounded-lg p-6 text-white shadow-[0_12px_30px_rgba(184,95,66,.18)] sm:p-8">
+        <section className="warm-gradient relative overflow-hidden rounded-none p-6 text-white shadow-[0_16px_36px_rgba(200,66,24,.22)] sm:p-8">
           <div className="relative z-10 max-w-md">
-            <span className="inline-flex items-center gap-2 rounded-md bg-white/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em]">
+            <span className="inline-flex items-center gap-2 rounded-none bg-white/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em]">
               <Sparkles size={13} /> {t("dash.journey")}
             </span>
             <h2 className="mt-5 font-display text-3xl font-semibold leading-tight">
@@ -2309,20 +2325,20 @@ function Dashboard({
               {t("dash.createListing")} <ArrowRight size={16} />
             </PrimaryButton>
           </div>
-          <div className="absolute -bottom-16 -right-8 h-52 w-52 rounded-full border-[25px] border-white/10" />
-          <div className="absolute -right-10 top-8 h-28 w-28 rounded-full bg-[#e5ad72]/35 blur-2xl" />
+          <div className="absolute -bottom-16 -right-8 h-52 w-52 border-[20px] border-white/10 rotate-12" />
+          <div className="absolute -right-10 top-8 h-28 w-28 rounded-full bg-[#f59e0b]/35 blur-2xl" />
         </section>
         <section className="surface-card p-6">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#b85f42]">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#c84218]">
                 {t("dash.coach")}
               </p>
-              <h2 className="mt-2 font-display text-2xl font-semibold text-[#3a3027]">
+              <h2 className="mt-2 font-display text-2xl font-semibold text-[#1f1a17]">
                 {t("dash.coachSubtitle")}
               </h2>
             </div>
-            <div className="rounded-md bg-[#f3e5d6] p-3 text-[#b85f42]">
+            <div className="rounded-none bg-[#fef3c7] p-3 text-[#c84218]">
               <WandSparkles size={20} />
             </div>
           </div>
@@ -2330,9 +2346,9 @@ function Dashboard({
             {(tips || []).slice(0, 2).map((tip) => (
               <div
                 key={tip}
-                className="flex gap-3 rounded-md bg-[#fbf7ef] p-3 text-xs leading-5 text-[#70675b]"
+                className="flex gap-3 rounded-none bg-[#faf6ee] p-3 text-xs leading-5 text-[#6e6258]"
               >
-                <Check size={15} className="mt-0.5 shrink-0 text-[#5e8a64]" />
+                <Check size={15} className="mt-0.5 shrink-0 text-[#0d6234]" />
                 {tip}
               </div>
             ))}
@@ -2344,15 +2360,15 @@ function Dashboard({
           <h2 className="font-display text-2xl font-semibold">{t("dash.recentProducts")}</h2>
           <button
             onClick={() => onNavigate("products")}
-            className="flex items-center gap-1 text-sm font-bold text-[#b85f42]"
+            className="flex items-center gap-1 text-sm font-bold text-[#c84218]"
           >
             {t("dash.viewAll")} <ChevronRight size={15} />
           </button>
         </div>
         {loading ? (
           <div className="grid gap-4 sm:grid-cols-3">
-            <div className="h-64 animate-pulse rounded-lg bg-[#eee5d8]" />
-            <div className="h-64 animate-pulse rounded-lg bg-[#eee5d8]" />
+            <div className="h-64 animate-pulse rounded-none bg-[#e6dfd5]" />
+            <div className="h-64 animate-pulse rounded-none bg-[#e6dfd5]" />
           </div>
         ) : safeProducts.length ? (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -2379,12 +2395,12 @@ function Dashboard({
       </section>
       <section className="surface-card flex flex-col justify-between gap-4 p-5 sm:flex-row sm:items-center">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#dcebdc] text-[#4c7954]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-none bg-[#dcfce7] text-[#0d6234]">
             <MessageCircle size={21} />
           </div>
           <div>
             <p className="font-semibold">{t("dash.messages")}</p>
-            <p className="mt-1 text-sm text-[#81786c]">
+            <p className="mt-1 text-sm text-[#6e6258]">
               {safeEnquiries.filter((item) => item.status === "new").length}{" "}
               {t("dash.messagesWaiting")}
             </p>
@@ -2415,7 +2431,7 @@ function AddProduct({
   const uploadRef = useRef<HTMLInputElement>(null);
   return (
     <div className="mx-auto max-w-3xl space-y-8">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#756e63]">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#6e6258]">
         <ArrowLeft size={16} /> {t("nav.dashboard")}
       </button>
       <PageTitle
@@ -2426,36 +2442,36 @@ function AddProduct({
       <div className="grid gap-4 sm:grid-cols-2">
         <button
           onClick={onTakePhoto}
-          className="group surface-card relative min-h-44 overflow-hidden p-6 text-left transition hover:-translate-y-1 hover:border-[#c9937f]"
+          className="group surface-card relative min-h-44 overflow-hidden p-6 text-left transition hover:-translate-y-1 hover:border-[#d8cfbf]"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#f3e5d6] text-[#b85f42]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-none bg-[#fef3c7] text-[#c84218]">
             <Camera size={23} />
           </div>
           <h3 className="mt-5 text-xl font-semibold">{t("add.takePhoto")}</h3>
-          <p className="mt-1 text-sm text-[#83796d]">{t("add.takePhotoDesc")}</p>
-          <ChevronRight className="absolute bottom-6 right-6 text-[#b85f42]" />
+          <p className="mt-1 text-sm text-[#6e6258]">{t("add.takePhotoDesc")}</p>
+          <ChevronRight className="absolute bottom-6 right-6 text-[#c84218]" />
         </button>
         <button
           onClick={() => uploadRef.current?.click()}
-          className="group surface-card min-h-44 p-6 text-left transition hover:-translate-y-1 hover:border-[#c9937f]"
+          className="group surface-card min-h-44 p-6 text-left transition hover:-translate-y-1 hover:border-[#d8cfbf]"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#e1ece1] text-[#4c7954]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-none bg-[#dcfce7] text-[#0d6234]">
             <Upload size={23} />
           </div>
           <h3 className="mt-5 text-xl font-semibold">{t("add.uploadPhoto")}</h3>
-          <p className="mt-1 text-sm text-[#83796d]">{t("add.uploadPhotoDesc")}</p>
-          <ChevronRight className="float-right text-[#4c7954]" />
+          <p className="mt-1 text-sm text-[#6e6258]">{t("add.uploadPhotoDesc")}</p>
+          <ChevronRight className="float-right text-[#0d6234]" />
         </button>
         <button
           onClick={onVoice}
-          className="surface-card relative min-h-44 border-[#d9b59f] bg-[#fff8f1] p-6 text-left transition hover:-translate-y-1"
+          className="surface-card relative min-h-44 border-[#d8cfbf] bg-[#ffffff] p-6 text-left transition hover:-translate-y-1"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#b85f42] text-white">
+          <div className="flex h-12 w-12 items-center justify-center rounded-none bg-[#c84218] text-white">
             <Mic size={23} />
           </div>
           <h3 className="mt-5 text-xl font-semibold">{t("add.voice")}</h3>
-          <p className="mt-1 text-sm text-[#83796d]">{t("add.voiceDesc")}</p>
-          <span className="absolute right-5 top-5 rounded-md bg-[#f1dfd0] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#a2553a]">
+          <p className="mt-1 text-sm text-[#6e6258]">{t("add.voiceDesc")}</p>
+          <span className="absolute right-5 top-5 rounded-none bg-[#fef3c7] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#a8320a]">
             {t("add.easyStart")}
           </span>
         </button>
@@ -2463,12 +2479,12 @@ function AddProduct({
           onClick={onManual}
           className="surface-card min-h-44 p-6 text-left transition hover:-translate-y-1"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#e8e5ef] text-[#6e628d]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-none bg-[#fef3c7] text-[#0b2559]">
             <FileText size={23} />
           </div>
           <h3 className="mt-5 text-xl font-semibold">{t("add.manual")}</h3>
-          <p className="mt-1 text-sm text-[#83796d]">{t("add.manualDesc")}</p>
-          <ChevronRight className="float-right text-[#6e628d]" />
+          <p className="mt-1 text-sm text-[#6e6258]">{t("add.manualDesc")}</p>
+          <ChevronRight className="float-right text-[#0b2559]" />
         </button>
       </div>
       <input
@@ -2540,7 +2556,7 @@ function CameraScreen({ onImage, onBack }: { onImage: (file: File) => void; onBa
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#756e63]">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#6e6258]">
         <ArrowLeft size={16} /> {t("common.back")}
       </button>
       <PageTitle
@@ -2548,7 +2564,7 @@ function CameraScreen({ onImage, onBack }: { onImage: (file: File) => void; onBa
         title={t("camera.title")}
         description={t("camera.desc")}
       />
-      <div className="relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-lg bg-[#342c24] text-center text-white shadow-xl">
+      <div className="relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-none bg-[#1f1a17] text-center text-white shadow-xl">
         {streamActive ? (
           <>
             <video
@@ -2558,12 +2574,12 @@ function CameraScreen({ onImage, onBack }: { onImage: (file: File) => void; onBa
               muted
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="pointer-events-none absolute inset-8 rounded-md border border-dashed border-white/40" />
+            <div className="pointer-events-none absolute inset-8 rounded-none border border-dashed border-white/40" />
             <div className="absolute bottom-6 flex items-center gap-4">
               <button
                 type="button"
                 onClick={captureSnapshot}
-                className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-[#b85f42] text-white shadow-lg transition hover:scale-105 active:scale-95"
+                className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-[#c84218] text-white shadow-lg transition hover:scale-105 active:scale-95"
                 title={t("camera.capture")}
               >
                 <Camera size={26} />
@@ -2572,15 +2588,15 @@ function CameraScreen({ onImage, onBack }: { onImage: (file: File) => void; onBa
           </>
         ) : (
           <div className="flex flex-col items-center p-8">
-            <div className="pointer-events-none absolute inset-8 rounded-md border border-dashed border-white/35" />
-            <Camera size={44} strokeWidth={1.3} className="text-[#e5ad72]" />
+            <div className="pointer-events-none absolute inset-8 rounded-none border border-dashed border-white/35" />
+            <Camera size={44} strokeWidth={1.3} className="text-[#f59e0b]" />
             <p className="relative mt-5 font-display text-2xl">{t("camera.ready")}</p>
             <p className="relative mt-2 max-w-xs text-sm leading-6 text-white/60">
               {cameraError || t("camera.hint")}
             </p>
             <div className="relative mt-7 flex flex-wrap justify-center gap-3">
               <PrimaryButton
-                className="bg-white text-[#342c24] hover:bg-[#fff6ec]"
+                className="bg-white text-[#1f1a17] hover:bg-[#ffffff]"
                 onClick={() => inputRef.current?.click()}
               >
                 <Camera size={17} /> {t("camera.openGallery")}
@@ -2601,7 +2617,7 @@ function CameraScreen({ onImage, onBack }: { onImage: (file: File) => void; onBa
           }}
         />
       </div>
-      <p className="text-center text-xs text-[#8b8175]">{t("camera.hint")}</p>
+      <p className="text-center text-xs text-[#6e6258]">{t("camera.hint")}</p>
     </div>
   );
 }
@@ -2677,21 +2693,21 @@ function Studio({
       />
       <div className="grid gap-5 md:grid-cols-2">
         <div>
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[#847a6d]">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[#6e6258]">
             {t("studio.original")}
           </p>
-          <div className="aspect-square overflow-hidden rounded-lg bg-[#eee5d8]">
+          <div className="aspect-square overflow-hidden rounded-none bg-[#e6dfd5]">
             <ImageBox src={draft.originalImageUrl} alt="Original product" />
           </div>
         </div>
         <div>
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[#b85f42]">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[#c84218]">
             {t("studio.enhanced")}
           </p>
-          <div className="relative aspect-square overflow-hidden rounded-lg bg-[#eee5d8]">
+          <div className="relative aspect-square overflow-hidden rounded-none bg-[#e6dfd5]">
             <ImageBox src={processedUrl ?? draft.originalImageUrl} alt="Enhanced product" />
             {processing && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#342c24]/80 p-6 text-center text-white backdrop-blur-sm">
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#1f1a17]/80 p-6 text-center text-white backdrop-blur-sm">
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
@@ -2699,9 +2715,9 @@ function Studio({
                   <WandSparkles size={30} />
                 </motion.div>
                 <p className="mt-5 text-sm font-bold">{phases[phase]}</p>
-                <div className="mt-4 h-1 w-36 overflow-hidden rounded bg-white/20">
+                <div className="mt-4 h-1 w-36 overflow-hidden rounded-none bg-white/20">
                   <motion.div
-                    className="h-full bg-[#e5ad72]"
+                    className="h-full bg-[#f59e0b]"
                     animate={{ width: `${(phase + 1) * 20}%` }}
                   />
                 </div>
@@ -2808,7 +2824,7 @@ function VoiceDescription({
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#756e63]">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#6e6258]">
         <ArrowLeft size={16} /> {t("common.back")}
       </button>
       <PageTitle
@@ -2823,9 +2839,9 @@ function VoiceDescription({
               ? {
                   scale: [1, 1.08, 1],
                   boxShadow: [
-                    "0 0 0 0 rgba(184,95,66,.3)",
-                    "0 0 0 18px rgba(184,95,66,0)",
-                    "0 0 0 0 rgba(184,95,66,0)",
+                    "0 0 0 0 rgba(200,66,24,.4)",
+                    "0 0 0 18px rgba(200,66,24,0)",
+                    "0 0 0 0 rgba(200,66,24,0)",
                   ],
                 }
               : {}
@@ -2833,13 +2849,13 @@ function VoiceDescription({
           transition={{ repeat: Infinity, duration: 1.6 }}
           onClick={toggleRecording}
           className={cn(
-            "flex h-28 w-28 items-center justify-center rounded-full text-white shadow-[0_15px_28px_rgba(184,95,66,.2)] transition hover:brightness-105",
-            listening ? "bg-[#a34432]" : "bg-[#b85f42]",
+            "flex h-28 w-28 items-center justify-center rounded-full text-white shadow-[0_16px_32px_rgba(200,66,24,.3)] transition hover:brightness-105",
+            listening ? "bg-[#e11d48]" : "bg-[#c84218]",
           )}
         >
           <Mic size={40} strokeWidth={1.5} />
         </motion.button>
-        <p className="mt-5 font-semibold text-[#45392e]">
+        <p className="mt-5 font-semibold text-[#2c241e]">
           {listening
             ? t("voice.listening")
             : supported
@@ -2848,7 +2864,7 @@ function VoiceDescription({
         </p>
 
         <div className="mt-4 w-full text-left">
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#867b6f] mb-2">
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258] mb-2">
             {t("voice.quickSamples")}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -2857,7 +2873,7 @@ function VoiceDescription({
                 key={index}
                 type="button"
                 onClick={() => setText(prompt)}
-                className="rounded-md border border-[#e5ded2] bg-[#f8f5ee] px-3 py-1.5 text-xs text-[#5f5548] hover:bg-[#ebdccb] text-left transition"
+                className="rounded-none border border-[#e6dfd5] bg-[#ffffff] px-3 py-1.5 text-xs text-[#2c241e] hover:bg-[#fef3c7] text-left transition"
               >
                 {prompt.slice(0, 42)}...
               </button>
@@ -2949,7 +2965,7 @@ function Catalogue({
 
   return (
     <div className="mx-auto max-w-4xl space-y-8">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#756e63]">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#6e6258]">
         <ArrowLeft size={16} /> {t("common.back")}
       </button>
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
@@ -2962,26 +2978,26 @@ function Catalogue({
 
       <div className="surface-card overflow-hidden p-5 sm:p-8">
         {generating && (
-          <div className="mb-6 flex items-center gap-3 rounded-md bg-[#f3e5d6] p-4 text-sm font-semibold text-[#9b553c]">
+          <div className="mb-6 flex items-center gap-3 rounded-none bg-[#fef3c7] p-4 text-sm font-semibold text-[#a8320a]">
             <Loader2 className="animate-spin" size={18} /> {t("cat.loading")}
           </div>
         )}
 
         {/* Image selector / thumbnail preview */}
-        <div className="mb-7 rounded-md border border-[#e8dfd2] bg-[#fbf9f5] p-4">
+        <div className="mb-7 rounded-none border border-[#e6dfd5] bg-[#ffffff] p-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
-              <div className="h-16 w-16 overflow-hidden rounded-md bg-[#eee5d8] border border-[#dfd5c7] flex-shrink-0">
+              <div className="h-16 w-16 overflow-hidden rounded-none bg-[#e6dfd5] border border-[#e6dfd5] flex-shrink-0">
                 <ImageBox
                   src={draft.imageUrl ?? draft.originalImageUrl}
                   alt={draft.name || "Product image"}
                 />
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#867a6e]">
+                <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#6e6258]">
                   {t("cat.productImage")}
                 </p>
-                <p className="text-sm font-semibold text-[#3b3228]">
+                <p className="text-sm font-semibold text-[#1f1a17]">
                   {draft.imageUrl || draft.originalImageUrl
                     ? t("cat.photoAttached")
                     : t("cat.noPhoto")}
@@ -3003,15 +3019,15 @@ function Catalogue({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-1.5 rounded-md border border-[#d6caba] bg-white px-3 py-2 text-xs font-bold text-[#625647] hover:bg-[#f6eee4]"
+                className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-3 py-2 text-xs font-bold text-[#2c241e] hover:bg-[#ffffff]"
               >
                 <Camera size={14} /> {t("cat.uploadPhoto")}
               </button>
             </div>
           </div>
           {!draft.imageUrl && !draft.originalImageUrl && (
-            <div className="mt-3 pt-3 border-t border-[#eee5d9]">
-              <p className="text-xs text-[#8c8274] mb-2 font-medium">{t("cat.pickMatching")}</p>
+            <div className="mt-3 pt-3 border-t border-[#e6dfd5]">
+              <p className="text-xs text-[#6e6258] mb-2 font-medium">{t("cat.pickMatching")}</p>
               <div className="flex flex-wrap gap-2">
                 {sampleImages.map((sample) => (
                   <button
@@ -3025,9 +3041,9 @@ function Catalogue({
                         category: sample.cat,
                       }))
                     }
-                    className="flex items-center gap-1.5 rounded-md border border-[#e4d9cb] bg-white px-2.5 py-1 text-xs text-[#6e6355] hover:bg-[#f3ece0]"
+                    className="flex items-center gap-1.5 rounded-none border border-[#e6dfd5] bg-white px-2.5 py-1 text-xs text-[#6e6258] hover:bg-[#faf6ee]"
                   >
-                    <Sparkles size={11} className="text-[#b85f42]" />
+                    <Sparkles size={11} className="text-[#c84218]" />
                     {sample.label}
                   </button>
                 ))}
@@ -3036,12 +3052,12 @@ function Catalogue({
           )}
         </div>
 
-        <div className="mb-6 flex gap-2 rounded-md bg-[#f4eee6] p-1">
+        <div className="mb-6 flex gap-2 rounded-none bg-[#ffffff] p-1">
           <button
             onClick={() => setTab("en")}
             className={cn(
-              "flex-1 rounded-sm py-2.5 text-sm font-bold",
-              tab === "en" ? "bg-white text-[#3f342b] shadow-sm" : "text-[#8e8478]",
+              "flex-1 rounded-none py-2.5 text-sm font-bold",
+              tab === "en" ? "bg-white text-[#1f1a17] shadow-sm" : "text-[#6e6258]",
             )}
           >
             English
@@ -3049,8 +3065,8 @@ function Catalogue({
           <button
             onClick={() => setTab("hi")}
             className={cn(
-              "flex-1 rounded-sm py-2.5 text-sm font-bold",
-              tab === "hi" ? "bg-white text-[#3f342b] shadow-sm" : "text-[#8e8478]",
+              "flex-1 rounded-none py-2.5 text-sm font-bold",
+              tab === "hi" ? "bg-white text-[#1f1a17] shadow-sm" : "text-[#6e6258]",
             )}
           >
             हिन्दी
@@ -3067,13 +3083,13 @@ function Catalogue({
             />
             <div className="grid gap-5 sm:grid-cols-2">
               <label className="block space-y-2">
-                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">
+                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258]">
                   {t("cat.categoryLabel")}
                 </span>
                 <select
                   value={draft.category}
                   onChange={(event) => update("category", event.target.value)}
-                  className="w-full rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
+                  className="w-full rounded-none border border-[#e6dfd5] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#c84218]"
                 >
                   {categoryNames.map((item) => (
                     <option key={item}>{item}</option>
@@ -3122,14 +3138,14 @@ function Catalogue({
             />
 
             <div>
-              <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">
+              <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258]">
                 {t("cat.keyFeatures")}
               </span>
               <div className="mt-3 flex flex-wrap gap-2">
                 {draft.key_features.map((feature, index) => (
                   <span
                     key={`${feature}-${index}`}
-                    className="flex items-center gap-2 rounded-md bg-[#e1ece1] px-3 py-2 text-xs font-semibold text-[#4b7151]"
+                    className="flex items-center gap-2 rounded-none bg-[#dcfce7] px-3 py-2 text-xs font-semibold text-[#0d6234]"
                   >
                     {feature}
                     <button
@@ -3161,12 +3177,12 @@ function Catalogue({
                     }
                   }}
                   placeholder="e.g. 100% Biodegradable"
-                  className="flex-1 rounded-md border border-[#e5ded2] bg-white px-3 py-2 text-xs outline-none focus:border-[#bb6547]"
+                  className="flex-1 rounded-none border border-[#e6dfd5] bg-white px-3 py-2 text-xs outline-none focus:border-[#c84218]"
                 />
                 <button
                   type="button"
                   onClick={addFeature}
-                  className="rounded-md bg-[#b85f42] px-3 py-2 text-xs font-bold text-white hover:bg-[#a25137]"
+                  className="rounded-none bg-[#c84218] px-3 py-2 text-xs font-bold text-white hover:bg-[#a8320a]"
                 >
                   {t("cat.addFeature")}
                 </button>
@@ -3186,8 +3202,8 @@ function Catalogue({
               onChange={(value) => update("description_hindi", value)}
               multiline
             />
-            <div className="rounded-md bg-[#fbf7ef] p-4 text-sm leading-6 text-[#756e63]">
-              <Globe2 size={17} className="mb-2 text-[#b85f42]" />
+            <div className="rounded-none bg-[#faf6ee] p-4 text-sm leading-6 text-[#6e6258]">
+              <Globe2 size={17} className="mb-2 text-[#c84218]" />
               {t("cat.hindiNote")}
             </div>
             <PrimaryButton
@@ -3291,7 +3307,7 @@ function Pricing({
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#756e63]">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#6e6258]">
         <ArrowLeft size={16} /> {t("cat.backToCat")}
       </button>
       <PageTitle
@@ -3301,7 +3317,7 @@ function Pricing({
       />
       <div className="grid gap-5 lg:grid-cols-[.9fr_1.1fr]">
         <div className="surface-card space-y-4 p-6">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#b85f42]">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#c84218]">
             {t("price.yourCosts")}
           </p>
           <Field
@@ -3338,7 +3354,7 @@ function Pricing({
             type="number"
             min={0}
           />
-          <div className="flex items-center justify-between border-t border-[#eee5d9] pt-4 text-sm font-bold">
+          <div className="flex items-center justify-between border-t border-[#e6dfd5] pt-4 text-sm font-bold">
             <span>{t("price.baseCost")}</span>
             <span>{formatPrice(base)}</span>
           </div>
@@ -3352,7 +3368,7 @@ function Pricing({
             {t("price.recalculate")}
           </PrimaryButton>
         </div>
-        <div className="warm-gradient flex min-h-[330px] flex-col rounded-lg p-6 text-white sm:p-8">
+        <div className="warm-gradient flex min-h-[330px] flex-col rounded-none p-6 text-white sm:p-8">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/65">
@@ -3364,7 +3380,7 @@ function Pricing({
                   : t("common.loading")}
               </p>
             </div>
-            <div className="rounded-md bg-white/15 p-3">
+            <div className="rounded-none bg-white/15 p-3">
               <IndianRupee size={23} />
             </div>
           </div>
@@ -3384,8 +3400,8 @@ function Pricing({
               </div>
             </div>
           )}
-          <div className="mt-auto rounded-md bg-white/10 p-4 text-xs leading-5 text-white/75">
-            <CircleHelp size={15} className="mb-1 text-[#f0c685]" />
+          <div className="mt-auto rounded-none bg-white/10 p-4 text-xs leading-5 text-white/75">
+            <CircleHelp size={15} className="mb-1 text-[#fbbf24]" />
             {result?.reasoning ?? t("price.desc")}
           </div>
         </div>
@@ -3393,10 +3409,10 @@ function Pricing({
       <div className="surface-card flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-semibold">{t("price.finalPrice")}</p>
-          <p className="mt-1 text-sm text-[#82796e]">{t("price.finalPriceDesc")}</p>
+          <p className="mt-1 text-sm text-[#6e6258]">{t("price.finalPriceDesc")}</p>
         </div>
-        <div className="flex items-center rounded-md border border-[#e5ded2] bg-white px-3">
-          <span className="text-[#8e8376]">₹</span>
+        <div className="flex items-center rounded-none border border-[#e6dfd5] bg-white px-3">
+          <span className="text-[#6e6258]">₹</span>
           <input
             value={draft.price || ""}
             onChange={(event) =>
@@ -3457,56 +3473,56 @@ function Preview({
         title={t("preview.title")}
         description={t("preview.desc")}
       />
-      <div className="overflow-hidden rounded-lg border border-[#e4d9cc] bg-white shadow-[0_12px_32px_rgba(65,47,29,.08)]">
+      <div className="overflow-hidden rounded-none border border-[#e6dfd5] bg-white shadow-[0_12px_32px_rgba(65,47,29,.08)]">
         <div className="grid md:grid-cols-[.9fr_1.1fr]">
-          <div className="aspect-square bg-[#eee5d8] md:aspect-auto">
+          <div className="aspect-square bg-[#e6dfd5] md:aspect-auto">
             <ImageBox src={previewImage} alt={draft.name || "Product preview"} />
           </div>
           <div className="p-6 sm:p-9">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span className="rounded-md bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a2553a]">
+                <span className="rounded-none bg-[#fef3c7] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a8320a]">
                   {draft.category || "Handmade"}
                 </span>
-                <h2 className="mt-4 font-display text-3xl font-semibold text-[#342c24]">
+                <h2 className="mt-4 font-display text-3xl font-semibold text-[#1f1a17]">
                   {draft.name || "Untitled product"}
                 </h2>
               </div>
               <button
                 onClick={onEditCatalogue}
-                className="rounded-md p-2 text-[#a2553a] hover:bg-[#f7eee5]"
+                className="rounded-none p-2 text-[#a8320a] hover:bg-[#faf6ee]"
                 title={t("preview.editCatalogue")}
               >
                 <Edit3 size={17} />
               </button>
             </div>
-            <p className="mt-5 text-sm leading-7 text-[#6f665b]">
+            <p className="mt-5 text-sm leading-7 text-[#6e6258]">
               {draft.description || "Add a short description to help buyers understand your work."}
             </p>
             <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-xs text-[#988e82]">{t("detail.material")}</p>
+                <p className="text-xs text-[#6e6258]">{t("detail.material")}</p>
                 <p className="mt-1 font-semibold">{draft.material || "—"}</p>
               </div>
               <div>
-                <p className="text-xs text-[#988e82]">{t("detail.size")}</p>
+                <p className="text-xs text-[#6e6258]">{t("detail.size")}</p>
                 <p className="mt-1 font-semibold">{draft.size || "—"}</p>
               </div>
               <div>
-                <p className="text-xs text-[#988e82]">{t("preview.madeIn")}</p>
+                <p className="text-xs text-[#6e6258]">{t("preview.madeIn")}</p>
                 <p className="mt-1 font-semibold">{profile.artisan?.location || "India"}</p>
               </div>
               <div>
-                <p className="text-xs text-[#988e82]">{t("detail.time")}</p>
+                <p className="text-xs text-[#6e6258]">{t("detail.time")}</p>
                 <p className="mt-1 font-semibold">{draft.production_time || "—"}</p>
               </div>
             </div>
-            <div className="mt-7 flex items-center justify-between border-t border-[#eee5d9] pt-5">
+            <div className="mt-7 flex items-center justify-between border-t border-[#e6dfd5] pt-5">
               <div>
-                <p className="text-xs text-[#988e82]">{t("preview.yourPrice")}</p>
-                <p className="mt-1 text-2xl font-bold text-[#b85f42]">{formatPrice(draft.price)}</p>
+                <p className="text-xs text-[#6e6258]">{t("preview.yourPrice")}</p>
+                <p className="mt-1 text-2xl font-bold text-[#c84218]">{formatPrice(draft.price)}</p>
               </div>
-              <button onClick={onEditPricing} className="text-xs font-bold text-[#b85f42]">
+              <button onClick={onEditPricing} className="text-xs font-bold text-[#c84218]">
                 {t("preview.changePrice")}
               </button>
             </div>
@@ -3544,26 +3560,26 @@ function Success({
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", bounce: 0.45 }}
-        className="flex h-24 w-24 items-center justify-center rounded-full bg-[#dcebdc] text-[#4c7954]"
+        className="flex h-24 w-24 items-center justify-center rounded-none bg-[#dcfce7] text-[#0d6234]"
       >
         <Check size={45} strokeWidth={2.2} />
       </motion.div>
-      <p className="mt-8 text-xs font-bold uppercase tracking-[0.16em] text-[#4c7954]">
+      <p className="mt-8 text-xs font-bold uppercase tracking-[0.16em] text-[#0d6234]">
         {t("success.eyebrow")}
       </p>
       <h1 className="mt-3 text-4xl font-semibold">{t("success.title")}</h1>
-      <p className="mt-3 max-w-md text-sm leading-6 text-[#7c7367]">{t("success.desc")}</p>
-      <div className="mt-8 w-full overflow-hidden rounded-lg border border-[#e4d9cc] bg-white text-left shadow-sm">
+      <p className="mt-3 max-w-md text-sm leading-6 text-[#6e6258]">{t("success.desc")}</p>
+      <div className="mt-8 w-full overflow-hidden rounded-none border border-[#e6dfd5] bg-white text-left shadow-sm">
         <div className="flex gap-4 p-4">
-          <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md bg-[#eee5d8]">
+          <div className="h-24 w-24 shrink-0 overflow-hidden rounded-none bg-[#e6dfd5]">
             <ImageBox src={product.imageUrl ?? product.originalImageUrl} alt={product.name} />
           </div>
           <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#b85f42]">
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#c84218]">
               {product.category}
             </p>
             <h3 className="mt-2 line-clamp-2 font-display text-xl font-semibold">{product.name}</h3>
-            <p className="mt-2 font-bold text-[#b85f42]">{formatPrice(product.price)}</p>
+            <p className="mt-2 font-bold text-[#c84218]">{formatPrice(product.price)}</p>
           </div>
         </div>
       </div>
@@ -3575,7 +3591,7 @@ function Success({
           {t("success.marketplace")} <ArrowRight size={16} />
         </PrimaryButton>
       </div>
-      <button onClick={onDashboard} className="mt-6 text-sm font-bold text-[#83796e]">
+      <button onClick={onDashboard} className="mt-6 text-sm font-bold text-[#6e6258]">
         {t("success.dashboard")}
       </button>
     </div>
@@ -3772,7 +3788,7 @@ function Marketplace({
         />
         <button
           onClick={onRefresh}
-          className="flex items-center gap-2 self-start rounded-md px-3 py-2 text-sm font-bold text-[#83796e] hover:bg-white"
+          className="flex items-center gap-2 self-start rounded-none px-3 py-2 text-sm font-bold text-[#6e6258] hover:bg-white"
         >
           <Compass size={16} /> {t("common.retry")}
         </button>
@@ -3780,12 +3796,12 @@ function Marketplace({
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9b9082]" size={19} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6e6258]" size={19} />
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder={t("market.search")}
-              className="w-full rounded-md border border-[#e5ded2] bg-white px-12 py-4 text-sm outline-none shadow-sm focus:border-[#bb6547] focus:ring-4 focus:ring-[#bb6547]/10"
+              className="w-full rounded-none border border-[#e6dfd5] bg-white px-12 py-4 text-sm outline-none shadow-sm focus:border-[#c84218] focus:ring-4 focus:ring-[#c84218]/10"
             />
           </div>
           <button
@@ -3794,21 +3810,21 @@ function Marketplace({
             aria-label={isListening ? "Stop voice search" : "Voice search"}
             title={isListening ? "Stop voice search" : "Voice search"}
             className={cn(
-              "flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-md border shadow-sm transition",
+              "flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-none border shadow-sm transition",
               isListening
-                ? "border-[#bb6547] bg-[#fbf2eb] text-[#bb6547] ring-4 ring-[#bb6547]/15 animate-pulse"
-                : "border-[#e5ded2] bg-white text-[#83796e] hover:border-[#bb6547] hover:text-[#bb6547]",
+                ? "border-[#c84218] bg-[#ffffff] text-[#c84218] ring-4 ring-[#c84218]/15 animate-pulse"
+                : "border-[#e6dfd5] bg-white text-[#6e6258] hover:border-[#c84218] hover:text-[#c84218]",
             )}
           >
-            <Mic size={20} className={cn(isListening && "animate-bounce text-[#bb6547]")} />
+            <Mic size={20} className={cn(isListening && "animate-bounce text-[#c84218]")} />
           </button>
         </div>
         {voiceStatus && (
           <div
             role="status"
-            className="flex items-center gap-2 px-1 text-xs font-medium text-[#a2553a]"
+            className="flex items-center gap-2 px-1 text-xs font-medium text-[#a8320a]"
           >
-            {isListening && <span className="h-2 w-2 animate-ping rounded-full bg-[#bb6547]" />}
+            {isListening && <span className="h-2 w-2 animate-ping rounded-full bg-[#c84218]" />}
             <span>{voiceStatus}</span>
           </div>
         )}
@@ -3819,10 +3835,10 @@ function Marketplace({
             key={item}
             onClick={() => setCategory(item)}
             className={cn(
-              "shrink-0 rounded-md px-4 py-2.5 text-xs font-bold transition",
+              "shrink-0 rounded-none px-4 py-2.5 text-xs font-bold transition",
               category === item
-                ? "bg-[#342c24] text-white"
-                : "bg-white text-[#766c60] hover:bg-[#f3e5d6]",
+                ? "bg-[#1f1a17] text-white"
+                : "bg-white text-[#6e6258] hover:bg-[#fef3c7]",
             )}
           >
             {item === "All" ? t("market.all") : item}
@@ -3878,48 +3894,48 @@ function Details({
     );
   return (
     <div className="mx-auto max-w-5xl space-y-7">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#756e63]">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#6e6258]">
         <ArrowLeft size={16} /> {t("common.back")}
       </button>
-      <div className="overflow-hidden rounded-lg border border-[#e4d9cc] bg-white shadow-sm">
+      <div className="overflow-hidden rounded-none border border-[#e6dfd5] bg-white shadow-sm">
         <div className="grid md:grid-cols-[1.05fr_.95fr]">
-          <div className="aspect-square bg-[#eee5d8] md:aspect-auto">
+          <div className="aspect-square bg-[#e6dfd5] md:aspect-auto">
             <ImageBox src={product.image_url} alt={product.name} />
           </div>
           <div className="p-6 sm:p-10">
-            <span className="rounded-md bg-[#f3e5d6] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a2553a]">
+            <span className="rounded-none bg-[#fef3c7] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#a8320a]">
               {product.category_name ?? product.craft_type}
             </span>
             <h1 className="mt-5 text-3xl font-semibold leading-tight sm:text-4xl">
               {product.name}
             </h1>
-            <p className="mt-4 text-3xl font-bold text-[#b85f42]">{formatPrice(product.price)}</p>
-            <p className="mt-6 text-sm leading-7 text-[#70675b]">{product.description}</p>
-            <div className="mt-7 grid grid-cols-2 gap-5 border-y border-[#eee5d9] py-5 text-sm">
+            <p className="mt-4 text-3xl font-bold text-[#c84218]">{formatPrice(product.price)}</p>
+            <p className="mt-6 text-sm leading-7 text-[#6e6258]">{product.description}</p>
+            <div className="mt-7 grid grid-cols-2 gap-5 border-y border-[#e6dfd5] py-5 text-sm">
               <div>
-                <p className="text-xs text-[#988e82]">{t("detail.material")}</p>
+                <p className="text-xs text-[#6e6258]">{t("detail.material")}</p>
                 <p className="mt-1 font-semibold">{product.material || "Handmade materials"}</p>
               </div>
               <div>
-                <p className="text-xs text-[#988e82]">{t("detail.size")}</p>
+                <p className="text-xs text-[#6e6258]">{t("detail.size")}</p>
                 <p className="mt-1 font-semibold">{product.size || "Made to order"}</p>
               </div>
               <div>
-                <p className="text-xs text-[#988e82]">{t("detail.location")}</p>
+                <p className="text-xs text-[#6e6258]">{t("detail.location")}</p>
                 <p className="mt-1 font-semibold">{product.artisan_location ?? "India"}</p>
               </div>
               <div>
-                <p className="text-xs text-[#988e82]">{t("detail.time")}</p>
+                <p className="text-xs text-[#6e6258]">{t("detail.time")}</p>
                 <p className="mt-1 font-semibold">{product.production_time || "—"}</p>
               </div>
             </div>
             <div className="mt-6 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#dcebdc] font-bold text-[#4c7954]">
+              <div className="flex h-11 w-11 items-center justify-center rounded-none bg-[#dcfce7] font-bold text-[#0d6234]">
                 {product.artisan_name?.slice(0, 1) ?? "A"}
               </div>
               <div>
                 <p className="font-semibold">{product.artisan_name}</p>
-                <p className="mt-1 flex items-center gap-1 text-xs text-[#82796e]">
+                <p className="mt-1 flex items-center gap-1 text-xs text-[#6e6258]">
                   <MapPin size={12} /> {product.artisan_location ?? "India"}
                 </p>
               </div>
@@ -3958,7 +3974,7 @@ function Enquiry({
   const [buyerName, setBuyerName] = useState("");
   return (
     <div className="mx-auto max-w-xl space-y-8">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#756e63]">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold text-[#6e6258]">
         <ArrowLeft size={16} /> {t("common.back")}
       </button>
       <PageTitle
@@ -3977,25 +3993,25 @@ function Enquiry({
           placeholder={t("enquiry.name")}
         />
         <label className="block space-y-2">
-          <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">
+          <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258]">
             {t("enquiry.contact")}
           </span>
           <input
             name="buyerContact"
             required
-            className="w-full rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
+            className="w-full rounded-none border border-[#e6dfd5] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#c84218]"
             placeholder={t("enquiry.contact")}
           />
         </label>
         <label className="block space-y-2">
-          <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">
+          <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258]">
             {t("enquiry.message")}
           </span>
           <textarea
             name="message"
             required
             defaultValue={t("enquiry.default")}
-            className="min-h-32 w-full resize-y rounded-md border border-[#e5ded2] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#bb6547]"
+            className="min-h-32 w-full resize-y rounded-none border border-[#e6dfd5] bg-white/80 px-4 py-3.5 text-sm outline-none focus:border-[#c84218]"
           />
         </label>
         <PrimaryButton type="submit" className="w-full">
@@ -4027,12 +4043,12 @@ function Messages({
             <div key={enquiry.id} className="surface-card p-5">
               <div className="flex flex-col justify-between gap-4 sm:flex-row">
                 <div className="flex gap-3">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-[#eee0ed] text-[#8c5b85]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-none bg-[#fef3c7] text-[#c84218]">
                     <UserRound size={18} />
                   </div>
                   <div>
                     <p className="font-semibold">{enquiry.buyer_name}</p>
-                    <p className="mt-1 text-xs text-[#887e72]">
+                    <p className="mt-1 text-xs text-[#6e6258]">
                       {enquiry.products?.name ?? t("messages.title")} ·{" "}
                       {new Date(enquiry.created_at).toLocaleDateString("en-IN", {
                         day: "numeric",
@@ -4043,28 +4059,28 @@ function Messages({
                 </div>
                 <span
                   className={cn(
-                    "self-start rounded-md px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em]",
+                    "self-start rounded-none px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em]",
                     enquiry.status === "new"
-                      ? "bg-[#f3e5d6] text-[#a2553a]"
-                      : "bg-[#dcebdc] text-[#4c7954]",
+                      ? "bg-[#fef3c7] text-[#a8320a]"
+                      : "bg-[#dcfce7] text-[#0d6234]",
                   )}
                 >
                   {enquiry.status === "new" ? t("messages.new") : t("messages.contacted")}
                 </span>
               </div>
-              <p className="mt-5 rounded-md bg-[#fbf7ef] p-4 text-sm leading-6 text-[#685f53]">
+              <p className="mt-5 rounded-none bg-[#faf6ee] p-4 text-sm leading-6 text-[#6e6258]">
                 “{enquiry.message}”
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <a
                   href={`mailto:${enquiry.buyer_contact}`}
-                  className="inline-flex min-h-10 items-center gap-2 rounded-md border border-[#e3d9cb] px-3 text-xs font-bold text-[#665c50]"
+                  className="inline-flex min-h-10 items-center gap-2 rounded-none border border-[#e6dfd5] px-3 text-xs font-bold text-[#6e6258]"
                 >
                   <Mail size={14} /> {enquiry.buyer_contact}
                 </a>
                 {enquiry.status === "new" && (
                   <PrimaryButton
-                    className="min-h-10 rounded-md px-3 text-xs"
+                    className="min-h-10 rounded-none px-3 text-xs"
                     onClick={() => onMark(enquiry, "contacted")}
                   >
                     <Check size={14} /> {t("messages.markContacted")}
@@ -4124,7 +4140,7 @@ function MyProducts({
           <Plus size={17} /> {t("dash.addProduct")}
         </PrimaryButton>
       </div>
-      <div className="flex gap-2 rounded-md bg-[#eee6db] p-1">
+      <div className="flex gap-2 rounded-none bg-[#e6dfd5] p-1">
         {(["draft", "published", "archived"] as const).map((tab) => {
           const isActive = selectedTab === tab;
           return (
@@ -4133,20 +4149,20 @@ function MyProducts({
               type="button"
               onClick={() => setSelectedTab(tab)}
               className={cn(
-                "relative flex-1 rounded-sm py-3 text-xs font-bold capitalize transition-colors duration-150 cursor-pointer active:scale-[0.98]",
-                isActive ? "text-[#3e342b]" : "text-[#887e72] hover:text-[#504538]",
+                "relative flex-1 rounded-none py-3 text-xs font-bold capitalize transition-colors duration-150 cursor-pointer active:scale-[0.98]",
+                isActive ? "text-[#1f1a17]" : "text-[#6e6258] hover:text-[#2c241e]",
               )}
             >
               {isActive && (
                 <motion.div
                   layoutId="products-active-tab-indicator"
-                  className="absolute inset-0 rounded-sm bg-white shadow-sm"
+                  className="absolute inset-0 rounded-none bg-white shadow-sm"
                   transition={{ type: "spring", stiffness: 450, damping: 32 }}
                 />
               )}
               <span className="relative z-10">
                 {tabLabel(tab)}{" "}
-                <span className="ml-1 text-[#a79b8c]">
+                <span className="ml-1 text-[#998c80]">
                   ({products.filter((product) => product.status === tab).length})
                 </span>
               </span>
@@ -4169,7 +4185,7 @@ function MyProducts({
                   key={product.id}
                   className="surface-card flex flex-col gap-4 p-4 sm:flex-row sm:items-center"
                 >
-                  <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md bg-[#eee5d8]">
+                  <div className="h-24 w-24 shrink-0 overflow-hidden rounded-none bg-[#e6dfd5]">
                     <ImageBox src={product.image_url} alt={product.name} />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -4177,12 +4193,12 @@ function MyProducts({
                       <h3 className="font-display text-xl font-semibold">{product.name}</h3>
                       <span
                         className={cn(
-                          "rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em]",
+                          "rounded-none px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em]",
                           product.status === "published"
-                            ? "bg-[#dcebdc] text-[#4c7954]"
+                            ? "bg-[#dcfce7] text-[#0d6234]"
                             : product.status === "archived"
-                              ? "bg-[#eee9e3] text-[#81776b]"
-                              : "bg-[#f3e5d6] text-[#a2553a]",
+                              ? "bg-[#f4eee6] text-[#6e6258]"
+                              : "bg-[#fef3c7] text-[#a8320a]",
                         )}
                       >
                         {product.status === "published"
@@ -4192,7 +4208,7 @@ function MyProducts({
                             : t("products.drafts")}
                       </span>
                     </div>
-                    <p className="mt-1 text-sm text-[#81786c]">
+                    <p className="mt-1 text-sm text-[#6e6258]">
                       {formatPrice(product.price)} · {product.views} {t("dash.views")} ·{" "}
                       {product.category_name ?? product.craft_type}
                     </p>
@@ -4200,14 +4216,14 @@ function MyProducts({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(product)}
-                      className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5] active:scale-95 transition"
+                      className="flex h-10 w-10 items-center justify-center rounded-none border border-[#e6dfd5] text-[#6e6258] hover:bg-[#faf6ee] active:scale-95 transition"
                       title={t("common.edit")}
                     >
                       <Edit3 size={16} />
                     </button>
                     <button
                       onClick={() => onView(product)}
-                      className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5] active:scale-95 transition"
+                      className="flex h-10 w-10 items-center justify-center rounded-none border border-[#e6dfd5] text-[#6e6258] hover:bg-[#faf6ee] active:scale-95 transition"
                       title={t("success.view")}
                     >
                       <Eye size={16} />
@@ -4215,7 +4231,7 @@ function MyProducts({
                     {product.status !== "archived" && (
                       <button
                         onClick={() => onArchive(product)}
-                        className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#756b60] hover:bg-[#f7eee5] active:scale-95 transition"
+                        className="flex h-10 w-10 items-center justify-center rounded-none border border-[#e6dfd5] text-[#6e6258] hover:bg-[#faf6ee] active:scale-95 transition"
                         title={t("products.archived")}
                       >
                         <Archive size={16} />
@@ -4223,7 +4239,7 @@ function MyProducts({
                     )}
                     <button
                       onClick={() => void onDelete(product)}
-                      className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e4d9cc] text-[#a85e4d] hover:bg-[#faece7] active:scale-95 transition"
+                      className="flex h-10 w-10 items-center justify-center rounded-none border border-[#e6dfd5] text-[#e11d48] hover:bg-[#ffffff] active:scale-95 transition"
                       title={t("common.delete")}
                     >
                       <Trash2 size={16} />
@@ -4297,14 +4313,14 @@ function ProfileScreen({
         />
         <button
           onClick={() => setEditing((value) => !value)}
-          className="flex h-11 items-center gap-2 rounded-md border border-[#e1d6ca] bg-white px-4 text-sm font-bold text-[#6d6357]"
+          className="flex h-11 items-center gap-2 rounded-none border border-[#e6dfd5] bg-white px-4 text-sm font-bold text-[#6e6258]"
         >
           <Edit3 size={16} /> {editing ? t("common.close") : t("common.edit")}
         </button>
       </div>
       <div className="grid gap-5 lg:grid-cols-[.7fr_1.3fr]">
-        <div className="warm-gradient flex flex-col items-center rounded-lg p-8 text-center text-white">
-          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white/20 text-3xl font-display font-semibold">
+        <div className="warm-gradient flex flex-col items-center rounded-none p-8 text-center text-white">
+          <div className="flex h-24 w-24 items-center justify-center rounded-none bg-white/20 text-3xl font-display font-semibold">
             {fullName.slice(0, 1)}
           </div>
           <h2 className="mt-5 font-display text-2xl font-semibold">{fullName}</h2>
@@ -4331,13 +4347,13 @@ function ProfileScreen({
                 />
               </div>
               <label className="block space-y-2">
-                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#736c61]">
+                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#6e6258]">
                   {t("profile.language")}
                 </span>
                 <select
                   value={language}
                   onChange={(event) => setLanguage(event.target.value as LanguageCode)}
-                  className="w-full rounded-md border border-[#e5ded2] bg-white px-4 py-3.5 text-sm"
+                  className="w-full rounded-none border border-[#e6dfd5] bg-white px-4 py-3.5 text-sm"
                 >
                   {LANGUAGES.map((item) => (
                     <option key={item.code} value={item.code}>
@@ -4360,22 +4376,22 @@ function ProfileScreen({
           ) : (
             <>
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#b85f42]">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#c84218]">
                   {t("profile.title")}
                 </p>
-                <p className="mt-4 text-sm leading-7 text-[#6f665b]">
+                <p className="mt-4 text-sm leading-7 text-[#6e6258]">
                   {bio || t("profile.subtitle")}
                 </p>
               </div>
-              <div className="mt-8 grid gap-5 border-t border-[#eee5d9] pt-6 sm:grid-cols-2">
+              <div className="mt-8 grid gap-5 border-t border-[#e6dfd5] pt-6 sm:grid-cols-2">
                 <div>
-                  <p className="text-xs text-[#988e82]">{t("profile.language")}</p>
+                  <p className="text-xs text-[#6e6258]">{t("profile.language")}</p>
                   <p className="mt-1 font-semibold">
                     {LANGUAGES.find((l) => l.code === language)?.native ?? "English"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-[#988e82]">{t("auth.email")}</p>
+                  <p className="text-xs text-[#6e6258]">{t("auth.email")}</p>
                   <p className="mt-1 break-all font-semibold">
                     {profile.profile?.email ?? (demoMode ? "Demo account" : "—")}
                   </p>
@@ -4385,7 +4401,7 @@ function ProfileScreen({
           )}
           <button
             onClick={onSignOut}
-            className="mt-8 flex items-center gap-2 text-sm font-bold text-[#a85e4d]"
+            className="mt-8 flex items-center gap-2 text-sm font-bold text-[#e11d48]"
           >
             <LogOut size={16} /> {t("profile.logout")}
           </button>

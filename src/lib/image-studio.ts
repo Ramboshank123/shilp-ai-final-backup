@@ -16,9 +16,9 @@ export async function enhanceProductImage(file: Blob): Promise<Blob> {
   const ctx = canvas.getContext("2d");
   if (!ctx) return file;
 
-  ctx.fillStyle = "#fbf7ef";
+  ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, 900, 900);
-  ctx.filter = "brightness(1.08) contrast(1.12) saturate(1.1)";
+  ctx.filter = "brightness(1.08) contrast(1.12) saturate(1.15)";
   ctx.drawImage(
     bitmap,
     (bitmap.width - size) / 2,
@@ -31,12 +31,9 @@ export async function enhanceProductImage(file: Blob): Promise<Blob> {
     900,
   );
 
-  // Soft vignette-free warm wash to imitate studio lighting.
+  // Studio lighting boost
   ctx.filter = "none";
-  const gradient = ctx.createRadialGradient(450, 380, 80, 450, 450, 700);
-  gradient.addColorStop(0, "rgba(255,250,240,0.18)");
-  gradient.addColorStop(1, "rgba(255,246,232,0)");
-  ctx.fillStyle = gradient;
+  ctx.fillStyle = "rgba(255,255,255,0.06)";
   ctx.fillRect(0, 0, 900, 900);
 
   return new Promise<Blob>((resolve) => {
