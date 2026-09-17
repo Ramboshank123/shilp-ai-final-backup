@@ -668,18 +668,23 @@ function Logo({ compact = false }: { compact?: boolean }) {
       <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-none shadow-[0_4px_14px_rgba(200,66,24,.22)] ring-1 ring-[#c84218]/20">
         <img
           src="/logo.png"
-          alt="SHILP"
+          alt="SHILP AI"
           className="h-full w-full object-cover"
           referrerPolicy="no-referrer"
         />
       </div>
       {!compact && (
         <div>
-          <p className="font-display text-[19px] font-bold tracking-tight text-[#1f1a17] leading-tight">
-            SHILP
-          </p>
+          <div className="flex items-center gap-1.5">
+            <p className="font-display text-[19px] font-bold tracking-tight text-[#1f1a17] leading-tight">
+              SHILP AI
+            </p>
+            <span className="bg-[#c84218]/10 text-[#c84218] text-[9px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
+              SIH26090
+            </span>
+          </div>
           <p className="text-[10px] font-medium tracking-[0.15em] text-[#6e6258] uppercase">
-            Craft to customer
+            Smart Cataloging & Market Linkage
           </p>
         </div>
       )}
@@ -1664,13 +1669,17 @@ export function ShilpApp() {
                   </motion.div>
                 </div>
                 <h1 className="font-display text-5xl font-semibold tracking-tight text-[#1f1a17]">
-                  SHILP
+                  SHILP AI
                 </h1>
+                <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 bg-[#c84218]/10 text-[#c84218] text-xs font-bold uppercase tracking-wider">
+                  Smart India Hackathon SIH26090
+                </div>
                 <p className="mt-3 font-display text-lg font-medium text-[#c84218]">
-                  From craft to customer
+                  AI-Driven Market Linkage & Smart Cataloging
                 </p>
-                <p className="mt-2 text-sm text-[#6e6258]">
-                  Dedicated craft companion · Connecting handmade heritage to customers
+                <p className="mx-auto mt-2 max-w-sm text-sm text-[#6e6258]">
+                  Empowering marginalized Indian artisans with voice-first cataloging, fair pricing,
+                  and direct market linkage
                 </p>
                 <div className="mx-auto mt-10 flex items-center justify-center gap-2">
                   <motion.span
@@ -2377,20 +2386,21 @@ function Topbar({
       </div>
 
       {/* Role Switcher (Artisan Studio vs Buyer & Exporter Hub) */}
-      <div className="hidden sm:flex items-center border border-[#1f1a17] bg-white p-0.5 shadow-sm">
+      <div className="flex items-center border border-[#1f1a17] bg-white p-0.5 shadow-sm">
         <button
           type="button"
           onClick={() => {
             onTogglePersona?.("artisan");
             onNavigate?.("dashboard");
           }}
-          className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
+          className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider transition ${
             personaMode === "artisan"
               ? "bg-[#c84218] text-white"
               : "text-[#6e6258] hover:text-[#1f1a17]"
           }`}
         >
-          Artisan Studio
+          <span className="sm:hidden">Artisan</span>
+          <span className="hidden sm:inline">Artisan Studio</span>
         </button>
         <button
           type="button"
@@ -2398,13 +2408,14 @@ function Topbar({
             onTogglePersona?.("buyer");
             onNavigate?.("marketplace");
           }}
-          className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
+          className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider transition ${
             personaMode === "buyer"
               ? "bg-[#0b2559] text-white"
               : "text-[#6e6258] hover:text-[#1f1a17]"
           }`}
         >
-          Buyer & Exporter Hub
+          <span className="sm:hidden">Buyer</span>
+          <span className="hidden sm:inline">Buyer Hub</span>
         </button>
       </div>
 

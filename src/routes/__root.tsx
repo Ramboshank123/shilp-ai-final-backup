@@ -80,17 +80,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SHILP — From Craft to Customer" },
+      { title: "SHILP AI — Smart Cataloging & Market Linkage (SIH26090)" },
       {
         name: "description",
         content:
-          "A gentle digital companion empowering Indian artisans, connecting authentic handmade craft from master hands to appreciative homes.",
+          "AI-Driven Market Linkage and Smart Cataloging Mobile Application for Marginalized Artisans (Smart India Hackathon SIH26090).",
       },
-      { name: "author", content: "SHILP" },
-      { property: "og:title", content: "SHILP — From Craft to Customer" },
+      { name: "author", content: "SHILP AI" },
+      { property: "og:title", content: "SHILP AI — Smart Cataloging & Market Linkage (SIH26090)" },
       {
         property: "og:description",
-        content: "Helping authentic handmade craft travel from the workshop to the right customer.",
+        content:
+          "AI-Driven Market Linkage and Smart Cataloging Mobile Application for Marginalized Artisans (Smart India Hackathon SIH26090).",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -1,8 +1,7 @@
-# Craft Connect AI
+# SHILP AI — AI-Driven Market Linkage & Smart Cataloging for Marginalized Artisans
 
-Build a complete, functional, mobile-first web application called "SHILP AI" for the Smart India Hackathon problem statement SIH26090:
-
-"AI-Driven Market Linkage and Smart Cataloging Mobile Application for Marginalized Artisans."
+**Smart India Hackathon Problem Statement SIH26090**  
+*AI-Driven Market Linkage and Smart Cataloging Mobile Application for Marginalized Artisans*
 
 The application should be designed as a production-quality college hackathon MVP, not merely a static UI mockup.
 

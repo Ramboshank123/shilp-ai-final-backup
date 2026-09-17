@@ -1,6 +1,6 @@
 {
   "name": "SHILP AI",
-  "description": "A warm digital business companion and craft marketplace empowering Indian artisans to catalog, celebrate, and sell their authentic handmade crafts.",
+  "description": "AI-Driven Market Linkage and Smart Cataloging Mobile Application for Marginalized Artisans (Smart India Hackathon SIH26090).",
   "requestFramePermissions": ["camera", "microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
